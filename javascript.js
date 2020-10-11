@@ -12,13 +12,8 @@ function setup() {
 
 function draw() {
     // check players score and increase the difficulty
-    if (score % 10 == 0) {
-        if (enemySpawnSpeed > 300) {
-            enemySpawnSpeed -= 50;
-        }
-    }
 
-    background(150);
+    background(20);
     showPlayersStats();
     playerOne.draw()
         // check if an object is colliding with the player.
@@ -29,12 +24,27 @@ function draw() {
         }
     }
     // draw all the bullets when shot.
-    for (let i = 0; i < bullets.length; i++) {
-        bullets[i].draw()
+    for (var i = 0; i < bullets.length; i++) {
+        var theBullet = bullets[i]
+        theBullet.draw()
             // check if a bullet is hitting an enemy
         for (let j = 0; j < enemies.length; j++) {
-            if (enemies[j].checkIfHit(bullets[i])) {
+            if (enemies[j].checkIfHit(theBullet)) {
+
                 if (enemies[j].dead()) {
+                    money += 10;
+                    score += 1;
+                    var velocity = 0;
+                    for (let i = 0; i < 15; i++) {
+                        var newDebri = new debri();
+                        newDebri.position.y = enemies[j].position.y;
+                        newDebri.position.x = enemies[j].position.x;
+                        newDebri.velocity.x = theBullet.velocity.x * 4 + Math.random() * 3;
+                        newDebri.velocity.y = theBullet.velocity.y * 4 + Math.random() * 3;
+                        newDebri.colour = enemies[j].colour;
+                        debris.push(newDebri)
+                        velocity += 4
+                    }
                     enemies.splice(j, 1)
                 }
                 bullets.splice(i, 1)
@@ -42,9 +52,12 @@ function draw() {
             }
         }
     }
-
+    // draw all the debri
+    for (d of debris) {
+        d.draw()
+    }
     // cursor
-    fill('rgba(0,0,0,0.7)');
+    fill('rgba(255,255,255,0.9)');
     circle(mouseX, mouseY, 5)
 }
 
@@ -52,6 +65,7 @@ function draw() {
 
 var enemies = [];
 var bullets = [];
+var debris = [];
 var score = 0;
 var money = 0;
 
@@ -101,7 +115,7 @@ class bullet {
             y: 0,
         }
         this.diameter = 5;
-        this.colour = 'rgba(0,0,0,0.8)';
+        this.colour = 'rgba(255,255,255,0.9)';
     }
     draw() {
         fill(this.colour)
@@ -118,12 +132,25 @@ class bullet {
 
 class debri {
     constructor() {
-        this.diameter = Math.floor(Math.random() * 5 + 5)
-        this.colour = `rgba(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},0.8)`
+        this.diameter = 7;
+        this.colour = 0;
+        this.position = {
+            x: 0,
+            y: 0,
+        }
+        this.velocity = {
+            x: Math.floor(Math.random() * 3 + 1),
+            y: Math.floor(Math.random() * 3 + 1),
+        }
     }
     draw() {
         fill(this.colour)
-        circle(50, 50, this.diameter)
+        circle(this.position.x, this.position.y, this.diameter)
+        this.update()
+    }
+    update() {
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
     }
 }
 
@@ -134,7 +161,7 @@ class enemy {
             'y': Math.floor(Math.random() * canvasHeight),
         }
         this.diameter = Math.floor(Math.random() * 50 + 10);
-        this.colour = 'rgba(255,0,0, 0.5)';
+        this.colour = `rgba(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},0.8)`;
         this.speed = 0.5;
     }
     draw() {
@@ -172,8 +199,6 @@ class enemy {
     }
     dead() {
         if (this.diameter < 20) {
-            money += 10;
-            score += 1;
             return true
         }
     }
@@ -182,10 +207,11 @@ class enemy {
 
 function showPlayersStats() {
     textSize(20);
-    fill(0, 0, 0);
+    fill(200, 200, 200);
     text(`Life: ${playerOne.life}`, 10, 30);
-    text(`Score: ${score}`, 100, 30);
-    text(`Money: ${money}`, 200, 30);
+    text(`Score: ${score}`, 110, 30);
+    text(`Money: ${money}`, 210, 30);
+    // text(`Time:`, 390, 30);
 }
 
 function endGame() {
@@ -204,10 +230,15 @@ function mouseClicked() {
     bullets.push(newBullet)
 }
 
-var enemySpawnSpeed = 500;
+var enemySpawnSpeed = 700;
 var enemySpawnAmount = 1;
 
 function spawnEnemies() {
+    if (enemySpawnSpeed > 300) {
+        enemySpawnSpeed -= 1;
+    }
+
+
     for (let i = 0; i < enemySpawnAmount; i++) {
         var newEnemy = new enemy();
         var spawn = Math.floor(Math.random() * 5)
@@ -227,7 +258,7 @@ function spawnEnemies() {
         enemies.push(newEnemy)
     }
     setTimeout(function() {
-        spawnEnemies()
+        spawnEnemies();
     }, enemySpawnSpeed)
 }
 spawnEnemies()
