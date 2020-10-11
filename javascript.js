@@ -6,7 +6,7 @@ var canvasHeight = 700;
 function setup() {
     createCanvas(canvasWidth, canvasHeight)
     noCursor();
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 5; i++) {
         var newEnemy = new enemy();
         enemies.push(newEnemy)
     }
@@ -30,16 +30,19 @@ function draw() {
         bullets[i].draw()
             // check if a bullet is hitting an enemy
         for (let j = 0; j < enemies.length; j++) {
-            enemies[j].checkIfHit(bullets[i])
             if (enemies[j].checkIfHit(bullets[i])) {
-                enemies.splice(j, 1)
+                if (enemies[j].dead()) {
+                    enemies.splice(j, 1)
+                }
+                bullets.splice(i, 1)
+                break
             }
         }
     }
 
     // cursor
     fill('rgba(0,0,0,0.7)');
-    circle(mouseX, mouseY, 10)
+    circle(mouseX, mouseY, 5)
 }
 
 //  game logic
@@ -105,6 +108,17 @@ class bullet {
     }
 }
 
+class debri {
+    constructor() {
+        this.diameter = Math.floor(Math.random() * 5 + 5)
+        this.colour = `rgba(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},0.8)`
+    }
+    draw() {
+        fill(this.colour)
+        circle(50, 50, this.diameter)
+    }
+}
+
 class enemy {
     constructor() {
         this.position = {
@@ -141,10 +155,15 @@ class enemy {
         var distance = dist(bullet.position.x, bullet.position.y, this.position.x, this.position.y)
         var diameters = bullet.diameter / 2 + this.diameter / 2
         if (distance < diameters) {
-            // this.diameter -= this.diameter / 2;
-            // if (this.diameter < 40) {
-            //     return true
-            // }
+            this.diameter -= this.diameter / 2;
+            if (this.diameter < 50) {
+                return true
+            }
+
+        }
+    }
+    dead() {
+        if (this.diameter < 20) {
             return true
         }
     }
