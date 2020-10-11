@@ -6,7 +6,7 @@ var canvasHeight = 700;
 function setup() {
     createCanvas(canvasWidth, canvasHeight)
     noCursor();
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 50; i++) {
         var newEnemy = new enemy();
         enemies.push(newEnemy)
     }
@@ -26,9 +26,17 @@ function draw() {
         }
     }
     // draw all the bullets when shot.
-    for (b of bullets) {
-        b.draw()
+    for (let i = 0; i < bullets.length; i++) {
+        bullets[i].draw()
+            // check if a bullet is hitting an enemy
+        for (let j = 0; j < enemies.length; j++) {
+            enemies[j].checkIfHit(bullets[i])
+            if (enemies[j].checkIfHit(bullets[i])) {
+                enemies.splice(j, 1)
+            }
+        }
     }
+
     // cursor
     fill('rgba(0,0,0,0.7)');
     circle(mouseX, mouseY, 10)
@@ -128,6 +136,17 @@ class enemy {
         var distance = dist(playerOne.position.x, playerOne.position.y, this.position.x, this.position.y)
         var diameters = playerOne.diameter / 2 + this.diameter / 2
         return (distance < diameters)
+    }
+    checkIfHit(bullet) {
+        var distance = dist(bullet.position.x, bullet.position.y, this.position.x, this.position.y)
+        var diameters = bullet.diameter / 2 + this.diameter / 2
+        if (distance < diameters) {
+            // this.diameter -= this.diameter / 2;
+            // if (this.diameter < 40) {
+            //     return true
+            // }
+            return true
+        }
     }
 }
 
