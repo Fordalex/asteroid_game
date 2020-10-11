@@ -6,15 +6,18 @@ var canvasHeight = 700;
 function setup() {
     createCanvas(canvasWidth, canvasHeight)
     noCursor();
-    for (let i = 0; i < 5; i++) {
-        var newEnemy = new enemy();
-        enemies.push(newEnemy)
-    }
 }
 
 // draw loop
 
 function draw() {
+    // check players score and increase the difficulty
+    if (score % 10 == 0) {
+        if (enemySpawnSpeed > 300) {
+            enemySpawnSpeed -= 50;
+        }
+    }
+
     background(150);
     showPlayersStats();
     playerOne.draw()
@@ -49,6 +52,8 @@ function draw() {
 
 var enemies = [];
 var bullets = [];
+var score = 0;
+var money = 0;
 
 class player {
     constructor() {
@@ -61,6 +66,7 @@ class player {
         this.life = 100;
     }
     draw() {
+        this.colour = 'rgba(255,255,255, 0.9)';
         fill(this.colour)
         circle(this.position.x, this.position.y, this.diameter)
     }
@@ -71,6 +77,8 @@ class player {
         } else {
             endGame()
         }
+        fill(this.colour)
+        circle(this.position.x, this.position.y, this.diameter)
     }
     intersects(e) {
         var distance = dist(e.position.x, e.position.y, this.position.x, this.position.y)
@@ -83,7 +91,7 @@ var playerOne = new player();
 
 class bullet {
     constructor() {
-        this.speed = 7;
+        this.speed = 15;
         this.position = {
             x: playerOne.position.x,
             y: playerOne.position.y,
@@ -123,7 +131,7 @@ class enemy {
     constructor() {
         this.position = {
             'x': Math.floor(Math.random() * canvasWidth),
-            'y': 0,
+            'y': Math.floor(Math.random() * canvasHeight),
         }
         this.diameter = Math.floor(Math.random() * 50 + 10);
         this.colour = 'rgba(255,0,0, 0.5)';
@@ -164,6 +172,8 @@ class enemy {
     }
     dead() {
         if (this.diameter < 20) {
+            money += 10;
+            score += 1;
             return true
         }
     }
@@ -174,9 +184,12 @@ function showPlayersStats() {
     textSize(20);
     fill(0, 0, 0);
     text(`Life: ${playerOne.life}`, 10, 30);
+    text(`Score: ${score}`, 100, 30);
+    text(`Money: ${money}`, 200, 30);
 }
 
 function endGame() {
+    $('#playersScore').html(score)
     $('#endGameModal').modal('show');
 }
 
@@ -190,3 +203,31 @@ function mouseClicked() {
     newBullet.velocity.y = Math.cos(angle)
     bullets.push(newBullet)
 }
+
+var enemySpawnSpeed = 500;
+var enemySpawnAmount = 1;
+
+function spawnEnemies() {
+    for (let i = 0; i < enemySpawnAmount; i++) {
+        var newEnemy = new enemy();
+        var spawn = Math.floor(Math.random() * 5)
+        if (spawn > 3) {
+            newEnemy.position.x = Math.floor(Math.random() * canvasWidth)
+            newEnemy.position.y = 0
+        } else if (spawn > 2) {
+            newEnemy.position.x = 0
+            newEnemy.position.y = Math.floor(Math.random() * canvasHeight)
+        } else if (spawn > 1) {
+            newEnemy.position.x = Math.floor(Math.random() * canvasWidth)
+            newEnemy.position.y = canvasHeight
+        } else {
+            newEnemy.position.x = canvasWidth
+            newEnemy.position.y = Math.floor(Math.random() * canvasHeight)
+        }
+        enemies.push(newEnemy)
+    }
+    setTimeout(function() {
+        spawnEnemies()
+    }, enemySpawnSpeed)
+}
+spawnEnemies()
