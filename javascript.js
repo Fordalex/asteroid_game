@@ -16,16 +16,17 @@ $(document).ready(function() {
     `);
 });
 
-var bulletSpeedCost = 50;
+var bulletSpeedCost = 100;
 
 var shopItems = `
-<h3>Item Shop</h3>
-<small>Purchase Items using your keyboard</small>
-<p><img src="https://img.icons8.com/color/40/000000/1-key.png"/> Faster Bullets, <img src="https://img.icons8.com/office/25/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
-<p class="mt-3"><img src="https://img.icons8.com/color/40/000000/2-key.png"/> Small medipack  <img src="https://img.icons8.com/office/25/000000/cheap-2.png"/> 500</p>
-<p><img src="https://img.icons8.com/color/40/000000/3-key.png"/> Bigger Bullets, <img src="https://img.icons8.com/office/25/000000/cheap-2.png"/> 500</p>
-<p><img src="https://img.icons8.com/color/40/000000/4-key.png"/> 50 health, <img src="https://img.icons8.com/office/25/000000/cheap-2.png"/> 500</p>
-<p><img src="https://img.icons8.com/color/40/000000/5-key.png"/> 30 Secs mini gun, <img src="https://img.icons8.com/office/25/000000/cheap-2.png"/> 500</p>
+    <h3>Item Shop</h3>
+    <small>Purchase Items using your keyboard</small>
+    <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
+    <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Small medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
+    <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
+    <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> Fule <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
+    <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> 30 Secs mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
+    <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
 `;
 
 // canvas setup
@@ -69,8 +70,8 @@ function draw() {
                         var newDebri = new debri();
                         newDebri.position.y = enemies[j].position.y;
                         newDebri.position.x = enemies[j].position.x;
-                        newDebri.velocity.x = theBullet.velocity.x * 3 + Math.random() * 2;
-                        newDebri.velocity.y = theBullet.velocity.y * 3 + Math.random() * 2;
+                        newDebri.velocity.x = theBullet.velocity.x * 2 + Math.random() * 2;
+                        newDebri.velocity.y = theBullet.velocity.y * 2 + Math.random() * 2;
                         newDebri.colour = enemies[j].colour;
                         debris.push(newDebri)
                         velocity += 4
@@ -104,7 +105,8 @@ var bullets = [];
 var debris = [];
 var score = 0;
 var money = 0;
-var bulletSpeed = 5;
+var bulletSpeed = 1;
+var bulletSize = 5;
 
 class player {
     constructor() {
@@ -143,20 +145,36 @@ class player {
         return (distance < diameters)
     }
     moveUp() {
-        this.velocity.y -= 1;
+        this.velocity.y -= 0.2;
     }
     moveDown() {
-        this.velocity.y += 1;
+        this.velocity.y += 0.2;
     }
     moveLeft() {
-        this.velocity.x -= 1;
+        this.velocity.x -= 0.2;
     }
     moveRight() {
-        this.velocity.x += 1;
+        this.velocity.x += 0.2;
     }
 }
 
 var playerOne = new player();
+
+// move the player
+window.addEventListener('keydown', function(e) {
+    if (e.key == 'w') {
+        playerOne.moveUp()
+    }
+    if (e.key == 's') {
+        playerOne.moveDown()
+    }
+    if (e.key == 'd') {
+        playerOne.moveRight()
+    }
+    if (e.key == 'a') {
+        playerOne.moveLeft()
+    }
+})
 
 class bullet {
     constructor() {
@@ -169,7 +187,7 @@ class bullet {
             x: 0,
             y: 0,
         }
-        this.diameter = 5;
+        this.diameter = bulletSize;
         this.colour = 'rgba(255,255,255,0.9)';
     }
     draw() {
@@ -265,6 +283,11 @@ function showPlayersStats() {
     text(`Enemy Delay: ${enemySpawnSpeed}`, 10, 690);
     text(`Enemy Speed: ${enemySpeed}`, 150, 690);
     text(`Bullet Speed: ${bulletSpeed}`, 290, 690);
+    text(`Bullet Size: ${bulletSize}`, 420, 690);
+    textSize(10);
+    text('Velocity', 640, 660);
+    text(`Y:${playerOne.velocity.y}`, 640, 675);
+    text(`X:${playerOne.velocity.x}`, 640, 690);
     // text(`Time:`, 390, 30);
 }
 
@@ -321,6 +344,7 @@ function spawnEnemies() {
     }
     setTimeout(function() {
         spawnEnemies();
+        updateShop();
     }, enemySpawnSpeed)
 }
 spawnEnemies()
@@ -328,19 +352,40 @@ spawnEnemies()
 // Purchasing items with the keyboard
 window.addEventListener('keypress', function(e) {
     if (e.key == 1) {
-        if (money >= 50) {
-            money -= 50;
+        if (money >= bulletSpeedCost) {
+            money -= bulletSpeedCost;
             bulletSpeedCost += bulletSpeedCost;
             bulletSpeed += 2;
         }
     }
     if (e.key == 2) {
-        console.log('one')
+
     }
     if (e.key == 3) {
-        console.log('one')
+
     }
     if (e.key == 4) {
-        console.log('one')
+
+    }
+    if (e.key == 5) {
+
+    }
+    if (e.key == 6) {
+
     }
 });
+
+// update the shop
+function updateShop() {
+    shopItems = `
+    <h3>Item Shop</h3>
+    <small>Purchase Items using your keyboard</small>
+    <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
+    <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Small medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
+    <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
+    <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> Fule <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
+    <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> 30 Secs mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
+    <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
+`;
+    $('#itemShopcontainer').html(shopItems)
+}
