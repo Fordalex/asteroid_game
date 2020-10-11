@@ -13,7 +13,7 @@ function setup() {
 function draw() {
     // check players score and increase the difficulty
 
-    background(20);
+    background(15);
     showPlayersStats();
     playerOne.draw()
         // check if an object is colliding with the player.
@@ -39,8 +39,8 @@ function draw() {
                         var newDebri = new debri();
                         newDebri.position.y = enemies[j].position.y;
                         newDebri.position.x = enemies[j].position.x;
-                        newDebri.velocity.x = theBullet.velocity.x * 4 + Math.random() * 3;
-                        newDebri.velocity.y = theBullet.velocity.y * 4 + Math.random() * 3;
+                        newDebri.velocity.x = theBullet.velocity.x * 3 + Math.random() * 2;
+                        newDebri.velocity.y = theBullet.velocity.y * 3 + Math.random() * 2;
                         newDebri.colour = enemies[j].colour;
                         debris.push(newDebri)
                         velocity += 4
@@ -59,6 +59,12 @@ function draw() {
     // cursor
     fill('rgba(255,255,255,0.9)');
     circle(mouseX, mouseY, 5)
+    if (bullets.length > 50) {
+        bullets.shift()
+    }
+    if (debris.length > 50) {
+        debris.shift()
+    }
 }
 
 //  game logic
@@ -68,6 +74,7 @@ var bullets = [];
 var debris = [];
 var score = 0;
 var money = 0;
+var bulletSpeed = 8;
 
 class player {
     constructor() {
@@ -75,12 +82,18 @@ class player {
             'x': canvasWidth / 2,
             'y': canvasHeight / 2,
         }
+        this.velocity = {
+            x: 0,
+            y: 0,
+        }
         this.diameter = 50;
         this.colour = 'rgba(255,255,255, 0.9)';
         this.life = 100;
     }
     draw() {
         this.colour = 'rgba(255,255,255, 0.9)';
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
         fill(this.colour)
         circle(this.position.x, this.position.y, this.diameter)
     }
@@ -99,13 +112,25 @@ class player {
         var diameters = e.diameter / 2 + this.diameter / 2
         return (distance < diameters)
     }
+    moveUp() {
+        this.velocity.y -= 1;
+    }
+    moveDown() {
+        this.velocity.y += 1;
+    }
+    moveLeft() {
+        this.velocity.x -= 1;
+    }
+    moveRight() {
+        this.velocity.x += 1;
+    }
 }
 
 var playerOne = new player();
 
 class bullet {
     constructor() {
-        this.speed = 15;
+        this.speed = bulletSpeed;
         this.position = {
             x: playerOne.position.x,
             y: playerOne.position.y,
@@ -160,8 +185,12 @@ class enemy {
             'x': Math.floor(Math.random() * canvasWidth),
             'y': Math.floor(Math.random() * canvasHeight),
         }
+        this.velocity = {
+            x: 0,
+            y: 0,
+        }
         this.diameter = Math.floor(Math.random() * 50 + 10);
-        this.colour = `rgba(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},0.8)`;
+        this.colour = `rgba(${Math.floor(Math.random() * 255) + 40},${Math.floor(Math.random() * 255) + 40},${Math.floor(Math.random() * 255) + 40},0.8)`;
         this.speed = 0.5;
     }
     draw() {
@@ -170,16 +199,8 @@ class enemy {
         this.movePosition()
     }
     movePosition() {
-        if (playerOne.position.y > this.position.y) {
-            this.position.y += this.speed;
-        } else {
-            this.position.y -= this.speed;
-        }
-        if (playerOne.position.x > this.position.x) {
-            this.position.x += this.speed;
-        } else {
-            this.position.x -= this.speed;
-        }
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
     }
     intersects() {
         var distance = dist(playerOne.position.x, playerOne.position.y, this.position.x, this.position.y)
@@ -204,13 +225,16 @@ class enemy {
     }
 }
 
-
 function showPlayersStats() {
-    textSize(20);
+    textSize(15);
     fill(200, 200, 200);
-    text(`Life: ${playerOne.life}`, 10, 30);
-    text(`Score: ${score}`, 110, 30);
-    text(`Money: ${money}`, 210, 30);
+    text(`Life: ${playerOne.life}`, 10, 20);
+    text(`Score: ${score}`, 90, 20);
+    text(`Money: ${money}`, 580, 20);
+    textSize(15);
+    text(`Enemy Delay: ${enemySpawnSpeed}`, 10, 690);
+    text(`Enemy Speed: ${enemySpeed}`, 150, 690);
+    text(`Bullet Speed: ${bulletSpeed}`, 290, 690);
     // text(`Time:`, 390, 30);
 }
 
@@ -230,14 +254,14 @@ function mouseClicked() {
     bullets.push(newBullet)
 }
 
-var enemySpawnSpeed = 700;
+var enemySpawnSpeed = 1000;
 var enemySpawnAmount = 1;
+var enemySpeed = 2;
 
 function spawnEnemies() {
     if (enemySpawnSpeed > 300) {
         enemySpawnSpeed -= 1;
     }
-
 
     for (let i = 0; i < enemySpawnAmount; i++) {
         var newEnemy = new enemy();
@@ -255,6 +279,12 @@ function spawnEnemies() {
             newEnemy.position.x = canvasWidth
             newEnemy.position.y = Math.floor(Math.random() * canvasHeight)
         }
+        const angle = Math.atan2(
+            playerOne.position.x - newEnemy.position.x,
+            playerOne.position.y - newEnemy.position.y,
+        )
+        newEnemy.velocity.x = Math.sin(angle) / enemySpeed;
+        newEnemy.velocity.y = Math.cos(angle) / enemySpeed;
         enemies.push(newEnemy)
     }
     setTimeout(function() {
@@ -262,3 +292,9 @@ function spawnEnemies() {
     }, enemySpawnSpeed)
 }
 spawnEnemies()
+
+$(document).ready(function() {
+    $('#defaultCanvas0').parent().prepend('<div></div>')
+    $('#defaultCanvas0').parent().addClass('d-flex justify-content-between pt-2')
+    $('#defaultCanvas0').parent().append('<div></div>')
+});
