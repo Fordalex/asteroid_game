@@ -1,3 +1,33 @@
+// style the page on load.
+$(document).ready(function() {
+    $('#defaultCanvas0').parent().prepend(`
+    <div class="container-fluid" id="itemShopcontainer">
+        ${shopItems}
+    </div>
+    `);
+    $('#defaultCanvas0').parent().addClass('d-flex justify-content-between pt-2')
+    $('#defaultCanvas0').parent().append(`
+    <div class="container-fluid">
+        <p>Database with high scores</p>
+        <ul>
+            <li>Name: blur blur. Score: 500</li>
+        </ul>
+    </div>
+    `);
+});
+
+var bulletSpeedCost = 50;
+
+var shopItems = `
+<h3>Item Shop</h3>
+<small>Purchase Items using your keyboard</small>
+<p><img src="https://img.icons8.com/color/40/000000/1-key.png"/> Faster Bullets, <img src="https://img.icons8.com/office/25/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
+<p class="mt-3"><img src="https://img.icons8.com/color/40/000000/2-key.png"/> Small medipack  <img src="https://img.icons8.com/office/25/000000/cheap-2.png"/> 500</p>
+<p><img src="https://img.icons8.com/color/40/000000/3-key.png"/> Bigger Bullets, <img src="https://img.icons8.com/office/25/000000/cheap-2.png"/> 500</p>
+<p><img src="https://img.icons8.com/color/40/000000/4-key.png"/> 50 health, <img src="https://img.icons8.com/office/25/000000/cheap-2.png"/> 500</p>
+<p><img src="https://img.icons8.com/color/40/000000/5-key.png"/> 30 Secs mini gun, <img src="https://img.icons8.com/office/25/000000/cheap-2.png"/> 500</p>
+`;
+
 // canvas setup
 
 var canvasWidth = 700;
@@ -74,7 +104,7 @@ var bullets = [];
 var debris = [];
 var score = 0;
 var money = 0;
-var bulletSpeed = 8;
+var bulletSpeed = 5;
 
 class player {
     constructor() {
@@ -254,6 +284,8 @@ function mouseClicked() {
     bullets.push(newBullet)
 }
 
+//  spawn the enemies
+
 var enemySpawnSpeed = 1000;
 var enemySpawnAmount = 1;
 var enemySpeed = 2;
@@ -293,8 +325,22 @@ function spawnEnemies() {
 }
 spawnEnemies()
 
-$(document).ready(function() {
-    $('#defaultCanvas0').parent().prepend('<div></div>')
-    $('#defaultCanvas0').parent().addClass('d-flex justify-content-between pt-2')
-    $('#defaultCanvas0').parent().append('<div></div>')
+// Purchasing items with the keyboard
+window.addEventListener('keypress', function(e) {
+    if (e.key == 1) {
+        if (money >= 50) {
+            money -= 50;
+            bulletSpeedCost += bulletSpeedCost;
+            bulletSpeed += 2;
+        }
+    }
+    if (e.key == 2) {
+        console.log('one')
+    }
+    if (e.key == 3) {
+        console.log('one')
+    }
+    if (e.key == 4) {
+        console.log('one')
+    }
 });

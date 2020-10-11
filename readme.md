@@ -6,6 +6,11 @@
 
 need to remove the bullets when they go outside the canvas area.
 Need to stop the enemies from traveling past the player.
+15 should be max bullet speed.
+
+## Features to implement
+
+I'm going to change this into a flask app so that high scores can be saved.
 
 ### Acknowledgements
 
