@@ -249,6 +249,8 @@ class bullet {
     draw() {
         fill(this.colour)
         circle(this.position.x, this.position.y, this.diameter)
+        circle(this.position.x - this.velocity.x * 5, this.position.y - this.velocity.y * 5, this.diameter / 1.5)
+        circle(this.position.x - this.velocity.x * 10, this.position.y - this.velocity.y * 10, this.diameter / 2)
         this.update()
     }
     update() {
@@ -261,7 +263,7 @@ class bullet {
 
 class debri {
     constructor() {
-        this.diameter = 7;
+        this.diameter = Math.floor(Math.random() * 8);
         this.colour = 0;
         this.position = {
             x: 0,
@@ -319,10 +321,11 @@ class enemy {
             if (this.diameter < 50) {
                 return true
             }
-
         }
     }
     dead() {
+        fill('#fffff')
+        circle(this.position.x, this.position.y, 50)
         if (this.diameter < 20) {
             return true
         }
@@ -476,7 +479,7 @@ window.addEventListener('keypress', function(e) {
             miniGunActivated = true;
             money -= miniGunCost;
             miniGunCost += miniGunCost;
-            miniGunTimer += 1500;
+            miniGunTimer += 750;
         }
     }
     if (e.key == 6) {
@@ -509,7 +512,7 @@ function updateShop() {
         <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${medipackCost}</p>
         <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSizeCost}</p>
         <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> 200 Fule <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${fuleCost}</p>
-        <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> 30 Secs mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${miniGunCost}</p>
+        <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> Mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${miniGunCost}</p>
         <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${moneyMultiplierCost}</p>
         <hr>
         <h3>Controls</h3>    
