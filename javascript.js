@@ -1,9 +1,7 @@
 // style the page on load.
 $(document).ready(function() {
     $('#defaultCanvas0').parent().prepend(`
-    <div class="container-fluid" id="itemShopcontainer">
-        ${shopItems}
-    </div>
+    <div class="container-fluid" id="itemShopcontainer"></div>
     `);
     $('#defaultCanvas0').parent().addClass('d-flex justify-content-between pt-2')
     $('#defaultCanvas0').parent().append(`
@@ -14,20 +12,15 @@ $(document).ready(function() {
         </ul>
     </div>
     `);
+    updateShop();
 });
 
-var bulletSpeedCost = 100;
-
-var shopItems = `
-    <h3>Item Shop</h3>
-    <small>Purchase Items using your keyboard</small>
-    <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
-    <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Small medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
-    <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
-    <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> Fule <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
-    <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> 30 Secs mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
-    <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
-`;
+var bulletSpeedCost = 10;
+var medipackCost = 10;
+var bulletSizeCost = 10;
+var fuleCost = 10;
+var miniGunCost = 10;
+var moneyMultiplierCost = 10;
 
 // canvas setup
 
@@ -49,6 +42,12 @@ function draw() {
     playerOne.draw()
         // check if an object is colliding with the player.
     for (e of enemies) {
+        const angle = Math.atan2(
+            playerOne.position.x - e.position.x,
+            playerOne.position.y - e.position.y,
+        )
+        e.velocity.x = Math.sin(angle) / enemySpeed;
+        e.velocity.y = Math.cos(angle) / enemySpeed;
         e.draw()
         if (playerOne.intersects(e)) {
             playerOne.hit()
@@ -63,7 +62,7 @@ function draw() {
             if (enemies[j].checkIfHit(theBullet)) {
 
                 if (enemies[j].dead()) {
-                    money += 10;
+                    money += 5 * moneyMultiplier;
                     score += 1;
                     var velocity = 0;
                     for (let i = 0; i < 15; i++) {
@@ -96,6 +95,12 @@ function draw() {
     if (debris.length > 50) {
         debris.shift()
     }
+    // stop the player if they have ran out of fule while moving
+    if (fule == 0) {
+        playerOne.velocity.x = 0;
+        playerOne.velocity.y = 0;
+    }
+    miniGunTimer++;
 }
 
 //  game logic
@@ -104,9 +109,13 @@ var enemies = [];
 var bullets = [];
 var debris = [];
 var score = 0;
-var money = 0;
+var money = 99990;
 var bulletSpeed = 1;
 var bulletSize = 5;
+var fule = 50;
+var moneyMultiplier = 1;
+var miniGunTimer = 1500;
+var miniGunActivated = false;
 
 class player {
     constructor() {
@@ -162,17 +171,20 @@ var playerOne = new player();
 
 // move the player
 window.addEventListener('keydown', function(e) {
-    if (e.key == 'w') {
-        playerOne.moveUp()
-    }
-    if (e.key == 's') {
-        playerOne.moveDown()
-    }
-    if (e.key == 'd') {
-        playerOne.moveRight()
-    }
-    if (e.key == 'a') {
-        playerOne.moveLeft()
+    if (fule > 0) {
+        if (e.key == 'w') {
+            playerOne.moveUp()
+        }
+        if (e.key == 's') {
+            playerOne.moveDown()
+        }
+        if (e.key == 'd') {
+            playerOne.moveRight()
+        }
+        if (e.key == 'a') {
+            playerOne.moveLeft()
+        }
+        fule--
     }
 })
 
@@ -278,10 +290,13 @@ function showPlayersStats() {
     fill(200, 200, 200);
     text(`Life: ${playerOne.life}`, 10, 20);
     text(`Score: ${score}`, 90, 20);
+    text(`Fule: ${fule}`, 200, 20);
+    text(`Money Multiplyer: ${moneyMultiplier}`, 300, 20);
     text(`Money: ${money}`, 580, 20);
+
     textSize(15);
     text(`Enemy Delay: ${enemySpawnSpeed}`, 10, 690);
-    text(`Enemy Speed: ${enemySpeed}`, 150, 690);
+    text(`Enemy Speed: ${enemySpeed.toFixed(2)}`, 150, 690);
     text(`Bullet Speed: ${bulletSpeed}`, 290, 690);
     text(`Bullet Size: ${bulletSize}`, 420, 690);
     textSize(10);
@@ -296,6 +311,22 @@ function endGame() {
     $('#endGameModal').modal('show');
 }
 
+
+function mouseMoved() {
+    if (miniGunActivated && miniGunTimer < 1500) {
+        var newBullet = new bullet();
+        const angle = Math.atan2(
+            mouseX - playerOne.position.x,
+            mouseY - playerOne.position.y,
+        )
+        newBullet.velocity.x = Math.sin(angle)
+        newBullet.velocity.y = Math.cos(angle)
+        bullets.push(newBullet)
+    } else {
+        miniGunActivated = false;
+    }
+}
+
 function mouseClicked() {
     var newBullet = new bullet();
     const angle = Math.atan2(
@@ -307,15 +338,24 @@ function mouseClicked() {
     bullets.push(newBullet)
 }
 
+
+
 //  spawn the enemies
 
 var enemySpawnSpeed = 1000;
 var enemySpawnAmount = 1;
 var enemySpeed = 2;
+var gameDifficulty = 1;
 
 function spawnEnemies() {
-    if (enemySpawnSpeed > 300) {
-        enemySpawnSpeed -= 1;
+    if (enemySpawnSpeed > 200) {
+        enemySpawnSpeed -= gameDifficulty;
+        if (enemySpeed > 0.15) {
+            enemySpeed -= gameDifficulty / 100;
+        } else {
+            enemySpeed = 0.15;
+        }
+
     }
 
     for (let i = 0; i < enemySpawnAmount; i++) {
@@ -344,7 +384,6 @@ function spawnEnemies() {
     }
     setTimeout(function() {
         spawnEnemies();
-        updateShop();
     }, enemySpawnSpeed)
 }
 spawnEnemies()
@@ -362,17 +401,36 @@ window.addEventListener('keypress', function(e) {
 
     }
     if (e.key == 3) {
-
+        if (money >= bulletSizeCost) {
+            money -= bulletSizeCost
+            bulletSizeCost += bulletSizeCost;
+            bulletSize++;
+        }
     }
     if (e.key == 4) {
-
+        if (money >= fuleCost) {
+            money -= fuleCost
+            fuleCost += fuleCost;
+            fule += 200;
+        }
     }
     if (e.key == 5) {
-
+        if (money >= miniGunCost) {
+            miniGunActivated = true;
+            money -= miniGunCost;
+            miniGunCost += miniGunCost;
+            miniGunTimer = 0;
+        }
     }
     if (e.key == 6) {
+        if (money > moneyMultiplierCost) {
+            money -= moneyMultiplierCost;
+            moneyMultiplierCost += moneyMultiplierCost;
+            moneyMultiplier += 1;
 
+        }
     }
+    updateShop();
 });
 
 // update the shop
@@ -381,11 +439,11 @@ function updateShop() {
     <h3>Item Shop</h3>
     <small>Purchase Items using your keyboard</small>
     <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
-    <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Small medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
-    <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
-    <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> Fule <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
-    <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> 30 Secs mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
-    <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> 500</p>
+    <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${medipackCost}</p>
+    <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSizeCost}</p>
+    <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> 200 Fule <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${fuleCost}</p>
+    <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> 30 Secs mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${miniGunCost}</p>
+    <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${moneyMultiplierCost}</p>
 `;
     $('#itemShopcontainer').html(shopItems)
 }
