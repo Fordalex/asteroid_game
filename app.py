@@ -1,5 +1,6 @@
 import os
-import env
+if path.exists("env.py"):
+    import env
 from flask import Flask, render_template
 
 app = Flask(__name__)
