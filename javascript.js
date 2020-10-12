@@ -1,9 +1,9 @@
 // style the page on load.
 $(document).ready(function() {
+    $('#defaultCanvas0').parent().addClass('d-flex justify-content-between pt-2')
     $('#defaultCanvas0').parent().prepend(`
     <div class="container-fluid" id="itemShopcontainer"></div>
     `);
-    $('#defaultCanvas0').parent().addClass('d-flex justify-content-between pt-2')
     $('#defaultCanvas0').parent().append(`
     <div class="container-fluid">
         <p>Database with high scores</p>
@@ -13,6 +13,30 @@ $(document).ready(function() {
     </div>
     `);
     updateShop();
+    var playersName = localStorage.getItem('playersName');
+    $('#playersNameInput').val(playersName)
+    $('#enterNameModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+});
+
+// get the game difficuly and start the game
+$('#ready').on('click', function() {
+    var difficuly = $('input[name="difficuly"]:checked').val();
+    if (difficuly == 'easy') {
+        gameDifficulty = 1;
+    }
+    if (difficuly == 'medium') {
+        gameDifficulty = 5;
+    }
+    if (difficuly == 'hard') {
+        gameDifficulty = 10;
+    }
+    if (difficuly == 'extream') {
+        gameDifficulty = 20;
+    }
+    localStorage.setItem('playersName', $('#playersNameInput').val())
 });
 
 var bulletSpeedCost = 10;
@@ -24,7 +48,7 @@ var moneyMultiplierCost = 10;
 
 // canvas setup
 
-var gamePaused = false;
+var gamePaused = true;
 var canvasWidth = 700;
 var canvasHeight = 700;
 
@@ -108,6 +132,8 @@ function draw() {
         textSize(30);
         fill(200, 200, 200);
         text('PAUSED', 290, 350);
+        textSize(15);
+        text('Press space to resume', 275, 370);
     }
 }
 
@@ -117,7 +143,7 @@ var enemies = [];
 var bullets = [];
 var debris = [];
 var score = 0;
-var money = 99990;
+var money = 0;
 var bulletSpeed = 1;
 var bulletSize = 5;
 var fule = 50;
@@ -321,7 +347,13 @@ function showPlayersStats() {
 
 function endGame() {
     $('#playersScore').html(score)
-    $('#endGameModal').modal('show');
+    var playersName = localStorage.getItem('playersName');
+    $('#playersName').html(playersName)
+    $('#endGameModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    gamePaused = true;
 }
 
 
@@ -364,12 +396,11 @@ function spawnEnemies() {
     if (!gamePaused) {
         if (enemySpawnSpeed > 200) {
             enemySpawnSpeed -= gameDifficulty;
-            if (enemySpeed > 0.15) {
-                enemySpeed -= gameDifficulty / 1000;
-            } else {
-                enemySpeed = 0.15;
-            }
-
+        }
+        if (enemySpeed > 0.3) {
+            enemySpeed -= gameDifficulty / 1000;
+        } else {
+            enemySpeed = 0.3;
         }
 
         for (let i = 0; i < enemySpawnAmount; i++) {
@@ -464,7 +495,7 @@ window.addEventListener('keypress', function(e) {
 function updateShop() {
     shopItems = `
     <h3>Item Shop</h3>
-    <small>Purchase Items using your keyboard</small>
+    <p>Purchase Items using your keyboard</p>
     <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
     <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${medipackCost}</p>
     <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSizeCost}</p>

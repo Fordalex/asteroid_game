@@ -5,9 +5,8 @@
 ## bugs
 
 need to remove the bullets when they go outside the canvas area.
-Need to stop the enemies from traveling past the player.
-15 should be max bullet speed.
-
+bullets will shoot when the game is pause.
+Need to stop the player from being able to leave the play area.
 
 ## Features to implement
 
