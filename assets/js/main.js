@@ -38,6 +38,7 @@ $('#ready').on('click', function() {
         gameDifficulty = 20;
     }
     localStorage.setItem('playersName', $('#playersNameInput').val())
+    playersColour = $('#playersColour').val();
 });
 
 var bulletSpeedCost = 10;
@@ -136,6 +137,7 @@ function draw() {
         textSize(15);
         text('Press space to resume', 275, 370);
     }
+    console.log(playerOne.colour)
 }
 
 //  game logic
@@ -143,6 +145,7 @@ function draw() {
 var enemies = [];
 var bullets = [];
 var debris = [];
+
 var score = 0;
 var money = 0;
 var bulletSpeed = 1;
@@ -151,8 +154,9 @@ var fule = 50;
 var moneyMultiplier = 1;
 var miniGunTimer = 0;
 var miniGunActivated = false;
+var playersColour = '';
 
-class player {
+class Player {
     constructor() {
         this.position = {
             'x': canvasWidth / 2,
@@ -163,20 +167,21 @@ class player {
             y: 0,
         }
         this.diameter = 50;
-        this.colour = 'rgba(255,255,255, 0.9)';
+        this.colour = playersColour;
         this.life = 100;
     }
     draw() {
-        this.colour = 'rgba(255,255,255, 0.9)';
+        this.colour = playersColour;
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
-        fill(this.colour)
+        var colour = color(this.colour)
+        fill(colour)
         circle(this.position.x, this.position.y, this.diameter)
     }
     hit() {
         if (this.life > 0) {
             this.life -= 1;
-            this.colour = 'rgba(255,0,0,0.9)'
+            this.colour = 'rgb(255,0,0)'
         } else {
             endGame()
         }
@@ -202,7 +207,7 @@ class player {
     }
 }
 
-var playerOne = new player();
+var playerOne = new Player();
 
 // move the player
 window.addEventListener('keydown', function(e) {
@@ -239,7 +244,7 @@ class bullet {
             y: 0,
         }
         this.diameter = bulletSize;
-        this.colour = 'rgba(255,255,255,0.9)';
+        this.colour = playersColour;
     }
     draw() {
         fill(this.colour)
