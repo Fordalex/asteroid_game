@@ -21,9 +21,10 @@ $(document).ready(function() {
     });
 });
 
+var difficuly = '';
 // get the game difficuly and start the game
 $('#ready').on('click', function() {
-    var difficuly = $('input[name="difficuly"]:checked').val();
+    difficuly = $('input[name="difficuly"]:checked').val();
     if (difficuly == 'easy') {
         gameDifficulty = 1;
     }
@@ -335,6 +336,7 @@ function showPlayersStats() {
     text(`Bullet Size: ${bulletSize}`, 580, 40);
     text(`MiniGun: ${miniGunTimer}`, 580, 60);
 
+    text(`Difficulty: ${difficuly.toUpperCase()}`, 10, 650);
     text(`Enemy Delay: ${enemySpawnSpeed}`, 10, 670);
     text(`Enemy Speed: ${enemySpeed.toFixed(2)}`, 10, 690);
 
@@ -494,14 +496,48 @@ window.addEventListener('keypress', function(e) {
 // update the shop
 function updateShop() {
     shopItems = `
-    <h3>Item Shop</h3>
-    <p>Purchase Items using your keyboard</p>
-    <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
-    <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${medipackCost}</p>
-    <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSizeCost}</p>
-    <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> 200 Fule <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${fuleCost}</p>
-    <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> 30 Secs mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${miniGunCost}</p>
-    <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${moneyMultiplierCost}</p>
-`;
+    <div class="item-shop-container">
+        <h3>Item Shop</h3>
+        <p class="m-0">Purchase Items using your keyboard.</p>
+        <p>Feel free to pause the game and purchase your upgrades.</p>
+        <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
+        <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${medipackCost}</p>
+        <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSizeCost}</p>
+        <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> 200 Fule <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${fuleCost}</p>
+        <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> 30 Secs mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${miniGunCost}</p>
+        <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${moneyMultiplierCost}</p>
+        <hr>
+        <h3>Controls</h3>    
+        <p class="m-0 mb-1">Moving will use your fule supply!</p>
+        <div class="d-flex justify-content-between">
+            <div>
+                <p class="m-0 ml-2">Up</p>
+                <img src="https://img.icons8.com/color/45/000000/w-key.png"/>
+            </div>
+            <div>
+                <p class="m-0 ml-2">Left</p>
+                <img src="https://img.icons8.com/color/45/000000/a-key.png"/>
+            </div>
+            <div>
+                <p class="m-0 ml-2">Down</p>
+                <img src="https://img.icons8.com/color/45/000000/s-key.png"/>
+            </div>
+            <div>
+                <p class="m-0 ml-2">Right</p>
+                <img src="https://img.icons8.com/color/45/000000/d-key.png"/>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div>
+                <p class="m-0 ml-2">Pause</p>
+                <img src="https://img.icons8.com/color/48/000000/space-key.png"/>
+            </div>
+            <div>
+                <p class="m-0 ml-2">Aim & Shoot</p>
+                <img src="https://img.icons8.com/ios-filled/50/000000/mouse-left-click.png"/>
+            </div>
+        </div>
+    </div>
+        `;
     $('#itemShopcontainer').html(shopItems)
 }
