@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Sansita+Swashed:wght@700&display=swap');
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Sansita Swashed', cursive;
+}
+
+p,
+small,
+button,
+a,
+li,
+label {
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.item-shop-container {
+    border: solid grey 1px;
+    border-radius: 2px;
+    background-color: rgb(255, 252, 252);
+    padding: 8px;
+}

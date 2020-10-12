@@ -2,6 +2,13 @@
 
 [Play Game](https://fordalex.github.io/asteroid_game/)
 
+##
+
+Things to do:
+- Add travisCI.
+- Create a home page where more games can be created.
+- Add mastermind project so high scores can be saved.
+
 ## bugs
 
 need to remove the bullets when they go outside the canvas area.
