@@ -19,14 +19,18 @@ label, td {
 
 .navigation-container {
     height: 40px;
-    background-color: greenyellow;
+    background: linear-gradient(greenyellow, rgb(210, 255, 47));
     display: flex;
     align-items: center;
     padding: 0px 10px;
 }
 
 footer {
-    background-color: greenyellow;
+    background: linear-gradient(rgb(219, 255, 213), rgb(255, 255, 255));
+}
+
+.logo-size {
+    width: 45px;
 }
 
 .acknowledgements-list {
