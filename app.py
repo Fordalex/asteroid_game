@@ -12,12 +12,19 @@ app = Flask(__name__)
 app.config["MONGO_URI"] = DBURL
 mongo = PyMongo(app)
 
+@app.route('/')
+def home():
+    return render_template('home.html')
+
+@app.route('/asteroid')
+def asteroid():
+    return render_template('asteroid.html', high_score=mongo.db.asteroid.find())
+
 @app.route('/save_high_score/<name>/<score>/<difficulty>', methods=['POST'])
 def save_high_score(name, score, difficulty):
-    print('data saved')
    
     asteroid = mongo.db.asteroid
-    
+
     high_score = {
         'name': name,
         'score': score,
@@ -26,10 +33,6 @@ def save_high_score(name, score, difficulty):
     asteroid.insert_one(high_score)
     return redirect(url_for('asteroid'))
 
-@app.route('/asteroid')
-def asteroid():
-
-    return render_template('asteroid.html', high_score=mongo.db.asteroid.find())
 
 if __name__ == '__main__':
     app.secret_key = 'mysecret'
