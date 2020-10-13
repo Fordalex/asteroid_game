@@ -48,7 +48,8 @@ label, td {
 }
 
 .card {
-    margin: 0px 10px;
+    margin: 0;
+    width: 100% !important;
 }
 
 
