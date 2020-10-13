@@ -22,7 +22,7 @@ $('#ready').on('click', function() {
     if (difficuly == 'hard') {
         gameDifficulty = 3;
     }
-    if (difficuly == 'extream') {
+    if (difficuly == 'extreme') {
         gameDifficulty = 5;
     }
     localStorage.setItem('playersName', $('#playersNameInput').val())
@@ -129,6 +129,19 @@ function draw() {
         text('PAUSED', 290, 350);
         textSize(15);
         text('Press space to resume', 275, 370);
+    }
+    if (miniGunActivated && miniGunTimer > 0) {
+        var newBullet = new bullet();
+        const angle = Math.atan2(
+            mouseX - playerOne.position.x,
+            mouseY - playerOne.position.y,
+        )
+        newBullet.velocity.x = Math.sin(angle)
+        newBullet.velocity.y = Math.cos(angle)
+        newBullet.speed = 15;
+        bullets.push(newBullet)
+    } else {
+        miniGunActivated = false;
     }
 }
 
@@ -345,21 +358,6 @@ function showPlayersStats() {
     // text(`Time:`, 390, 30);
 }
 
-function mouseMoved() {
-    if (miniGunActivated && miniGunTimer > 0) {
-        var newBullet = new bullet();
-        const angle = Math.atan2(
-            mouseX - playerOne.position.x,
-            mouseY - playerOne.position.y,
-        )
-        newBullet.velocity.x = Math.sin(angle)
-        newBullet.velocity.y = Math.cos(angle)
-        newBullet.speed = 15;
-        bullets.push(newBullet)
-    } else {
-        miniGunActivated = false;
-    }
-}
 
 function mouseClicked() {
     var newBullet = new bullet();

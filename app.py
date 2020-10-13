@@ -28,7 +28,7 @@ def save_high_score(name, score, difficulty):
 
     high_score = {
         'name': name,
-        'score': score,
+        'score': int(score),
         'difficulty': difficulty,
     }
     asteroid.insert_one(high_score)
