@@ -474,6 +474,7 @@ window.addEventListener('keypress', function(e) {
         } else {
             gamePaused = true;
         }
+        e.preventDefault();
     }
     updateShop();
 });
@@ -524,3 +525,4 @@ $('#annoymous').on('click', function() {
         anonymous = true;
     }
 });
+
