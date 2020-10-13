@@ -137,7 +137,6 @@ function draw() {
         textSize(15);
         text('Press space to resume', 275, 370);
     }
-    console.log(playerOne.colour)
 }
 
 //  game logic

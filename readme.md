@@ -1,6 +1,6 @@
 # Asteroid Game
 
-[Play Game](https://fordalex.github.io/asteroid_game/)
+[Play Game](https://fd-games.herokuapp.com/)
 
 ##
 
@@ -22,4 +22,4 @@ Create the debri from small trangles.
 
 ### Acknowledgements
 
-[Inspiration was taken from this tutorial](https://www.youtube.com/watch?v=eI9idPTT0c4&t=24s)
+[Inspiration for the asteroid game was taken from this tutorial](https://www.youtube.com/watch?v=eI9idPTT0c4&t=24s)
