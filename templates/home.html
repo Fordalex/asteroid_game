@@ -5,13 +5,18 @@
 
 <hr>
 
-<div class="row m-0 p-0 px-3">
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src='{{ url_for("static", filename="img/asteroid_gameplay.png") }}'' alt="Card image cap">
+<div class="row m-0 p-0 px-3 mt-5">
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src='{{ url_for("static", filename="img/asteroid_gameplay.png") }}'' alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Asteriod</h5>
           <p class="card-text">A survival game where an endless count of enemies will attack you with increasing difficulty. Use your skills and power-ups to try and get to the top of the leader board!</p>
-          <a href="{{ url_for('asteroid') }}" class="btn btn-dark">Play</a>
+          <small><b>Compatible:</b></small>
+          <div>
+            <img src="https://img.icons8.com/color/36/000000/monitor.png"/>
+            <!-- <img src="https://img.icons8.com/color/28/000000/android.png"/> -->
+            <a href="{{ url_for('asteroid') }}" class="btn btn-dark float-right">Play</a>
+          </div>
         </div>
       </div>
 </div>

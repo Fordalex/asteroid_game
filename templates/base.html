@@ -13,11 +13,59 @@
 
 <body>
 
+    <nav class="navigation-container">
+        <a href="{{ url_for('home') }}">
+            <img src="https://img.icons8.com/material-rounded/24/000000/home.png"/>
+        </a>
+    </nav>
 
     {% block content %}{% endblock %}
       
-
     {% block extra_js %}{% endblock %}
+
+    <footer class="p-3 py-4 mt-5">
+        <div class="row m-0 p-0">
+            <div class="col-12 col-md-4">
+                <h4 class="text-center mt-4 mb-3">Social Media</h4>
+                <div class="d-flex justify-content-center">
+                    <a href="https://www.facebook.com/Fords-development-102522668044543/" class="m-0" target="_blank">
+                        <i class="fab fa-facebook-square clickable mr-3" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://www.instagram.com/fordsdevelopment/?hl=en" class="m-0" target="_blank">
+                        <i class="fab fa-instagram clickable mr-3" aria-hidden="true"></i>
+                    </a>
+                    <a href="mailto:fordsdevelopment@gmail.com" class="m-0" target="_blank">
+                        <i class="far fa-envelope clickable mr-3" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://github.com/Fordalex" class="m-0" target="_blank">
+                        <i class="fab fa-github clickable mr-3" aria-hidden="true"></i>
+                    </a>
+
+                </div>
+            </div>
+            <div class="col-12 col-md-4 mt-4">
+                <h4 class="text-center mt-1 mb-3">Acknowledgements</h4>
+                <small>This web application would of never been created without the following plateforms.</small>
+                <ul class="acknowledgements-list">
+                    <li>Github</li>
+                    <li>Heroku</li>
+                    <li>P5.js</li>
+                    <li>Jquery</li>
+                    <li><a target="_blank" href="https://icons8.com/icons/set/create-icon" class="text-dark">Create Icon icon</a> icon by <a target="_blank" href="https://icons8.com" class="text-dark">Icons8</a></li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-4 mt-4">
+                <h4 class="text-center mt-1 mb-3">Business</h4>
+    
+            </div>
+        </div>
+        <small class="m-0 mt-2 py-1 d-flex justify-content-center text-small"><span>Copyright © 2020
+            FD Games</span></small>
+        <small class="text-light text-center d-block">
+                
+            </small>
+
+    </footer>
 
 </body>
 

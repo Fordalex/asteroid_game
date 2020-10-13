@@ -2,9 +2,12 @@
 
 [Play Game](https://fd-games.herokuapp.com/)
 
-##
+## UX
 
-Things to do:
+I'm trying to use loads of icons to guide the user through this web app as I'm assuming the type of user that will be using this site will be of the younger generation.
+
+## Things to do
+
 - Add travisCI.
 - Create a home page where more games can be created.
 - Add mastermind project so high scores can be saved.
