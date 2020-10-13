@@ -18,6 +18,7 @@
                     <div class="col-6 m-0 py-0 px-3">
                         <h5 class="mt-3">Players Colour</h5>
                         <input type="color" id="playersColour" value="#ffffff">
+                        <small>I don't recommend black.</small>
                     </div>
                     <div class="col-6 m-0 p-0">
                         <h5 class="mt-3">Select The Difficuly</h5>
@@ -56,7 +57,7 @@
             </div>
             <div class="modal-body">
                 <p><span id="playersName"></span> scored: <span id="playersScore"></span></p>
-                <p>Save your score as anonymous<input type="checkbox" class="ml-2">
+                <p>Save your score as anonymous<input type="checkbox" class="ml-2" id="annoymous">
             </div>
             <div class="modal-footer" id="endGameFormContainer">
 
@@ -71,12 +72,12 @@
             <h3>Item Shop</h3>
             <p class="m-0">Purchase Items using your keyboard.</p>
             <p>Feel free to pause the game and purchase your upgrades, but be careful after each purchase the price will double!</p>
-            <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
-            <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${medipackCost}</p>
-            <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSizeCost}</p>
-            <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> 200 Fuel <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${fuleCost}</p>
-            <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> Mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${miniGunCost}</p>
-            <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${moneyMultiplierCost}</p>
+            <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> <span id="fasterBulletsCost"></span></p>
+            <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> <span id="medipackCost"></span></p>
+            <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> <span id="biggerBulletsCost"></span></p>
+            <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> 200 Fuel <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/><span id="fuelCost"></span></p>
+            <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> Mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> <span id="minigunCost"></span></p>
+            <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> <span id="moneyMultiplerCost"></span></p>
             <hr>
             <h3>Controls</h3>    
             <p class="m-0 mb-1">Moving will use your fuel supply!</p>
@@ -114,7 +115,8 @@
         <div id="canvasContainer"></div>
     </div>
     <div class="col-3">
-        <table>
+        <h3>High Scores</h3>
+        <table id="highScoreTable">
             <tr>
                 <th>Rank</th>
                 <th>Name</th>
@@ -136,7 +138,7 @@
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href='{{ url_for("static", filename="css/asteriod.css") }}'>
+<link rel="stylesheet" href='{{ url_for("static", filename="css/asteroid.css") }}'>
 {% endblock %}
 
 {% block extra_js %}

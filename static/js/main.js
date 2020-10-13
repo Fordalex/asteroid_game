@@ -345,23 +345,6 @@ function showPlayersStats() {
     // text(`Time:`, 390, 30);
 }
 
-function endGame() {
-    $('#playersScore').html(score)
-    var playersName = localStorage.getItem('playersName');
-    $('#endGameFormContainer').html(`
-    <form action="save_high_score/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
-        <button type="submit" class="btn btn-danger" >I'm a loser</button>
-    </form>
-    `)
-    $('#playersName').html(playersName)
-    $('#endGameModal').modal({
-        backdrop: 'static',
-        keyboard: false
-    });
-    gamePaused = true;
-}
-
-
 function mouseMoved() {
     if (miniGunActivated && miniGunTimer > 0) {
         var newBullet = new bullet();
@@ -475,7 +458,7 @@ window.addEventListener('keypress', function(e) {
             miniGunActivated = true;
             money -= miniGunCost;
             miniGunCost += miniGunCost;
-            miniGunTimer += 750;
+            miniGunTimer += 500;
         }
     }
     if (e.key == 6) {
@@ -499,5 +482,47 @@ window.addEventListener('keypress', function(e) {
 
 // update the shop
 function updateShop() {
-
+    $('#fasterBulletsCost').html(bulletSpeedCost)
+    $('#medipackCost').html(medipackCost)
+    $('#biggerBulletsCost').html(bulletSizeCost)
+    $('#fuelCost').html(fuleCost)
+    $('#minigunCost').html(miniGunCost)
+    $('#moneyMultiplerCost').html(moneyMultiplierCost)
 }
+
+// End of the game
+function endGame() {
+    $('#playersScore').html(score)
+    var playersName = localStorage.getItem('playersName');
+    $('#endGameFormContainer').html(`
+    <form action="save_high_score/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
+        <button type="submit" class="btn btn-danger" >I'm a loser</button>
+    </form>
+    `)
+    $('#playersName').html(playersName)
+    $('#endGameModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    gamePaused = true;
+}
+// Change the form if user would like to be anonymous
+var anonymous = false;
+$('#annoymous').on('click', function() {
+    if (anonymous) {
+        var playersName = localStorage.getItem('playersName');
+        $('#endGameFormContainer').html(`
+        <form action="save_high_score/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
+            <button type="submit" class="btn btn-danger" >I'm a loser</button>
+        </form>
+        `)
+        anonymous = false;
+    } else {
+        $('#endGameFormContainer').html(`
+        <form action="save_high_score/Anonymous/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
+            <button type="submit" class="btn btn-danger" >I'm a loser</button>
+        </form>
+        `)
+        anonymous = true;
+    }
+});

@@ -11,9 +11,9 @@ Things to do:
 
 ## bugs
 
-need to remove the bullets when they go outside the canvas area.
 bullets will shoot when the game is pause.
 Need to stop the player from being able to leave the play area.
+If the user edits the form before it's sent they can changed their score.
 
 ## Features to implement
 
