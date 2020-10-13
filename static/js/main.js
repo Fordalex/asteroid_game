@@ -494,7 +494,7 @@ function endGame() {
     var playersName = localStorage.getItem('playersName');
     $('#endGameFormContainer').html(`
     <form action="save_high_score/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
-        <button type="submit" class="btn btn-danger" >I'm a loser</button>
+        <button type="submit" class="btn btn-warning" >Save Score</button>
     </form>
     `)
     $('#playersName').html(playersName)
@@ -511,14 +511,14 @@ $('#annoymous').on('click', function() {
         var playersName = localStorage.getItem('playersName');
         $('#endGameFormContainer').html(`
         <form action="save_high_score/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
-            <button type="submit" class="btn btn-danger" >I'm a loser</button>
+        <button type="submit" class="btn btn-warning" >Save Score</button>
         </form>
         `)
         anonymous = false;
     } else {
         $('#endGameFormContainer').html(`
         <form action="save_high_score/Anonymous/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
-            <button type="submit" class="btn btn-danger" >I'm a loser</button>
+            <button type="submit" class="btn btn-warning" >Save Score</button>
         </form>
         `)
         anonymous = true;
