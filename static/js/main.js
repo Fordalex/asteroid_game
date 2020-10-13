@@ -1,6 +1,5 @@
 // style the page on load.
 $(document).ready(function() { 
-    $('#canvasContainer').html($('#defaultCanvas0'))
     updateShop();
     var playersName = localStorage.getItem('playersName');
     $('#playersNameInput').val(playersName)
@@ -28,6 +27,9 @@ $('#ready').on('click', function() {
     }
     localStorage.setItem('playersName', $('#playersNameInput').val())
     playersColour = $('#playersColour').val();
+    var canvas = $('#defaultCanvas0')
+    $('#defaultCanvas0').remove()
+    $('#canvasContainer').html(canvas)
 });
 
 var bulletSpeedCost = 10;
@@ -242,11 +244,6 @@ class bullet {
         this.update()
     }
     update() {
-        if (miniGunActivated) {
-            this.speed = 15;
-        } else {
-            this.speed = bulletSpeed;
-        }
         for (let i = 0; i < this.speed; i++) {
             this.position.x += this.velocity.x;
             this.position.y += this.velocity.y;
@@ -374,6 +371,7 @@ function mouseMoved() {
         )
         newBullet.velocity.x = Math.sin(angle)
         newBullet.velocity.y = Math.cos(angle)
+        newBullet.speed = 15;
         bullets.push(newBullet)
     } else {
         miniGunActivated = false;
