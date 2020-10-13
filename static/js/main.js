@@ -1,17 +1,6 @@
 // style the page on load.
-$(document).ready(function() {
-    $('#defaultCanvas0').parent().addClass('d-flex justify-content-between pt-2')
-    $('#defaultCanvas0').parent().prepend(`
-    <div class="container-fluid" id="itemShopcontainer"></div>
-    `);
-    $('#defaultCanvas0').parent().append(`
-    <div class="container-fluid">
-        <p>Database with high scores</p>
-        <ul>
-            <li>Name: blur blur. Score: 500</li>
-        </ul>
-    </div>
-    `);
+$(document).ready(function() { 
+    $('#canvasContainer').html($('#defaultCanvas0'))
     updateShop();
     var playersName = localStorage.getItem('playersName');
     $('#playersNameInput').val(playersName)
@@ -53,6 +42,8 @@ var moneyMultiplierCost = 10;
 var gamePaused = true;
 var canvasWidth = 700;
 var canvasHeight = 700;
+
+
 
 function setup() {
     createCanvas(canvasWidth, canvasHeight)
@@ -251,6 +242,11 @@ class bullet {
         this.update()
     }
     update() {
+        if (miniGunActivated) {
+            this.speed = 15;
+        } else {
+            this.speed = bulletSpeed;
+        }
         for (let i = 0; i < this.speed; i++) {
             this.position.x += this.velocity.x;
             this.position.y += this.velocity.y;
@@ -355,6 +351,11 @@ function showPlayersStats() {
 function endGame() {
     $('#playersScore').html(score)
     var playersName = localStorage.getItem('playersName');
+    $('#endGameFormContainer').html(`
+    <form action="save_high_score/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
+        <button type="submit" class="btn btn-danger" >I'm a loser</button>
+    </form>
+    `)
     $('#playersName').html(playersName)
     $('#endGameModal').modal({
         backdrop: 'static',
@@ -500,49 +501,5 @@ window.addEventListener('keypress', function(e) {
 
 // update the shop
 function updateShop() {
-    shopItems = `
-    <div class="item-shop-container">
-        <h3>Item Shop</h3>
-        <p class="m-0">Purchase Items using your keyboard.</p>
-        <p>Feel free to pause the game and purchase your upgrades, but be careful after each purchase the price will double!</p>
-        <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
-        <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${medipackCost}</p>
-        <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSizeCost}</p>
-        <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> 200 Fuel <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${fuleCost}</p>
-        <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> Mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${miniGunCost}</p>
-        <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${moneyMultiplierCost}</p>
-        <hr>
-        <h3>Controls</h3>    
-        <p class="m-0 mb-1">Moving will use your fuel supply!</p>
-        <div class="d-flex justify-content-between">
-            <div>
-                <p class="m-0 ml-2">Up</p>
-                <img src="https://img.icons8.com/color/45/000000/w-key.png"/>
-            </div>
-            <div>
-                <p class="m-0 ml-2">Left</p>
-                <img src="https://img.icons8.com/color/45/000000/a-key.png"/>
-            </div>
-            <div>
-                <p class="m-0 ml-2">Down</p>
-                <img src="https://img.icons8.com/color/45/000000/s-key.png"/>
-            </div>
-            <div>
-                <p class="m-0 ml-2">Right</p>
-                <img src="https://img.icons8.com/color/45/000000/d-key.png"/>
-            </div>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div>
-                <p class="m-0 ml-2">Pause</p>
-                <img src="https://img.icons8.com/color/48/000000/space-key.png"/>
-            </div>
-            <div>
-                <p class="m-0 ml-2">Aim & Shoot</p>
-                <img src="https://img.icons8.com/ios-filled/50/000000/mouse-left-click.png"/>
-            </div>
-        </div>
-    </div>
-        `;
-    $('#itemShopcontainer').html(shopItems)
+
 }

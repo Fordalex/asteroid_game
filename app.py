@@ -18,7 +18,8 @@ def home():
 
 @app.route('/asteroid')
 def asteroid():
-    return render_template('asteroid.html', high_score=mongo.db.asteroid.find())
+    high_score = mongo.db.asteroid.find().sort('score', pymongo.DESCENDING)
+    return render_template('asteroid.html', high_score=high_score)
 
 @app.route('/save_high_score/<name>/<score>/<difficulty>', methods=['POST'])
 def save_high_score(name, score, difficulty):

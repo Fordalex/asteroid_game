@@ -1,87 +1,152 @@
 {% extends 'base.html' %}
 {% block content %}
 
- <!-- Enter Name modal -->
-    <div class="modal fade" id="enterNameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="exampleModalLabel">Welcome!</h4>
+<!-- Enter Name modal -->
+<div class="modal fade" id="enterNameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel">Welcome!</h4>
+            </div>
+            <div class="modal-body p-0">
+                <div class="p-3">
+                    <h5>Your Players Name</h5>
+                    <input class="form-control" type="text" id="playersNameInput">
                 </div>
-                <div class="modal-body p-0">
-                    <div class="p-3">
-                        <h5>Your Players Name</h5>
-                        <input class="form-control" type="text" id="playersNameInput">
+                <hr class="mb-0">
+                <div class="row m-0 p-0">
+                    <div class="col-6 m-0 py-0 px-3">
+                        <h5 class="mt-3">Players Colour</h5>
+                        <input type="color" id="playersColour" value="#ffffff">
                     </div>
-                    <hr class="mb-0">
-                    <div class="row m-0 p-0">
-                        <div class="col-6 m-0 py-0 px-3">
-                            <h5 class="mt-3">Players Colour</h5>
-                            <input type="color" id="playersColour" value="#ffffff">
+                    <div class="col-6 m-0 p-0">
+                        <h5 class="mt-3">Select The Difficuly</h5>
+                        <div>
+                            <label>Easy</label>
+                            <input name="difficuly" type="radio" value="easy" checked>
                         </div>
-                        <div class="col-6 m-0 p-0">
-                            <h5 class="mt-3">Select The Difficuly</h5>
-                            <div>
-                                <label>Easy</label>
-                                <input name="difficuly" type="radio" value="easy" checked>
-                            </div>
-                            <div>
-                                <label>Medium</label>
-                                <input name="difficuly" type="radio" value="medium">
-                            </div>
-                            <div>
-                                <label>Hard</label>
-                                <input name="difficuly" type="radio" value="hard">
-                            </div>
-                            <div>
-                                <label>Extreme</label>
-                                <input name="difficuly" type="radio" value="extream">
-                            </div>
+                        <div>
+                            <label>Medium</label>
+                            <input name="difficuly" type="radio" value="medium">
+                        </div>
+                        <div>
+                            <label>Hard</label>
+                            <input name="difficuly" type="radio" value="hard">
+                        </div>
+                        <div>
+                            <label>Extreme</label>
+                            <input name="difficuly" type="radio" value="extreme">
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-dismiss="modal" id="ready">Ready</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" id="ready">Ready</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End game modal -->
+<div class="modal fade" id="endGameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">You died</h5>
+            </div>
+            <div class="modal-body">
+                <p><span id="playersName"></span> scored: <span id="playersScore"></span></p>
+                <p>Save your score as anonymous<input type="checkbox" class="ml-2">
+            </div>
+            <div class="modal-footer" id="endGameFormContainer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row m-0 pt-2 px-0">
+    <div class="col-3">
+        <div class="item-shop-container">
+            <h3>Item Shop</h3>
+            <p class="m-0">Purchase Items using your keyboard.</p>
+            <p>Feel free to pause the game and purchase your upgrades, but be careful after each purchase the price will double!</p>
+            <p><img src="https://img.icons8.com/color/45/000000/1-key.png"><img src="https://img.icons8.com/android/20/000000/speed.png"/> Faster Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSpeedCost}</p>
+            <p class="mt-3"><img src="https://img.icons8.com/color/45/000000/2-key.png"/><img src="https://img.icons8.com/cotton/20/000000/like--v3.png"/> Medipack  <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${medipackCost}</p>
+            <p><img src="https://img.icons8.com/color/45/000000/3-key.png"/><img src="https://img.icons8.com/color/20/000000/bullet.png"/> Bigger Bullets <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${bulletSizeCost}</p>
+            <p><img src="https://img.icons8.com/color/45/000000/4-key.png"/><img src="https://img.icons8.com/color/20/000000/oil-industry.png"/> 200 Fuel <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${fuleCost}</p>
+            <p><img src="https://img.icons8.com/color/45/000000/5-key.png"/><img src="https://img.icons8.com/color/20/000000/gatling-gun.png"/> Mini gun <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${miniGunCost}</p>
+            <p><img src="https://img.icons8.com/color/45/000000/6-key.png"/> <img src="https://img.icons8.com/cotton/20/000000/economic-growth-.png"/> Earn More per kill <img src="https://img.icons8.com/office/20/000000/cheap-2.png"/> ${moneyMultiplierCost}</p>
+            <hr>
+            <h3>Controls</h3>    
+            <p class="m-0 mb-1">Moving will use your fuel supply!</p>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p class="m-0 ml-2">Up</p>
+                    <img src="https://img.icons8.com/color/45/000000/w-key.png"/>
+                </div>
+                <div>
+                    <p class="m-0 ml-2">Left</p>
+                    <img src="https://img.icons8.com/color/45/000000/a-key.png"/>
+                </div>
+                <div>
+                    <p class="m-0 ml-2">Down</p>
+                    <img src="https://img.icons8.com/color/45/000000/s-key.png"/>
+                </div>
+                <div>
+                    <p class="m-0 ml-2">Right</p>
+                    <img src="https://img.icons8.com/color/45/000000/d-key.png"/>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p class="m-0 ml-2">Pause</p>
+                    <img src="https://img.icons8.com/color/48/000000/space-key.png"/>
+                </div>
+                <div>
+                    <p class="m-0 ml-2">Aim & Shoot</p>
+                    <img src="https://img.icons8.com/ios-filled/50/000000/mouse-left-click.png"/>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- End game modal -->
-    <div class="modal fade" id="endGameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">You died</h5>
-
-                </div>
-                <div class="modal-body">
-                    <p><span id="playersName"></span> scored: <span id="playersScore"></span></p>
-                    <p>Save your score as anonymous<input type="checkbox" class="ml-2">
-                </div>
-                <div class="modal-footer">
-                    <form action="save_high_score/alex/43534/EASY" id="endGameForm" method="POST">
-                        <button type="submit" class="btn btn-danger" >I'm a loser</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="col-6">
+        <div id="canvasContainer"></div>
     </div>
-
-    <div>
-        {% for score in high_score %}
-            {{ score.name }}
-            {{ score.score }}
-            {{ score.difficulty }}
-        {% endfor %}
+    <div class="col-3">
+        <table>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Difficulty</th>
+            </tr>
+            {% for score in high_score %}
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{ score.name }}</td>
+                <td>{{ score.score }}</td>
+                <td>{{ score.difficulty }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
+</div>
 
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js" integrity="sha512-rMaqGbYalDaQz0lWNF2L8DHPtf4NW+gSZomExS0LcsNyRS4Rmj21+dt97XfXCZE/E569eX72Bh//Jt1EpStgiA==" crossorigin="anonymous"></script>
-    <script src='{{ url_for("static", filename="js/main.js") }}'></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"
+    integrity="sha512-rMaqGbYalDaQz0lWNF2L8DHPtf4NW+gSZomExS0LcsNyRS4Rmj21+dt97XfXCZE/E569eX72Bh//Jt1EpStgiA=="
+    crossorigin="anonymous"></script>
+<script src='{{ url_for("static", filename="js/main.js") }}'></script>
 {% endblock %}
