@@ -7,6 +7,10 @@
     padding: 8px;
 }
 
+#highScoreTable tr:first-child {
+    border-bottom: solid rgb(33, 33, 33) 1px;
+}
+
 #highScoreTable tr:nth-child(odd) {
     background-color: rgb(237, 237, 237);
 }

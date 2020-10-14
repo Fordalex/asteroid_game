@@ -14,14 +14,23 @@ I'm trying to use loads of icons to guide the user through this web app as I'm a
 
 ## bugs
 
+### Asteroid
+
 bullets will shoot when the game is pause.
 Need to stop the player from being able to leave the play area.
 If the user edits the form before it's sent they can changed their score.
 
 ## Features to implement
 
-I'm going to change this into a flask app so that high scores can be saved.
-Create the debri from small trangles.
+### Asteroid
+
+- Add a minigun to the player when it's activated.
+- Add a flame for when the player moves around.
+- Let the player purchase more powerful jets to move the player quicker.
+
+### Mastermind
+
+Add scoreboard and database to this project.
 
 ### Acknowledgements
 
