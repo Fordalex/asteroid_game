@@ -77,10 +77,12 @@ function draw() {
         for (var i = 0; i < bullets.length; i++) {
             var theBullet = bullets[i]
             theBullet.draw()
+            if (theBullet.position.x > canvasWidth || theBullet.position.x < 0 || theBullet.position.y > canvasHeight || theBullet.position.y < 0) {
+                bullets.splice(i, 1)
+            } 
                 // check if a bullet is hitting an enemy
             for (let j = 0; j < enemies.length; j++) {
                 if (enemies[j].checkIfHit(theBullet)) {
-
                     if (enemies[j].dead()) {
                         money += 5 * moneyMultiplier;
                         score += 1;
@@ -102,6 +104,7 @@ function draw() {
                 }
             }
         }
+        console.log(bullets.length)
         // draw all the debri
         for (d of debris) {
             d.draw()
@@ -109,10 +112,10 @@ function draw() {
         // cursor
         fill('rgba(255,255,255,0.9)');
         circle(mouseX, mouseY, 5)
-        if (bullets.length > 50) {
+        if (bullets.length > 35) {
             bullets.shift()
         }
-        if (debris.length > 50) {
+        if (debris.length > 40) {
             debris.shift()
         }
         // stop the player if they have ran out of fule while moving
@@ -129,19 +132,6 @@ function draw() {
         text('PAUSED', 290, 350);
         textSize(15);
         text('Press space to resume', 275, 370);
-    }
-    if (miniGunActivated && miniGunTimer > 0) {
-        var newBullet = new bullet();
-        const angle = Math.atan2(
-            mouseX - playerOne.position.x,
-            mouseY - playerOne.position.y,
-        )
-        newBullet.velocity.x = Math.sin(angle)
-        newBullet.velocity.y = Math.cos(angle)
-        newBullet.speed = 15;
-        bullets.push(newBullet)
-    } else {
-        miniGunActivated = false;
     }
 }
 
@@ -457,6 +447,7 @@ window.addEventListener('keypress', function(e) {
             money -= miniGunCost;
             miniGunCost += miniGunCost;
             miniGunTimer += 500;
+            startMinigun();
         }
     }
     if (e.key == 6) {
@@ -478,6 +469,28 @@ window.addEventListener('keypress', function(e) {
     }
     updateShop();
 });
+
+// start minigun 
+function startMinigun() {
+    if (miniGunActivated && miniGunTimer > 0) {
+        var newBullet = new bullet();
+        const angle = Math.atan2(
+            mouseX - playerOne.position.x,
+            mouseY - playerOne.position.y,
+        )
+        newBullet.velocity.x = Math.sin(angle)
+        newBullet.velocity.y = Math.cos(angle)
+        newBullet.speed = 15;
+        bullets.push(newBullet)
+    } else {
+        miniGunActivated = false;
+    }
+    if (miniGunActivated) {
+        setTimeout(function() {
+            startMinigun();
+        }, 50);
+    }
+}
 
 // update the shop
 function updateShop() {
