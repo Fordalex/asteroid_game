@@ -58,8 +58,14 @@ function draw() {
     // check players score and increase the difficulty
     background(15);
     showPlayersStats();
-    if (!gamePaused) {
+    if (!gamePaused) {   
         playerOne.draw()
+        // set the players velocity to zero if they are outside the canvas area
+        if (playerOne.position.x > canvasWidth || playerOne.position.x < 0 || playerOne.position.y > canvasHeight || playerOne.position.y < 0) {
+            playerOne.velocity.x = 0;
+            playerOne.velocity.y = 0;
+        } 
+
             // check if an object is colliding with the player.
         for (e of enemies) {
             const angle = Math.atan2(
