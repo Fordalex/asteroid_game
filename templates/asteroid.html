@@ -221,6 +221,8 @@ function preload() {
     flameLeft = loadImage("{{ url_for("static", filename="img/asteroid/flame-left.png") }}")
     flameRight = loadImage("{{ url_for("static", filename="img/asteroid/flame-right.png") }}")
     flameDown = loadImage("{{ url_for("static", filename="img/asteroid/flame-down.png") }}")
+    ufo = loadImage("{{ url_for("static", filename="img/asteroid/ufo.png") }}")
+    enemyUfo = loadImage("{{ url_for("static", filename="img/asteroid/enemy_ufo.png") }}")
 }
 
 
@@ -373,6 +375,7 @@ class Player {
         var colour = color(this.colour)
         fill(colour)
         circle(this.position.x, this.position.y, this.diameter)
+        image(ufo, this.position.x - this.diameter / 2, this.position.y - this.diameter / 2, this.diameter, this.diameter)
         
     }
     hit() {
@@ -496,12 +499,13 @@ class enemy {
             y: 0,
         }
         this.diameter = Math.floor(Math.random() * 50 + 10);
-        this.colour = `rgba(${Math.floor(Math.random() * 255) + 40},${Math.floor(Math.random() * 255) + 40},${Math.floor(Math.random() * 255) + 40},0.8)`;
+        this.colour = `rgb(${Math.floor(Math.random() * 255) + 40},${Math.floor(Math.random() * 255) + 40},${Math.floor(Math.random() * 255) + 40})`;
         this.speed = 0.5;
     }
     draw() {
         fill(this.colour)
         circle(this.position.x, this.position.y, this.diameter)
+        image(enemyUfo, this.position.x - this.diameter / 2, this.position.y - this.diameter / 2, this.diameter, this.diameter)
         this.movePosition()
     }
     movePosition() {
