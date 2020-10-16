@@ -35,3 +35,5 @@ Add scoreboard and database to this project.
 ### Acknowledgements
 
 [Inspiration for the asteroid game was taken from this tutorial](https://www.youtube.com/watch?v=eI9idPTT0c4&t=24s)
+[Bike Game](https://www.youtube.com/watch?v=MW8HcwHK1S0&t=119s)
+I've been watching this video and I'm taking the code step by step to get a understanding of how an object is coliding with a line. I'll then be refractoring this coding and using P5.js to create my own vision.

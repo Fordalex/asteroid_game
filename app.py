@@ -21,6 +21,10 @@ def asteroid():
     high_score = mongo.db.asteroid.find().sort('score', pymongo.DESCENDING)
     return render_template('asteroid.html', high_score=high_score)
 
+@app.route('/motobike')
+def motobike():
+    return render_template('motobike.html')
+
 @app.route('/save_high_score/<name>/<score>/<difficulty>', methods=['POST'])
 def save_high_score(name, score, difficulty):
    
