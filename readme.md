@@ -25,8 +25,9 @@ If the user edits the form before it's sent they can changed their score.
 ### Asteroid
 
 - Add a minigun to the player when it's activated.
-- Add a flame for when the player moves around.
 - Let the player purchase more powerful jets to move the player quicker.
+- Add sounds to each section of the game.
+- More feedback to the user after an item is purchased.
 
 ### Mastermind
 

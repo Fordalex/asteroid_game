@@ -216,6 +216,10 @@ var gamePaused = true;
 var canvasWidth = 700;
 var canvasHeight = 700;
 
+// load audio
+
+
+
 function preload() {
     flameUp = loadImage("{{ url_for("static", filename="img/asteroid/flame-up.png") }}")
     flameLeft = loadImage("{{ url_for("static", filename="img/asteroid/flame-left.png") }}")
@@ -282,6 +286,10 @@ function draw() {
                             debris.push(newDebri)
                             velocity += 4
                         }
+                        var enemyExplode = new Audio();
+                        enemyExplode.src = "{{ url_for("static", filename="sounds/ufo_explode.wav") }}"
+                        enemyExplode.volume = 0.05;
+                        enemyExplode.play()
                         enemies.splice(j, 1)
                     }
                     bullets.splice(i, 1)
@@ -561,6 +569,10 @@ function showPlayersStats() {
 
 
 function mouseClicked() {
+    var lazerSound = new Audio();
+    lazerSound.src = "{{ url_for("static", filename="sounds/lazer_shot.wav") }}";
+    lazerSound.volume = 0.05;
+    lazerSound.play();
     var newBullet = new bullet();
     const angle = Math.atan2(
         mouseX - playerOne.position.x,
@@ -683,6 +695,10 @@ window.addEventListener('keypress', function(e) {
 
 // start minigun 
 function startMinigun() {
+    var lazerSound = new Audio();
+    lazerSound.src = "{{ url_for("static", filename="sounds/lazer_shot.wav") }}";
+    lazerSound.volume = 0.05;
+    lazerSound.play();
     if (miniGunActivated && miniGunTimer > 0) {
         var newBullet = new bullet();
         const angle = Math.atan2(
