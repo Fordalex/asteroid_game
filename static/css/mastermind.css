@@ -1,7 +1,4 @@
-body {
-    background-color: rgb(170, 185, 200);
-    background-size: 100%;
-}
+
 
 a {
     color: black;
@@ -183,11 +180,11 @@ h5 {
 .mastermind-menu {
     width: 100%;
     border-radius: 10px;
-    border: solid #313131 1px;
+    border: solid #a9a9a9 1px;
     margin-bottom: 32px;
-    background-image: linear-gradient(rgb(226, 226, 226), #ffffff);
+    background-image: linear-gradient(#ffffff,rgb(238, 238, 238));
     padding: 10px;
-    box-shadow: inset 0px 0px 5px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0px 0px 8px 8px rgba(0, 0, 0, 0.08);
 }
 
 .rules-image {
@@ -207,15 +204,6 @@ h5 {
     width: 100%;
 }
 
-.mastermind-board-container {
-    width: 310px;
-    height: 525px;
-    border-radius: 10px;
-    background-image: url('../images/wood-background-two.png');
-    background-size: 100% 100%;
-    box-shadow: rgba(0, 0, 0, 0.5) 4px 4px 8px;
-    margin-right: 10px;
-}
 
 .counter-black-hole {
     width: 15px;

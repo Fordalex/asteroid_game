@@ -58,6 +58,7 @@ label, td {
 
 /* footer */
 footer {
+    border-top: solid  rgb(201, 212, 223) 1px;
     background-color: rgb(237, 247, 255);
 }
 
