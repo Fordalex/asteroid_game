@@ -1,0 +1,865 @@
+body {
+    background-color: rgb(170, 185, 200);
+    background-size: 100%;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    color: lightgray;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: black;
+}
+
+.how-to-play {
+    font-family: 'Grenze', serif;
+    height: 30px;
+    width: 52px;
+    background-image: linear-gradient(#dedede, rgb(207, 207, 207));
+    border: none;
+    border-radius: 15px;
+    font-size: 15px;
+    color: black;
+    border: solid silver 2px;
+    padding: 0px 5px;
+}
+
+.how-to-play:hover {
+    color: gray;
+    text-decoration: none;
+    background-color: white;
+    border: solid lightgray 2px;
+}
+
+.title-font-size {
+    font-size: 40px;
+}
+
+.difficulty-font {
+    font-family: 'Grenze', serif;
+    font-size: 20px;
+}
+
+.easy {
+    color: rgb(107, 151, 41);
+}
+
+.medium {
+    color: rgb(195, 144, 49);
+}
+
+.hard {
+    color: red;
+}
+
+.light-blue {
+    color: rgb(154, 207, 219);
+}
+
+.p-smaller-font {
+    font-size: 13px;
+}
+
+.ready-button-container {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.play-button-classic {
+    font-family: 'Grenze', serif;
+    height: 40px;
+    width: 100px;
+    background-image: linear-gradient(#dedede, rgb(207, 207, 207));
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    color: black;
+    border: solid silver 2px;
+}
+
+.play-button-classic:hover {
+    color: gray;
+    text-decoration: none;
+}
+
+.play-button-fruit {
+    font-family: 'Grenze', serif;
+    height: 40px;
+    width: 100px;
+    background-image: linear-gradient(#ffe48c, rgb(168, 239, 160));
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    color: rgb(36, 113, 61);
+    border: solid rgb(86, 157, 86) 2px;
+}
+
+.play-button-fruit:hover {
+    color: rgb(155, 139, 109);
+    text-decoration: none;
+}
+
+.play-button-pink {
+    font-family: 'Grenze', serif;
+    height: 40px;
+    width: 100px;
+    background-image: linear-gradient(#ffe7e7, rgb(255, 177, 177));
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    color: #d87474;
+    border: solid #ff9696 2px;
+}
+
+.play-button-pink:hover {
+    color: gray;
+    text-decoration: none;
+}
+
+.play-button-ice {
+    font-family: 'Grenze', serif;
+    height: 40px;
+    width: 100px;
+    background-image: linear-gradient(#dae5e6, rgb(168, 210, 213));
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    color: #4b8998;
+    border: solid #a4e1dd 2px;
+}
+
+.play-button-ice:hover {
+    color: gray;
+    text-decoration: none;
+}
+
+.left-play-arrow {
+    position: relative;
+    animation-name: leftPlayArrow;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
+    transition-timing-function: ease-out;
+    animation-direction: alternate;
+}
+
+.right-play-arrow {
+    position: relative;
+    animation-name: rightPlayArrow;
+    animation-duration: 0.7s;
+    animation-iteration-count: infinite;
+    transition-timing-function: ease-out;
+    animation-direction: alternate;
+}
+
+#ready-button:hover {
+    background-image: linear-gradient(rgb(207, 207, 207), #dedede);
+}
+
+#ready-button i {
+    font-size: 15px;
+}
+
+.page-container {
+    max-width: 1300px;
+}
+
+.padding-left {
+    padding-left: 40px;
+}
+
+
+/* index.html */
+
+.mastermind-menu {
+    width: 100%;
+    border-radius: 10px;
+    border: solid #313131 1px;
+    margin-bottom: 32px;
+    background-image: linear-gradient(rgb(226, 226, 226), #ffffff);
+    padding: 10px;
+    box-shadow: inset 0px 0px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.rules-image {
+    border-radius: 15px;
+    border: solid black 1px;
+    width: 270px;
+}
+
+
+/* mastermind board */
+
+.board-row-height {
+    height: 43px;
+}
+
+.fixed-width-section {
+    width: 100%;
+}
+
+.mastermind-board-container {
+    width: 310px;
+    height: 525px;
+    border-radius: 10px;
+    background-image: url('../images/wood-background-two.png');
+    background-size: 100% 100%;
+    box-shadow: rgba(0, 0, 0, 0.5) 4px 4px 8px;
+    margin-right: 10px;
+}
+
+.counter-black-hole {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: rgb(50, 50, 50);
+    border: solid black 1px;
+    display: inline-block;
+    float: left;
+    margin-right: 14px;
+}
+
+.side-border-divider {
+    border-left: solid black 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.marker-black-hole {
+    width: 6px;
+    height: 6px;
+    background-color: lightgray;
+    border: solid black 1px;
+    margin: 4px;
+    border-radius: 50%;
+    display: inline-block;
+    float: left;
+}
+
+.check-round-button {
+    font-size: 0.8em;
+    border: solid black 1px;
+    border-radius: 5px;
+}
+
+.check-round-button:focus {
+    outline: none;
+}
+
+.answer-container {
+    height: 68px;
+}
+
+.answer-wrapper {
+    position: relative;
+}
+
+.master-mind-cover {
+    width: 201px;
+    height: 70px;
+    background: url('../images/mastermind-cover.png');
+    background-size: 100% 100%;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 12px;
+    left: 2px;
+    z-index: 50;
+}
+
+.masters-counters-position {
+    margin-top: 30px;
+    padding-left: 40px;
+}
+
+.fade-in {
+    animation-name: fadein;
+    animation-duration: 1.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+
+/* choose counter */
+
+.choose-button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.choose-button:hover {
+    cursor: pointer;
+    width: 34px;
+    height: 34px;
+}
+
+.choose-button:active {
+    width: 29px;
+    height: 29px;
+}
+
+.choose-red {
+    background-color: rgb(245, 60, 39);
+    border: solid white 1px;
+}
+
+.choose-red:hover {
+    background-color: rgb(199, 60, 44);
+}
+
+.choose-green {
+    background-color: rgb(63, 227, 48);
+    border: solid white 1px;
+}
+
+.choose-green:hover {
+    background-color: rgb(56, 179, 45);
+}
+
+.choose-yellow {
+    background-color: rgb(235, 225, 52);
+    border: solid white 1px;
+}
+
+.choose-yellow:hover {
+    background-color: rgb(194, 186, 48);
+}
+
+.choose-blue {
+    background-color: rgb(45, 115, 227);
+    border: solid white 1px;
+}
+
+.choose-blue:hover {
+    background-color: rgb(44, 103, 199);
+}
+
+.choose-orange {
+    background-color: rgb(255, 131, 15);
+    border: solid white 1px;
+}
+
+.choose-orange:hover {
+    background-color: rgb(231, 107, 36);
+}
+
+.choose-white {
+    background-color: rgb(255, 255, 255);
+    border: solid white 1px;
+}
+
+.choose-white:hover {
+    background-color: rgb(192, 192, 192);
+}
+
+#choose-hole {
+    width: 15px;
+    height: 15px;
+    background-color: black;
+    border-radius: 50%;
+    border: solid black 1px;
+}
+
+.not-in-use {
+    position: absolute;
+    color: rgb(148, 42, 42);
+    font-size: 35px;
+}
+
+
+/* chosen counter */
+
+.counter {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    position: relative;
+    right: 7px;
+    bottom: 7px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.counter-inventory {
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+}
+
+.counter-noshadow {
+    width: 26px;
+    height: 26px;
+    position: relative;
+    right: 7px;
+    bottom: 8px;
+}
+
+.red-glow {
+    box-shadow: 0px 0px 7px 7px rgba(255, 102, 102, 0.5);
+}
+
+.green-glow {
+    box-shadow: 0px 0px 7px 7px rgba(105, 255, 102, 0.5);
+}
+
+.yellow-glow {
+    box-shadow: 0px 0px 7px 7px rgba(255, 250, 102, 0.5);
+}
+
+.blue-glow {
+    box-shadow: 0px 0px 7px 7px rgba(102, 222, 255, 0.5);
+}
+
+.orange-glow {
+    box-shadow: 0px 0px 7px 7px rgba(255, 194, 102, 0.5);
+}
+
+.white-glow {
+    box-shadow: 0px 0px 7px 7px rgba(255, 255, 255, 0.5);
+}
+
+.hole-counter {
+    width: 26px;
+    height: 26px;
+}
+
+
+/* marker peg  */
+
+.marker-container {
+    width: 32px;
+    height: 32px;
+    transform: rotateZ(180deg);
+    background-image: url('../images/peg-container-background.png');
+    background-size: 100% 100%;
+}
+
+.marker-peg {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    bottom: 11px;
+    right: 2.5px;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.2);
+    margin: 3px;
+    display: inline-block;
+    float: right;
+    transform: rotateZ(180deg);
+}
+
+
+/* hole selector */
+
+.hole-selector {
+    position: relative;
+    font-size: 15px;
+    bottom: 22px;
+    left: 3px;
+    color: rgb(150, 0, 0);
+    animation-name: holeSelectorAnimation;
+    animation-duration: 1.3s;
+    animation-iteration-count: infinite;
+    transition-timing-function: ease-in-out;
+}
+
+.hole-selector-check {
+    position: relative;
+    top: 0px;
+    left: -3px;
+    animation-name: holeSelectorCheckAnimation;
+    animation-duration: 1.3s;
+    animation-iteration-count: infinite;
+    transition-timing-function: ease-in-out;
+}
+
+
+/* coin counter and sound */
+
+#sound-on-off:hover {
+    cursor: pointer;
+}
+
+
+/* accessory shop */
+
+.coin-color {
+    animation-name: coinGlow;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.expand-container {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.justify-around {
+    display: flex;
+    justify-content: space-around;
+}
+
+.dropdown-arrow {
+    font-size: 15px;
+    margin-left: 5px;
+    transform: none;
+    transition: all 0.2s;
+}
+
+.dropdown-arrow:hover {
+    cursor: pointer;
+}
+
+.shop-counter-container {
+    border: solid black 1px;
+    border-radius: 10px;
+    background-color: white;
+    border: solid black 1px;
+    text-align: center;
+    width: 30%;
+    display: inline-block;
+    box-shadow: inset 0px 0px 5px 5px rgba(255, 255, 255, 0.5);
+}
+
+.shop-counter-container:hover {
+    cursor: pointer;
+}
+
+.shop-counter-container p {
+    margin-bottom: 10px;
+}
+
+.shop-theme-container {
+    border: solid black 1px;
+    border-radius: 10px;
+    background-color: white;
+    border: solid black 1px;
+    text-align: center;
+    width: 23.5%;
+    display: inline-block;
+    box-shadow: inset 0px 0px 5px 5px rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}
+
+
+/* counters */
+
+.fruit-purchase-background {
+    background: url('../images/fruit-background-purchase.png');
+    background-size: 110%;
+}
+
+.candy-purchase-background {
+    background: url('../images/candy-background-purchase.png');
+    background-size: 110%;
+}
+
+.gem-purchase-background {
+    background: url('../images/gem-background-purchase.png');
+    background-size: 100%;
+}
+
+
+/* thems */
+
+.fruit-background-container {
+    background-image: url('../images/fruit-background.png');
+    background-size: 150%;
+}
+
+.fruit-background {
+    background-image: url('../images/fruit-background.png');
+    background-size: 100%;
+}
+
+.pink-background-container {
+    background-image: url('../images/pink-background.png');
+    background-size: 150%;
+}
+
+.pink-background {
+    background-image: url('../images/pink-background.png');
+    background-size: 100%;
+}
+
+.ice-background-container {
+    background-image: url('../images/ice-background.png');
+    background-size: 150%;
+}
+
+.ice-background {
+    background-image: url('../images/ice-background.png');
+    background-size: 100%;
+}
+
+.inventory-background-classic-theme {
+    background-color: #bfcccf;
+}
+
+.classic-theme {
+    color: rgb(123, 182, 195);
+}
+
+.inventory-background-fruit-theme {
+    background-color: rgb(208, 215, 151);
+}
+
+.fruit-theme {
+    color: rgb(255, 179, 80);
+}
+
+.inventory-background-pink-theme {
+    background-color: rgb(225, 186, 209);
+}
+
+.pink-theme {
+    color: rgb(240, 114, 187);
+}
+
+.inventory-background-ice-theme {
+    background-color: rgb(175, 213, 211);
+}
+
+.ice-theme {
+    color: rgb(170, 170, 170);
+}
+
+
+/* inventory */
+
+.inventory-sections {
+    width: 19%;
+    border: solid black 1px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 7px;
+    box-shadow: inset 0px 0px 5px 5px rgba(255, 255, 255, 0.65);
+    cursor: pointer;
+}
+
+.inventory-selected {
+    box-shadow: inset 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+#basic-counter-inventory {
+    width: 26px;
+    height: 26px;
+    background-color: red;
+    border-radius: 50%;
+    border: solid black 1px;
+    cursor: pointer;
+}
+
+#classic-counter-inventory {
+    width: 26px;
+    height: 26px;
+    background-image: url('../images/green-counter.png');
+    background-size: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.Inventory-background {
+    width: 50px;
+    height: 50px;
+    background-color: blue;
+}
+
+.Inventory-background:hover {
+    cursor: pointer;
+    background-color: lightblue;
+}
+
+
+/* themes */
+
+.basic-theme-inventory {
+    background-color: rgb(170, 185, 200);
+}
+
+
+/* counter types */
+
+
+/* basic */
+
+.basic-counter {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    position: relative;
+    right: 6px;
+    bottom: 4px;
+    border: solid black 1px;
+    border-radius: 50%;
+}
+
+.basic-red-counter {
+    background-color: red;
+}
+
+.basic-green-counter {
+    background-color: rgb(148, 218, 44);
+}
+
+.basic-yellow-counter {
+    background-color: yellow;
+}
+
+.basic-blue-counter {
+    background-color: blue;
+}
+
+.basic-orange-counter {
+    background-color: orange;
+}
+
+.basic-white-counter {
+    background-color: white;
+}
+
+
+/* stats */
+
+td,
+th {
+    text-align: center;
+    width: 70px;
+}
+
+.colour-secondary {
+    color: rgb(86, 152, 167);
+}
+
+
+/* Animations */
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes holeSelectorAnimation {
+    0% {
+        font-size: 18px;
+        bottom: 25px;
+        left: 2px;
+        color: rgb(255, 255, 255);
+    }
+    50% {
+        font-size: 12px;
+        bottom: 45px;
+        left: 3px;
+        color: rgba(255, 255, 255, 0.5);
+    }
+    100% {
+        font-size: 18px;
+        bottom: 25px;
+        left: 2px;
+        color: rgb(255, 255, 255);
+    }
+}
+
+@keyframes holeSelectorCheckAnimation {
+    0% {
+        font-size: 15px;
+        top: 0px;
+        left: -3px;
+        color: rgb(255, 255, 255);
+    }
+    50% {
+        font-size: 12px;
+        top: -1.5px;
+        left: -11px;
+        color: rgba(255, 255, 255, 0.5);
+    }
+    100% {
+        font-size: 15px;
+        top: 0px;
+        left: -3px;
+        color: rgb(255, 255, 255);
+    }
+}
+
+@keyframes coinGlow {
+    0% {
+        color: #ffc107;
+    }
+    25% {
+        color: #ffd000;
+    }
+    50% {
+        color: #ebdc11;
+    }
+    75% {
+        color: #e6d11b;
+    }
+    100% {
+        color: #ffc107;
+    }
+}
+
+@keyframes arrowRotate {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(-180deg);
+    }
+}
+
+@keyframes leftPlayArrow {
+    0% {
+        right: 0px;
+    }
+    100% {
+        right: 50px;
+    }
+}
+
+@keyframes rightPlayArrow {
+    0% {
+        left: 0px;
+    }
+    100% {
+        left: 50px;
+    }
+}
+
+
+/* media queries */
+
+@media (max-width:450px) {
+    .mastermind-board-container {
+        margin-right: 0px;
+    }
+    .ice-background {
+        background-image: url('../images/ice-background-mobile.png');
+    }
+    .pink-background {
+        background-image: url('../images/pink-background.png');
+        background-size: 200%;
+    }
+    .fruit-background {
+        background-image: url('../images/fruit-background-mobile.png');
+        background-size: 200%;
+    }
+}

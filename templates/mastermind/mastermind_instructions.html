@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+ <!-- How to play -->
+
+ <div class="d-flex justify-content-center">
+    <div class="page-container">
+        <h2 class="text-center my-4 title-font-size"><b>Master Mind</b></h2>
+        <div class="row m-0 p-0">
+            <div class="col-lg-6 col-md-12 p-0 m-0 px-1 d-flex justify-content-center">
+                <div class="mastermind-menu p-3">
+                    <h4>How To Play</h4>
+                    <h6 class="mt-2"><b>Aim Of The Game</b></h6>
+                    <p>Mastermind is a game that requires a player to use logic, speculation and reasoning skills to determine the sequence of the coloured counters. The computer has secretly generated a sequence leaving players having 10 attempts to
+                        guess correctly, or the computer wins!.</p>
+                    <h6><b>Step: 1</b></h6>
+                    <p>Place your first 4 counters trying to workout what coloured counters the computer has generated. (You might want to start filling the first row with counters all of the same colour)
+                    </p>
+                    <h6><b>Step: 2</b></h6>
+                    <p>If you got any coloured counters right, the computer will return black and white pegs. (Black: Right colour, right place) (White: right colour, wrong place) or none if the colour is not in the hidden sequence.</p>
+                    <h6><b>Step: 3</b></h6>
+                    <p>Use a process of elimination to work out what is hidden under cover.</p>
+
+                    <!-- Button trigger modal -->
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center mt-3">
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#videoExplanation">
+                                Video Explaination
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="videoExplanation" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">How to play Mastermind</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body d-flex justify-content-center">
+                                    <iframe width="448" height="252" src="https://www.youtube.com/embed/dMHxyulGrEk" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 m-0 p-0 my-3 mt-4 d-flex justify-content-center">
+                        <a href="{{ url_for('mastermind') }}" class="play-button-classic d-flex justify-content-center align-items-center">Play<i
+                                class="mx-2 fas fa-play"></i></a>
+                    </div>
+                    <div class="col-12 d-flex justify-content-end">
+                        <p class="m-0 my-2 d-lg-none"><b>(Example Below)</b></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rules with image explanation -->
+
+            <div class="col-md-12 col-lg-6 p-0 m-0 px-1 d-flex justify-content-center">
+                <div class="mastermind-menu p-3">
+                    <h4>Rules</h4>
+                    <div class="row m-0 p-0 my-3">
+                        <div class="col-12 m-0 p-0 d-flex justify-content-center">
+                            <img src="assets/images/explain-pegs.png" alt="example of the rules" class="rules-image">
+                        </div>
+                    </div>
+                    <p><b>Black Peg:</b><br /> The right colour in the <span class="text-success"><b>right</b></span> location
+                    </p>
+                    <p><b>White Peg:</b><br /> The right colour in the <span class="text-danger"><b>wrong</b></span> location.
+                    </p>
+                    <a href="https://www.wikihow.com/Play-Mastermind" target="_blank">Still unsure?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

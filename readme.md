@@ -1,4 +1,6 @@
-# Asteroid Game
+# Fds Games
+
+This is a library of all my game projects, please take a look and see if you can set any new high scores.
 
 [Play Game](https://fd-games.herokuapp.com/)
 
@@ -30,6 +32,10 @@ If the user edits the form before it's sent they can changed their score.
 - More feedback to the user after an item is purchased.
 
 ### Mastermind
+
+This project was taken from one of my older projects. [Mastermind](https://github.com/Fordalex/mastermind-project)
+
+I will be refractoring this code becasue the html can easily be done using js.
 
 Add scoreboard and database to this project.
 

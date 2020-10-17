@@ -1,0 +1,515 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="d-flex justify-content-center">
+    <div class="page-container">
+        <a class="how-to-play ml-2" href="index.html">Rules</a>
+        <div>
+            <h2 class="text-center m-0 title-font-size"><b>Master Mind</b></h2>
+        </div>
+        <div class="row m-0 p-0 mb-2">
+            <div class="col-12 m-0 d-flex justify-content-center ready-button-container">
+                <div id="ready-start-button-container">
+                    <i class="fas fa-long-arrow-alt-right left-play-arrow"></i>
+                    <button onclick="start()" id="ready-button" class="play-button-classic">Play!<i
+                            class="mx-2 fas fa-play"></i></button>
+                    <i class="fas fa-long-arrow-alt-left right-play-arrow"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-0 p-0">
+
+            <!-- Mastermind board -->
+
+            <div class="col-sm-12 col-md-6 p-0 mb-4 d-flex justify-content-center">
+                <div class="mastermind-board-container">
+
+                    <div class="row m-0 p-0 answer-container">
+                        <div class="col-9 m-0 p-0 answer-wrapper">
+                            <div id="master-cover" class="master-mind-cover ml-2"></div>
+                            <div class="d-flex align-items-center masters-counters-position">
+                                <div class="counter-black-hole" id="master-one"></div>
+                                <div class="counter-black-hole" id="master-two"></div>
+                                <div class="counter-black-hole" id="master-three"></div>
+                                <div class="counter-black-hole" id="master-four"></div>
+                            </div>
+                        </div>
+                        <div class="col-3 side-border-divider p-0 m-0">
+                            <h5 class="p-2 m-0 text-center text-dark">Choose Counter</h5>
+                        </div>
+                    </div>
+
+                    <div class="row m-0 p-0">
+                        <div class="col-9 p-0 m-0">
+                            <div class="row board-row-height m-0 p-0 mt-3">
+                                <div class=" d-flex align-items-center m-0  padding-left">
+                                    <div class="counter-black-hole" id="r-10-c-one"></div>
+                                    <div class="counter-black-hole" id="r-10-c-two"></div>
+                                    <div class="counter-black-hole" id="r-10-c-three"></div>
+                                    <div class="counter-black-hole" id="r-10-c-four"></div>
+                                </div>
+                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                    <div class="marker-container" id="peg-container-10">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-0 pt-3 p-0 side-border-divider">
+                            <div class="choose-red choose-button" onclick="chooseColour(redCounter,0)"></div>
+                        </div>
+                    </div>
+                    <div class="row m-0 p-0">
+                        <div class="col-9 p-0 m-0">
+                            <div class="row board-row-height m-0 p-0 mt-0">
+                                <div class=" d-flex align-items-center m-0  padding-left">
+                                    <div class="counter-black-hole" id="r-9-c-one"></div>
+                                    <div class="counter-black-hole" id="r-9-c-two"></div>
+                                    <div class="counter-black-hole" id="r-9-c-three"></div>
+                                    <div class="counter-black-hole" id="r-9-c-four"></div>
+                                </div>
+                                <div class="m-0  ml-2 p-0 d-flex justify-content-center align-items-center">
+                                    <div class="marker-container" id="peg-container-9">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-0 p-0 side-border-divider">
+                            <div class="choose-green choose-button" onclick="chooseColour(greenCounter,1)"></div>
+                        </div>
+                    </div>
+                    <div class="row m-0 p-0">
+                        <div class="col-9 p-0 m-0">
+                            <div class="row board-row-height m-0 p-0 mt-0">
+                                <div class=" d-flex align-items-center m-0  padding-left ">
+                                    <div class="counter-black-hole" id="r-8-c-one"></div>
+                                    <div class="counter-black-hole" id="r-8-c-two"></div>
+                                    <div class="counter-black-hole" id="r-8-c-three"></div>
+                                    <div class="counter-black-hole" id="r-8-c-four"></div>
+                                </div>
+                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                    <div class="marker-container" id="peg-container-8">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-0 p-0 side-border-divider">
+                            <div class="choose-yellow choose-button" onclick="chooseColour(yellowCounter,2)"></div>
+                        </div>
+                    </div>
+                    <div class="row m-0 p-0">
+                        <div class="col-9 p-0 m-0">
+                            <div class="row board-row-height m-0 p-0 mt-0">
+                                <div class=" d-flex align-items-center m-0 padding-left">
+                                    <div class="counter-black-hole" id="r-7-c-one"></div>
+                                    <div class="counter-black-hole" id="r-7-c-two"></div>
+                                    <div class="counter-black-hole" id="r-7-c-three"></div>
+                                    <div class="counter-black-hole" id="r-7-c-four"></div>
+                                </div>
+                                <div class="m-0 p-0 ml-2 d-flex justify-content-center align-items-center">
+                                    <div class="marker-container" id="peg-container-7">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-0 p-0 side-border-divider easy-counter-selector-container">
+                            <div class="choose-blue choose-button" onclick="chooseColour(blueCounter,3)"></div>
+                        </div>
+                    </div>
+                    <div class="row m-0 p-0">
+                        <div class="col-9 p-0 m-0">
+                            <div class="row board-row-height m-0 p-0 mt-0">
+                                <div class=" d-flex align-items-center m-0 padding-left">
+                                    <div class="counter-black-hole" id="r-6-c-one"></div>
+                                    <div class="counter-black-hole" id="r-6-c-two"></div>
+                                    <div class="counter-black-hole" id="r-6-c-three"></div>
+                                    <div class="counter-black-hole" id="r-6-c-four"></div>
+                                </div>
+                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                    <div class="marker-container" id="peg-container-6">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-0 p-0 side-border-divider easy-counter-selector-container">
+                            <div class="choose-orange choose-button" onclick="chooseColour(orangeCounter,4)"></div>
+                        </div>
+                    </div>
+                    <div class="row m-0 p-0">
+                        <div class="col-9 p-0 m-0">
+                            <div class="row board-row-height m-0 p-0 mt-0">
+                                <div class=" d-flex align-items-center m-0 padding-left">
+                                    <div class="counter-black-hole" id="r-5-c-one"></div>
+                                    <div class="counter-black-hole" id="r-5-c-two"></div>
+                                    <div class="counter-black-hole" id="r-5-c-three"></div>
+                                    <div class="counter-black-hole" id="r-5-c-four"></div>
+                                </div>
+                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                    <div class="marker-container" id="peg-container-5">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-0 p-0 side-border-divider medium-counter-selector-container">
+
+                            <div class="choose-white choose-button" onclick="chooseColour(whiteCounter,5)"></div>
+                        </div>
+                    </div>
+                    <div class="row m-0 p-0">
+                        <div class="col-9 p-0 m-0">
+                            <div class="row board-row-height m-0 p-0 mt-0">
+                                <div class=" d-flex align-items-center m-0  padding-left">
+                                    <div class="counter-black-hole" id="r-4-c-one"></div>
+                                    <div class="counter-black-hole" id="r-4-c-two"></div>
+                                    <div class="counter-black-hole" id="r-4-c-three"></div>
+                                    <div class="counter-black-hole" id="r-4-c-four"></div>
+                                </div>
+                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                    <div class="marker-container" id="peg-container-4">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-0 p-0 side-border-divider medium-counter-selector-container">
+
+                            <div id="choose-hole" onclick="chooseColour(holeCounter,6)"></div>
+                        </div>
+                    </div>
+                    <div class="row m-0 p-0">
+                        <div class="col-9 p-0 m-0">
+                            <div class="row board-row-height m-0 p-0 mt-0">
+                                <div class=" d-flex align-items-center m-0  padding-left">
+                                    <div class="counter-black-hole" id="r-3-c-one"></div>
+                                    <div class="counter-black-hole" id="r-3-c-two"></div>
+                                    <div class="counter-black-hole" id="r-3-c-three"></div>
+                                    <div class="counter-black-hole" id="r-3-c-four"></div>
+                                </div>
+                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                    <div class="marker-container" id="peg-container-3">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-0 p-0 side-border-divider">
+                            <button class="check-round-button" onclick="removeCounter()">Remove</button>
+                        </div>
+                    </div>
+                    <div class="row m-0 p-0">
+                        <div class="col-9 p-0 m-0">
+                            <div class="row board-row-height m-0 p-0 mt-0">
+                                <div class=" d-flex align-items-center m-0  padding-left">
+                                    <div class="counter-black-hole" id="r-2-c-one"></div>
+                                    <div class="counter-black-hole" id="r-2-c-two"></div>
+                                    <div class="counter-black-hole" id="r-2-c-three"></div>
+                                    <div class="counter-black-hole" id="r-2-c-four"></div>
+                                </div>
+                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                    <div class="marker-container" id="peg-container-2">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-0 p-0 side-border-divider">
+                            <div id="check-round-arrow"></div>
+                            <button class="check-round-button" onclick="checkCounters()">Check</button>
+                        </div>
+                    </div>
+                    <div class="row m-0 p-0">
+                        <div class="col-9 p-0 m-0">
+                            <div class="row board-row-height m-0 p-0 mt-0">
+                                <div class=" d-flex align-items-center m-0  padding-left">
+                                    <div class="counter-black-hole" id="r-1-c-one"></div>
+                                    <div class="counter-black-hole" id="r-1-c-two"></div>
+                                    <div class="counter-black-hole" id="r-1-c-three"></div>
+                                    <div class="counter-black-hole" id="r-1-c-four"></div>
+                                </div>
+                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                    <div class="marker-container" id="peg-container-1">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3 m-0 p-0 side-border-divider">
+                            <div>
+                                <p class="p-smaller-font m-0">Attempts: <span id="round-counter">1</span></p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <i class="fas fa-stopwatch mx-1 text-black-50"></i>
+                                    <p class="p-smaller-font m-0"><span id="timer-min"></span><span class="mx-1">:</span><span id="timer-sec"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- // Mastermind board -->
+
+            <!-- shop and stats -->
+
+            <div class="col-sm-12 col-md-6 px-0 d-flex px-1">
+                <div class="container-fluid p-0">
+                    <div class="mastermind-menu mb-2 fixed-width-section">
+                        <div class="row m-0 p-0">
+                            <div class="col-6 m-0 p-0 d-flex justify-content-start">
+                                <p class="m-0"><i class="fas fa-coins mx-2 coin-color"></i><span id="player-coins" class="mr-2 font-weight-bold"></span>Coins</p>
+                            </div>
+                            <div class="col-6 m-0 p-0 d-flex justify-content-end align-items-center">
+                                <div id="sound-on-off">
+                                    <i class="fas fa-volume-up mr-3"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mastermind-menu mb-2 fixed-width-section">
+                        <h4 class="text-center mb-2">Accessory Shop</h4>
+
+
+
+                        <div class="expand-button">
+                            <h5 class="m-0 d-inline">Counters</h5>
+                            <i class="fas fa-angle-double-down dropdown-arrow theme classic-theme"></i>
+                        </div>
+
+
+                        <div class="expand-container justify-around">
+                            <div class="shop-counter-container p-2 fruit-purchase-background" id="fruit-counters-purchase">
+                                <p><b>Fruit</b><i class="fas fa-lemon ml-2 text-warning"></i></p>
+                                <p class="m-0"><i class="fas fa-coins mx-2 coin-color"></i>200</p>
+                            </div>
+
+                            <div class="shop-counter-container p-2 candy-purchase-background" id="candy-counters-purchase">
+                                <p><b>Candy</b><i class="fas fa-candy-cane ml-2 text-danger"></i></p>
+                                <p class="m-0"><i class="fas fa-coins mx-2 coin-color"></i>350</p>
+                            </div>
+
+                            <div class="shop-counter-container p-2 gem-purchase-background" id="gem-counters-purchase">
+                                <p><b>Gems</b><i class="far fa-snowflake ml-2 text-light"></i></p>
+                                <p class="m-0"><i class="fas fa-coins mx-2 coin-color"></i>500</p>
+                            </div>
+                        </div>
+
+                        <div class="expand-button ">
+                            <h5 class=" m-0 d-inline">Themes</h5>
+                            <i class="fas fa-angle-double-down dropdown-arrow theme classic-theme"></i>
+                        </div>
+
+                        <div class="expand-container justify-around">
+                            <div class="shop-counter-container p-2 fruit-background-container" id="fruit-background-purchase">
+                                <p><b>Fruit</b><i class="fas fa-lemon ml-2 text-warning"></i></p>
+                                <p class="m-0"><i class="fas fa-coins mx-2 coin-color"></i><span>100</span></p>
+                            </div>
+
+                            <div class="shop-counter-container p-2 pink-background-container" id="pink-background-purchase">
+                                <p><b>Pink</b><i class="fas fa-candy-cane ml-2 text-danger"></i></p>
+                                <p class="m-0"><i class="fas fa-coins mx-2 coin-color"></i>200</p>
+                            </div>
+
+                            <div class="shop-counter-container p-2 ice-background-container" id="ice-background-purchase">
+                                <p><b>Ice</b><i class="far fa-snowflake ml-2 text-light"></i></p>
+                                <p class="m-0"><i class="fas fa-coins mx-2 coin-color"></i>300</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- inventory -->
+
+                    <div class="my-2 mastermind-menu fixed-width-section">
+                        <h4 class="text-center">Inventory</h4>
+                        <div class="expand-button">
+                            <h5 class="d-inline">Counters</h5>
+                            <i class="fas fa-angle-double-down dropdown-arrow theme classic-theme"></i>
+                        </div>
+                        <div class="expand-container">
+                            <div class="justify-around">
+                                <div class="counters-unlocked inventory-sections inventory-background-classic-theme" id="basic-counter-inventory-select">
+                                    <div id="basic-counter-inventory"></div>
+                                </div>
+                                <div class="counters-unlocked inventory-sections inventory-background-classic-theme inventory-selected" id="classic-counter-inventory-select">
+                                    <div id="classic-counter-inventory"></div>
+                                </div>
+                                <div class="inventory-sections inventory-background-classic-theme" id="fruit-counter-inventory-select">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="inventory-sections inventory-background-classic-theme" id="candy-counter-inventory-select">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="inventory-sections inventory-background-classic-theme" id="gem-counter-inventory-select">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <p class="m-0">Counters can only be changed before a game.</p>
+                            </div>
+                        </div>
+                        <div class="expand-button">
+                            <h5 class="d-inline">Themes</h5>
+                            <i class="fas fa-angle-double-down dropdown-arrow theme classic-theme"></i>
+                        </div>
+                        <div class="expand-container justify-around">
+                            <div class="themes-unlocked inventory-selected shop-theme-container d-flex justify-content-center basic-theme-inventory p-4" id="select-classic-theme">
+
+                            </div>
+                            <div class="shop-theme-container d-flex justify-content-center p-4" id="select-fruit-theme">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="shop-theme-container d-flex justify-content-center p-4" id="select-pink-theme">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="shop-theme-container d-flex justify-content-center p-4" id="select-ice-theme">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="my-2 mastermind-menu fixed-width-section">
+                        <h4 class="text-center"><span id="player-name-stats" class="colour-secondary theme"></span> Stats
+                        </h4>
+
+                        <div class="mx-5"></div>
+                        <div class="d-flex justify-content-around">
+                            <table id="stats-table">
+                                <tr>
+                                    <th>Round</th>
+                                    <th>Attempts</th>
+                                    <th>Time</th>
+                                    <th>Coins</th>
+                                    <th>Difficulty</th>
+                                </tr>
+                            </table>
+                        </div>
+                        <hr>
+
+                        <div class=" d-flex justify-content-around align-items-center">
+                            <h4><span class="colour-secondary theme"></span> Total <span class="theme classic-theme">Stats</span>
+                            </h4>
+                            <table>
+                                <tr>
+                                    <th>Attempts</th>
+                                    <th>Coins</th>
+                                </tr>
+                                <tr>
+                                    <th id="totalStatAttempts">0</th>
+                                    <th id="totalStatCoins">0</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- // shop and stats -->
+
+    <!-- First Modal for players name and difficulty -->
+    <div class="modal fade" id="enterNameModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Welcome to Mastermind</h5>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="px-3 pt-3">
+                        <h6>Please Enter Your Name:</h6>
+                        <input type="text" id="inputPlayerName" maxlength="15">
+                    </div>
+                    <hr>
+                    <div class="px-3">
+                        <h6 class="mt-2">Please Select Your Difficulty:</h6>
+                        <p>The harder the difficulty the more you'll be rewarded.</p>
+                        <label class="difficuly-select-entry"><input type="radio" name="difficulty"
+                                class="easy-difficulty"> Easy</label>
+                        <label class="difficuly-select-entry"><input type="radio" name="difficulty"
+                                class="medium-difficulty">
+                            Medium</label>
+                        <label class="difficuly-select-entry"><input type="radio" name="difficulty"
+                                class="hard-difficulty"> Hard</label>
+                        <div id="enter-name-message" class="mt-2">
+                            <p class="text-danger">Please enter your name and select difficulty.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="close-start-modal">
+                    <Button class="btn btn-secondary">Nope</Button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Winner modal -->
+    <div class="modal fade" id="winnerModal" tabindex="-1" role="dialog" aria-labelledby="winnerModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Winner</h5>
+
+                </div>
+                <div class="modal-body p-4">
+                    <p>Well Done <span id="player-name-winner"></span>!!</p>
+                    <p>You worked it out in <span id="attempts-round"></span> attempts.</p>
+                    <p>It only took you <i class="fas fa-stopwatch mx-2 text-black-50"></i><span id="time-taken-min"></span> : <span id="time-taken-sec"></span></p>
+                    <p>Mastermind has rewarded you with<i class="fas fa-coins mx-2 coin-color"></i>
+                        <b>50</b></p>
+                    <p>Round Bonus: <i class="fas fa-coins mx-2 coin-color"></i><span id="round-coin-bonus" class="font-weight-bold"></span></p>
+                    <p>Time Bonus: <i class="fas fa-coins mx-2 coin-color"></i><span id="timer-bonus" class="font-weight-bold"></span></p>
+                    <p>Difficulty Bonus: <i class="fas fa-coins mx-2 coin-color"></i><span id="difficulty-bonus" class="font-weight-bold"></span></p>
+                    <p>Total coins for that round: <i class="fas fa-coins mx-2 coin-color"></i><span id="total-coins-round" class="font-weight-bold"></span> Coins</p>
+                    <h4>Try a different difficulty?</h4>
+                    <label><input type="radio" name="difficulty" class="easy-difficulty"> Easy</label>
+                    <label><input type="radio" name="difficulty" class="medium-difficulty"> Medium</label>
+                    <label><input type="radio" name="difficulty" class="hard-difficulty"> Hard</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="firstModal" onclick="loop()">Okay!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loser modal -->
+    <div class="modal fade" id="loserModal" tabindex="-1" role="dialog" aria-labelledby="loserModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Loser</h5>
+                </div>
+                <div class="modal-body p-4">
+                    <p>Unfortunately <span id="player-name-loser"></span>, the computer outsmarted you this time!
+                    </p>
+                    <p>Mastermind took<i class="fas fa-coins mx-2 coin-color"></i><b class="text-danger">50</b> coins off you!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="loop()">Try
+                        Again!</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href='{{ url_for("static", filename="css/mastermind.css") }}'>
+{% endblock %}
+
+{% block extra_js %}
+<script src='{{ url_for("static", filename="js/mastermind.js") }}'></script>
+{% endblock %}
