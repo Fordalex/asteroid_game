@@ -504,6 +504,7 @@
 {% endblock %}
 
 {% block extra_css %}
+<script src="https://kit.fontawesome.com/d4ed0579d0.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href='{{ url_for("static", filename="css/mastermind.css") }}'>
 <style>
     
@@ -515,6 +516,30 @@
     background-size: 100% 100%;
     box-shadow: rgba(0, 0, 0, 0.5) 4px 4px 8px;
     margin-right: 10px;
+}
+
+
+.master-mind-cover {
+    width: 201px;
+    height: 70px;
+    background: url('{{ url_for("static", filename="img/mastermind/mastermind-cover.png") }}');
+    background-size: 100% 100%;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 12px;
+    left: 2px;
+    z-index: 50;
+}
+
+.marker-container {
+    width: 32px;
+    height: 32px;
+    transform: rotateZ(180deg);
+    background-image: url('{{ url_for("static", filename="img/mastermind/peg-container-background.png") }}');
+    background-size: 100% 100%;
 }
 </style>
 {% endblock %}

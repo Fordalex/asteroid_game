@@ -7,6 +7,12 @@
     padding: 8px;
 }
 
+/* high score table */
+
+#highScoreTable {
+    border: solid rgb(233, 233, 233) 1px;
+}
+
 #highScoreTable tr:first-child {
     border-bottom: solid rgb(33, 33, 33) 1px;
 }
@@ -17,4 +23,5 @@
 
 #highScoreTable td {
     width: 25%;
+    padding: 2px;
 }

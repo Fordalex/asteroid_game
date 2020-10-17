@@ -21,6 +21,12 @@ label, td {
     font-family: 'Open Sans Condensed', sans-serif;
 }
 
+.logo {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
 .title {
     background-color: rgb(255, 255, 255);
 }

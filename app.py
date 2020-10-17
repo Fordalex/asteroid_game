@@ -29,7 +29,7 @@ def ufo_defence():
     The ufo defence game with the score board.
     """
     high_score = mongo.db.asteroid.find().sort('score', pymongo.DESCENDING)
-    return render_template('ufo_defence.html', high_score=high_score)
+    return render_template('ufo_defence/ufo_defence.html', high_score=high_score)
 
 # Mastermind
 
