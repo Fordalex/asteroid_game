@@ -373,36 +373,8 @@
                         <h4 class="text-center"><span id="player-name-stats" class="colour-secondary theme"></span> Stats
                         </h4>
                         <div id="statsContainer">
-                            <div class="mx-5"></div>
-                            <div class="d-flex justify-content-around">
-                                <table id="stats-table">
-                                    <tr>
-                                        <th>Round</th>
-                                        <th>Attempts</th>
-                                        <th>Time</th>
-                                        <th>Coins</th>
-                                        <th>Difficulty</th>
-                                    </tr>
-                                </table>
-                            </div>
-                            <hr>
-    
-                            <div class=" d-flex justify-content-around align-items-center">
-                                <h4><span class="colour-secondary theme"></span> Total <span class="theme classic-theme">Stats</span>
-                                </h4>
-                                <table>
-                                    <tr>
-                                        <th>Attempts</th>
-                                        <th>Coins</th>
-                                    </tr>
-                                    <tr>
-                                        <th id="totalStatAttempts">0</th>
-                                        <th id="totalStatCoins">0</th>
-                                    </tr>
-                                </table>
-                            </div>
+                        <p>Press play to play your first game to see your stats.</p>
                         </div>
-                       
                     </div>
                 </div>
             </div>
@@ -598,6 +570,7 @@ function addName() {
     $('#player-coins').html(coins);
     localStorage.setItem('playerName', playerName);
 }
+
 
 /* variables */
 
@@ -1314,6 +1287,7 @@ function checkCounters() {
         }
 
         if (masterLocationOne == playerLocationOne && masterLocationTwo == playerLocationTwo && masterLocationThree == playerLocationThree && masterLocationFour == playerLocationFour) {
+            addStatsTable();
             levelComplete();
             winnerBoolean = true;
         }
@@ -1322,8 +1296,11 @@ function checkCounters() {
             if (soundOn == true) {
                 gameOverSound.play();
             }
+            addStatsTable();
             levelLost();
         }
+
+
 
         round++;
         holeSelect = 1;
@@ -1334,6 +1311,43 @@ function checkCounters() {
         playerLocationFour = 0;
         selectedHole();
     }
+}
+
+function addStatsTable() {
+        /* adding table of stats if first round */
+        console.log(fullGames)
+        if (fullGames == 1) {
+            $('#statsContainer').html(`
+            <div class="mx-5"></div>
+                                <div class="d-flex justify-content-around">
+                                    <table id="stats-table">
+                                        <tr>
+                                            <th>Round</th>
+                                            <th>Attempts</th>
+                                            <th>Time</th>
+                                            <th>Coins</th>
+                                            <th>Difficulty</th>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <hr>
+        
+                                <div class=" d-flex justify-content-around align-items-center">
+                                    <h4><span class="colour-secondary theme"></span> Total <span class="theme classic-theme">Stats</span>
+                                    </h4>
+                                    <table>
+                                        <tr>
+                                            <th>Attempts</th>
+                                            <th>Coins</th>
+                                        </tr>
+                                        <tr>
+                                            <th id="totalStatAttempts">0</th>
+                                            <th id="totalStatCoins">0</th>
+                                        </tr>
+                                    </table>
+                                </div>
+            `)
+        }
 }
 
 function levelComplete() {
@@ -1363,6 +1377,7 @@ function levelComplete() {
     var difficultyBonus;
     var roundCoinBonus = (10 - round + 1) * 10;
     var totalRoundCoins = 50 + roundCoinBonus + difficultyBonus + timerBonus;
+
     /* adding stats */
     $('#stats-table').append(`
      <tr>
