@@ -4,14 +4,16 @@
 
 
     <div class="page-container mt-3">
-        <a class="how-to-play ml-2 float-left" href="{{ url_for('mastermind_instructions') }}"><img src="https://img.icons8.com/metro/13/000000/rules.png" class="mr-1 mb-1"/>Rules</a>
-       
-        <div class="row m-0 p-0">
+        <a class="how-to-play ml-2 float-left d-none d-md-block" href="{{ url_for('mastermind_instructions') }}"><img src="https://img.icons8.com/metro/13/000000/rules.png" class="mr-1 mb-1"/>Rules</a>
+        <div class=" d-block d-md-none justify-content-start">
+            <a class="how-to-play ml-2" href="{{ url_for('mastermind_instructions') }}"><img src="https://img.icons8.com/metro/13/000000/rules.png" class="mr-1 mb-1"/>Rules</a>
+        </div>
+        
+        <div class="row m-0 p-0 justify-content-end">
             
             <!-- shop and stats -->
-            <div class="col-sm-12 col-md-4 px-0 d-flex justify-content-end px-1">
-                <div class="p-0">
-                    
+            <div class="col-sm-12 col-md-3 my-4 my-md-0 px-0 d-flex justify-content-center order-2 order-md-1">
+                <div class="container-fluid ">
                     <div class="mastermind-menu mb-2 fixed-width-section">
                         <div class="row m-0 p-0">
                             <div class="col-6 m-0 p-0 d-flex justify-content-start">
@@ -137,7 +139,7 @@
                 </div>
             </div>
             <!-- Mastermind board -->
-            <div class="col-sm-12 col-md-4 p-0 mb-4">
+            <div class="col-sm-12 col-md-4 p-0 mb-4 order-1 order-md-2">
                 <div class="row m-0 p-0 mb-2">
                     <div class="col-12 m-0 pt-0 d-flex justify-content-center ready-button-container">
                         <div id="ready-start-button-container">
@@ -380,32 +382,35 @@
             </div>
 
             <!-- score board -->
-            <div class="col-12 col-md-4 px-0">
-                <h3>High Scores</h3>
-                <table id="highScoreTable">
-                    <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Score</th>
-                        <th>Difficulty</th>
-                    </tr>
-                    {% for score in high_score %}
-                    <tr>
-                        {% if loop.first %}
-                        <td><img src="https://img.icons8.com/color/20/000000/gold-medal--v1.png"/></td>
-                        {% elif loop.index == 2 %}
-                        <td><img src="https://img.icons8.com/color/20/000000/silver-medal--v1.png"/></td>
-                        {% elif loop.index == 3 %}
-                        <td><img src="https://img.icons8.com/color/20/000000/bronze-medal--v1.png"/></td>
-                        {% else %}
-                        <td class="pl-1">{{loop.index}}</td>
-                        {% endif %}
-                        <td>{{ score.name }}</td>
-                        <td>{{ score.score }}</td>
-                        <td>{{ score.difficulty }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
+            <div class="col-12 col-md-4 px-0 d-flex justify-content-center justify-content-md-start order-3 order-md-3">
+                <div>
+                    <h3>High Scores</h3>
+                    <table id="highScoreTable">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                            <th>Difficulty</th>
+                        </tr>
+                        {% for score in high_score %}
+                        <tr>
+                            {% if loop.first %}
+                            <td><img src="https://img.icons8.com/color/20/000000/gold-medal--v1.png"/></td>
+                            {% elif loop.index == 2 %}
+                            <td><img src="https://img.icons8.com/color/20/000000/silver-medal--v1.png"/></td>
+                            {% elif loop.index == 3 %}
+                            <td><img src="https://img.icons8.com/color/20/000000/bronze-medal--v1.png"/></td>
+                            {% else %}
+                            <td class="pl-1">{{loop.index}}</td>
+                            {% endif %}
+                            <td>{{ score.name }}</td>
+                            <td>{{ score.score }}</td>
+                            <td>{{ score.difficulty }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                
             </div>
 
         </div>
