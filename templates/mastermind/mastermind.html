@@ -2,10 +2,9 @@
 {% block header %}Mastermind{% endblock %}
 {% block content %}
 
-
 <div class="d-flex justify-content-center">
-    <div class="page-container">
-        <a class="how-to-play ml-2" href="index.html">Rules</a>
+    <div class="page-container mt-3">
+        <a class="how-to-play ml-2" href="{{ url_for('mastermind_instructions') }}"><img src="https://img.icons8.com/metro/13/000000/rules.png" class="mr-1 mb-1"/>Rules</a>
         <div class="row m-0 p-0 mb-2">
             <div class="col-12 m-0 d-flex justify-content-center ready-button-container">
                 <div id="ready-start-button-container">
@@ -16,11 +15,8 @@
                 </div>
             </div>
         </div>
-
         <div class="row m-0 p-0">
-
             <!-- Mastermind board -->
-
             <div class="col-sm-12 col-md-6 p-0 mb-4 d-flex justify-content-center">
                 <div class="mastermind-board-container">
 
@@ -376,35 +372,37 @@
                     <div class="my-2 mastermind-menu fixed-width-section">
                         <h4 class="text-center"><span id="player-name-stats" class="colour-secondary theme"></span> Stats
                         </h4>
-
-                        <div class="mx-5"></div>
-                        <div class="d-flex justify-content-around">
-                            <table id="stats-table">
-                                <tr>
-                                    <th>Round</th>
-                                    <th>Attempts</th>
-                                    <th>Time</th>
-                                    <th>Coins</th>
-                                    <th>Difficulty</th>
-                                </tr>
-                            </table>
+                        <div id="statsContainer">
+                            <div class="mx-5"></div>
+                            <div class="d-flex justify-content-around">
+                                <table id="stats-table">
+                                    <tr>
+                                        <th>Round</th>
+                                        <th>Attempts</th>
+                                        <th>Time</th>
+                                        <th>Coins</th>
+                                        <th>Difficulty</th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <hr>
+    
+                            <div class=" d-flex justify-content-around align-items-center">
+                                <h4><span class="colour-secondary theme"></span> Total <span class="theme classic-theme">Stats</span>
+                                </h4>
+                                <table>
+                                    <tr>
+                                        <th>Attempts</th>
+                                        <th>Coins</th>
+                                    </tr>
+                                    <tr>
+                                        <th id="totalStatAttempts">0</th>
+                                        <th id="totalStatCoins">0</th>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-                        <hr>
-
-                        <div class=" d-flex justify-content-around align-items-center">
-                            <h4><span class="colour-secondary theme"></span> Total <span class="theme classic-theme">Stats</span>
-                            </h4>
-                            <table>
-                                <tr>
-                                    <th>Attempts</th>
-                                    <th>Coins</th>
-                                </tr>
-                                <tr>
-                                    <th id="totalStatAttempts">0</th>
-                                    <th id="totalStatCoins">0</th>
-                                </tr>
-                            </table>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -442,8 +440,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer" id="close-start-modal">
-                    <Button class="btn btn-secondary">Nope</Button>
+                <div class="modal-footer d-flex justify-content-between" id="close-start-modal">
+                    <a href="{{ url_for('home') }}" class="btn btn-danger">Back</a>
+                    <Button class="btn btn-secondary">Select A Difficulty</Button>
                 </div>
             </div>
         </div>
@@ -575,7 +574,12 @@ $('.expand-button').on('click', function () {
 /* entry modal */
 
 $('.difficuly-select-entry').on('click', function () {
-    $('#close-start-modal').html(`<Button type="submit" class="btn btn-success" onclick="addName()" data-dismiss="modal">Okay</Button>`);
+    
+    $('#close-start-modal').html(`
+    <a href="{{ url_for('home') }}" class="btn btn-danger">Back</a>
+    <Button type="submit" class="btn btn-success" onclick="addName()" data-dismiss="modal">Okay</Button>
+    `);
+    
     $('#enter-name-message').html('<p class="text-success">Thank you, Enjoy!</p>');
 });
 

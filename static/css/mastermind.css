@@ -17,13 +17,13 @@ h5 {
 }
 
 .how-to-play {
-    background-image: linear-gradient(#dedede, rgb(207, 207, 207));
-    border: none;
-    border-radius: 4px;
+    border: solid #b0b0b0 1px;
+    background-image: linear-gradient(#ffffff,rgb(242, 242, 242));
+    box-shadow: inset 0px 0px 8px 8px rgba(122, 86, 86, 0.04);
+    border-radius: 5px;
     font-size: 15px;
     color: black;
-    border: solid silver 2px;
-    padding: 0px 5px;
+    padding: 2px 5px;
 }
 
 .how-to-play:hover {

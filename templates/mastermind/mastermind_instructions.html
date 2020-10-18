@@ -3,7 +3,7 @@
 {% block content %}
  <!-- How to play -->
 
- <div class="d-flex justify-content-center">
+ <div class="d-flex justify-content-center mt-3">
     <div class="page-container">
         <div class="row m-0 p-0">
             <div class="col-lg-6 col-md-12 p-0 m-0 px-1 d-flex justify-content-center">
@@ -23,7 +23,7 @@
                     <!-- Button trigger modal -->
                     <div class="row">
                         <div class="col-12 d-flex justify-content-center mt-3">
-                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#videoExplanation">
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#videoExplanation">
                                 Video Explaination
                             </button>
 
@@ -69,14 +69,14 @@
                     <h4>Rules</h4>
                     <div class="row m-0 p-0 my-3">
                         <div class="col-12 m-0 p-0 d-flex justify-content-center">
-                            <img src="assets/images/explain-pegs.png" alt="example of the rules" class="rules-image">
+                            <img src="{{ url_for("static", filename="img/mastermind/explain-pegs.png") }}" alt="example of the rules" class="rules-image">
                         </div>
                     </div>
                     <p><b>Black Peg:</b><br /> The right colour in the <span class="text-success"><b>right</b></span> location
                     </p>
                     <p><b>White Peg:</b><br /> The right colour in the <span class="text-danger"><b>wrong</b></span> location.
                     </p>
-                    <a href="https://www.wikihow.com/Play-Mastermind" target="_blank">Still unsure?</a>
+                    <a href="https://www.wikihow.com/Play-Mastermind" class="btn btn-dark" target="_blank">Still unsure?</a>
                 </div>
             </div>
         </div>
@@ -84,4 +84,9 @@
 </div>
 
 
+{% endblock %}
+
+{% block extra_css %}
+<script src="https://kit.fontawesome.com/d4ed0579d0.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename="css/mastermind.css") }}">
 {% endblock %}
