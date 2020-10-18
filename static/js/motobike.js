@@ -48,7 +48,7 @@ var player = new function() {
 
 var t = 0;
 function loop() {
-    t += 2;
+    t += 3;
     ctx.fillStyle = "#f3ffd6";
     ctx.fillRect(0,0,c.width, c.height);
 

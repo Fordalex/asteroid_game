@@ -162,7 +162,7 @@ h5 {
 }
 
 .page-container {
-    max-width: 1300px;
+ 
 }
 
 .padding-left {
@@ -515,55 +515,6 @@ h5 {
 }
 
 
-/* counters */
-
-.fruit-purchase-background {
-    background: url('../images/fruit-background-purchase.png');
-    background-size: 110%;
-}
-
-.candy-purchase-background {
-    background: url('../images/candy-background-purchase.png');
-    background-size: 110%;
-}
-
-.gem-purchase-background {
-    background: url('../images/gem-background-purchase.png');
-    background-size: 100%;
-}
-
-
-/* thems */
-
-.fruit-background-container {
-    background-image: url('../images/fruit-background.png');
-    background-size: 150%;
-}
-
-.fruit-background {
-    background-image: url('../images/fruit-background.png');
-    background-size: 100%;
-}
-
-.pink-background-container {
-    background-image: url('../images/pink-background.png');
-    background-size: 150%;
-}
-
-.pink-background {
-    background-image: url('../images/pink-background.png');
-    background-size: 100%;
-}
-
-.ice-background-container {
-    background-image: url('../images/ice-background.png');
-    background-size: 150%;
-}
-
-.ice-background {
-    background-image: url('../images/ice-background.png');
-    background-size: 100%;
-}
 
 .inventory-background-classic-theme {
     background-color: #bfcccf;
@@ -622,15 +573,6 @@ h5 {
     background-color: red;
     border-radius: 50%;
     border: solid black 1px;
-    cursor: pointer;
-}
-
-#classic-counter-inventory {
-    width: 26px;
-    height: 26px;
-    background-image: url('../images/green-counter.png');
-    background-size: 100%;
-    border-radius: 50%;
     cursor: pointer;
 }
 
@@ -806,21 +748,3 @@ th {
 }
 
 
-/* media queries */
-
-@media (max-width:450px) {
-    .mastermind-board-container {
-        margin-right: 0px;
-    }
-    .ice-background {
-        background-image: url('../images/ice-background-mobile.png');
-    }
-    .pink-background {
-        background-image: url('../images/pink-background.png');
-        background-size: 200%;
-    }
-    .fruit-background {
-        background-image: url('../images/fruit-background-mobile.png');
-        background-size: 200%;
-    }
-}

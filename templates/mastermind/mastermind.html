@@ -2,258 +2,16 @@
 {% block header %}Mastermind{% endblock %}
 {% block content %}
 
-<div class="d-flex justify-content-center">
+
     <div class="page-container mt-3">
-        <a class="how-to-play ml-2" href="{{ url_for('mastermind_instructions') }}"><img src="https://img.icons8.com/metro/13/000000/rules.png" class="mr-1 mb-1"/>Rules</a>
-        <div class="row m-0 p-0 mb-2">
-            <div class="col-12 m-0 d-flex justify-content-center ready-button-container">
-                <div id="ready-start-button-container">
-                    <i class="fas fa-long-arrow-alt-right left-play-arrow"></i>
-                    <button onclick="start()" id="ready-button" class="play-button-classic">Play!<i
-                            class="mx-2 fas fa-play"></i></button>
-                    <i class="fas fa-long-arrow-alt-left right-play-arrow"></i>
-                </div>
-            </div>
-        </div>
+        <a class="how-to-play ml-2 float-left" href="{{ url_for('mastermind_instructions') }}"><img src="https://img.icons8.com/metro/13/000000/rules.png" class="mr-1 mb-1"/>Rules</a>
+       
         <div class="row m-0 p-0">
-            <!-- Mastermind board -->
-            <div class="col-sm-12 col-md-6 p-0 mb-4 d-flex justify-content-center">
-                <div class="mastermind-board-container">
-
-                    <div class="row m-0 p-0 answer-container">
-                        <div class="col-9 m-0 p-0 answer-wrapper">
-                            <div id="master-cover" class="master-mind-cover ml-2"></div>
-                            <div class="d-flex align-items-center masters-counters-position">
-                                <div class="counter-black-hole" id="master-one"></div>
-                                <div class="counter-black-hole" id="master-two"></div>
-                                <div class="counter-black-hole" id="master-three"></div>
-                                <div class="counter-black-hole" id="master-four"></div>
-                            </div>
-                        </div>
-                        <div class="col-3 side-border-divider p-0 m-0">
-                            <h5 class="p-2 m-0 text-center text-dark">Choose Counter</h5>
-                        </div>
-                    </div>
-
-                    <div class="row m-0 p-0">
-                        <div class="col-9 p-0 m-0">
-                            <div class="row board-row-height m-0 p-0 mt-3">
-                                <div class=" d-flex align-items-center m-0  padding-left">
-                                    <div class="counter-black-hole" id="r-10-c-one"></div>
-                                    <div class="counter-black-hole" id="r-10-c-two"></div>
-                                    <div class="counter-black-hole" id="r-10-c-three"></div>
-                                    <div class="counter-black-hole" id="r-10-c-four"></div>
-                                </div>
-                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
-                                    <div class="marker-container" id="peg-container-10">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 m-0 pt-3 p-0 side-border-divider">
-                            <div class="choose-red choose-button" onclick="chooseColour(redCounter,0)"></div>
-                        </div>
-                    </div>
-                    <div class="row m-0 p-0">
-                        <div class="col-9 p-0 m-0">
-                            <div class="row board-row-height m-0 p-0 mt-0">
-                                <div class=" d-flex align-items-center m-0  padding-left">
-                                    <div class="counter-black-hole" id="r-9-c-one"></div>
-                                    <div class="counter-black-hole" id="r-9-c-two"></div>
-                                    <div class="counter-black-hole" id="r-9-c-three"></div>
-                                    <div class="counter-black-hole" id="r-9-c-four"></div>
-                                </div>
-                                <div class="m-0  ml-2 p-0 d-flex justify-content-center align-items-center">
-                                    <div class="marker-container" id="peg-container-9">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 m-0 p-0 side-border-divider">
-                            <div class="choose-green choose-button" onclick="chooseColour(greenCounter,1)"></div>
-                        </div>
-                    </div>
-                    <div class="row m-0 p-0">
-                        <div class="col-9 p-0 m-0">
-                            <div class="row board-row-height m-0 p-0 mt-0">
-                                <div class=" d-flex align-items-center m-0  padding-left ">
-                                    <div class="counter-black-hole" id="r-8-c-one"></div>
-                                    <div class="counter-black-hole" id="r-8-c-two"></div>
-                                    <div class="counter-black-hole" id="r-8-c-three"></div>
-                                    <div class="counter-black-hole" id="r-8-c-four"></div>
-                                </div>
-                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
-                                    <div class="marker-container" id="peg-container-8">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 m-0 p-0 side-border-divider">
-                            <div class="choose-yellow choose-button" onclick="chooseColour(yellowCounter,2)"></div>
-                        </div>
-                    </div>
-                    <div class="row m-0 p-0">
-                        <div class="col-9 p-0 m-0">
-                            <div class="row board-row-height m-0 p-0 mt-0">
-                                <div class=" d-flex align-items-center m-0 padding-left">
-                                    <div class="counter-black-hole" id="r-7-c-one"></div>
-                                    <div class="counter-black-hole" id="r-7-c-two"></div>
-                                    <div class="counter-black-hole" id="r-7-c-three"></div>
-                                    <div class="counter-black-hole" id="r-7-c-four"></div>
-                                </div>
-                                <div class="m-0 p-0 ml-2 d-flex justify-content-center align-items-center">
-                                    <div class="marker-container" id="peg-container-7">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 m-0 p-0 side-border-divider easy-counter-selector-container">
-                            <div class="choose-blue choose-button" onclick="chooseColour(blueCounter,3)"></div>
-                        </div>
-                    </div>
-                    <div class="row m-0 p-0">
-                        <div class="col-9 p-0 m-0">
-                            <div class="row board-row-height m-0 p-0 mt-0">
-                                <div class=" d-flex align-items-center m-0 padding-left">
-                                    <div class="counter-black-hole" id="r-6-c-one"></div>
-                                    <div class="counter-black-hole" id="r-6-c-two"></div>
-                                    <div class="counter-black-hole" id="r-6-c-three"></div>
-                                    <div class="counter-black-hole" id="r-6-c-four"></div>
-                                </div>
-                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
-                                    <div class="marker-container" id="peg-container-6">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 m-0 p-0 side-border-divider easy-counter-selector-container">
-                            <div class="choose-orange choose-button" onclick="chooseColour(orangeCounter,4)"></div>
-                        </div>
-                    </div>
-                    <div class="row m-0 p-0">
-                        <div class="col-9 p-0 m-0">
-                            <div class="row board-row-height m-0 p-0 mt-0">
-                                <div class=" d-flex align-items-center m-0 padding-left">
-                                    <div class="counter-black-hole" id="r-5-c-one"></div>
-                                    <div class="counter-black-hole" id="r-5-c-two"></div>
-                                    <div class="counter-black-hole" id="r-5-c-three"></div>
-                                    <div class="counter-black-hole" id="r-5-c-four"></div>
-                                </div>
-                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
-                                    <div class="marker-container" id="peg-container-5">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 m-0 p-0 side-border-divider medium-counter-selector-container">
-
-                            <div class="choose-white choose-button" onclick="chooseColour(whiteCounter,5)"></div>
-                        </div>
-                    </div>
-                    <div class="row m-0 p-0">
-                        <div class="col-9 p-0 m-0">
-                            <div class="row board-row-height m-0 p-0 mt-0">
-                                <div class=" d-flex align-items-center m-0  padding-left">
-                                    <div class="counter-black-hole" id="r-4-c-one"></div>
-                                    <div class="counter-black-hole" id="r-4-c-two"></div>
-                                    <div class="counter-black-hole" id="r-4-c-three"></div>
-                                    <div class="counter-black-hole" id="r-4-c-four"></div>
-                                </div>
-                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
-                                    <div class="marker-container" id="peg-container-4">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 m-0 p-0 side-border-divider medium-counter-selector-container">
-
-                            <div id="choose-hole" onclick="chooseColour(holeCounter,6)"></div>
-                        </div>
-                    </div>
-                    <div class="row m-0 p-0">
-                        <div class="col-9 p-0 m-0">
-                            <div class="row board-row-height m-0 p-0 mt-0">
-                                <div class=" d-flex align-items-center m-0  padding-left">
-                                    <div class="counter-black-hole" id="r-3-c-one"></div>
-                                    <div class="counter-black-hole" id="r-3-c-two"></div>
-                                    <div class="counter-black-hole" id="r-3-c-three"></div>
-                                    <div class="counter-black-hole" id="r-3-c-four"></div>
-                                </div>
-                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
-                                    <div class="marker-container" id="peg-container-3">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 m-0 p-0 side-border-divider">
-                            <button class="check-round-button" onclick="removeCounter()">Remove</button>
-                        </div>
-                    </div>
-                    <div class="row m-0 p-0">
-                        <div class="col-9 p-0 m-0">
-                            <div class="row board-row-height m-0 p-0 mt-0">
-                                <div class=" d-flex align-items-center m-0  padding-left">
-                                    <div class="counter-black-hole" id="r-2-c-one"></div>
-                                    <div class="counter-black-hole" id="r-2-c-two"></div>
-                                    <div class="counter-black-hole" id="r-2-c-three"></div>
-                                    <div class="counter-black-hole" id="r-2-c-four"></div>
-                                </div>
-                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
-                                    <div class="marker-container" id="peg-container-2">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 m-0 p-0 side-border-divider">
-                            <div id="check-round-arrow"></div>
-                            <button class="check-round-button" onclick="checkCounters()">Check</button>
-                        </div>
-                    </div>
-                    <div class="row m-0 p-0">
-                        <div class="col-9 p-0 m-0">
-                            <div class="row board-row-height m-0 p-0 mt-0">
-                                <div class=" d-flex align-items-center m-0  padding-left">
-                                    <div class="counter-black-hole" id="r-1-c-one"></div>
-                                    <div class="counter-black-hole" id="r-1-c-two"></div>
-                                    <div class="counter-black-hole" id="r-1-c-three"></div>
-                                    <div class="counter-black-hole" id="r-1-c-four"></div>
-                                </div>
-                                <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
-                                    <div class="marker-container" id="peg-container-1">
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3 m-0 p-0 side-border-divider">
-                            <div>
-                                <p class="p-smaller-font m-0">Attempts: <span id="round-counter">1</span></p>
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <i class="fas fa-stopwatch mx-1 text-black-50"></i>
-                                    <p class="p-smaller-font m-0"><span id="timer-min"></span><span class="mx-1">:</span><span id="timer-sec"></span></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- // Mastermind board -->
-
+            
             <!-- shop and stats -->
-
-            <div class="col-sm-12 col-md-6 px-0 d-flex px-1">
-                <div class="container-fluid p-0">
+            <div class="col-sm-12 col-md-4 px-0 d-flex justify-content-end px-1">
+                <div class="p-0">
+                    
                     <div class="mastermind-menu mb-2 fixed-width-section">
                         <div class="row m-0 p-0">
                             <div class="col-6 m-0 p-0 d-flex justify-content-start">
@@ -378,9 +136,279 @@
                     </div>
                 </div>
             </div>
+            <!-- Mastermind board -->
+            <div class="col-sm-12 col-md-4 p-0 mb-4">
+                <div class="row m-0 p-0 mb-2">
+                    <div class="col-12 m-0 pt-0 d-flex justify-content-center ready-button-container">
+                        <div id="ready-start-button-container">
+                            <i class="fas fa-long-arrow-alt-right left-play-arrow"></i>
+                            <button onclick="start()" id="ready-button" class="play-button-classic">Play!<i
+                                    class="mx-2 fas fa-play"></i></button>
+                            <i class="fas fa-long-arrow-alt-left right-play-arrow"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="mastermind-board-container">
+                        <div class="row m-0 p-0 answer-container">
+                            <div class="col-9 m-0 p-0 answer-wrapper">
+                                <div id="master-cover" class="master-mind-cover ml-2"></div>
+                                <div class="d-flex align-items-center masters-counters-position">
+                                    <div class="counter-black-hole" id="master-one"></div>
+                                    <div class="counter-black-hole" id="master-two"></div>
+                                    <div class="counter-black-hole" id="master-three"></div>
+                                    <div class="counter-black-hole" id="master-four"></div>
+                                </div>
+                            </div>
+                            <div class="col-3 side-border-divider p-0 m-0">
+                                <h5 class="p-2 m-0 text-center text-dark">Choose Counter</h5>
+                            </div>
+                        </div>
+    
+                        <div class="row m-0 p-0">
+                            <div class="col-9 p-0 m-0">
+                                <div class="row board-row-height m-0 p-0 mt-3">
+                                    <div class=" d-flex align-items-center m-0  padding-left">
+                                        <div class="counter-black-hole" id="r-10-c-one"></div>
+                                        <div class="counter-black-hole" id="r-10-c-two"></div>
+                                        <div class="counter-black-hole" id="r-10-c-three"></div>
+                                        <div class="counter-black-hole" id="r-10-c-four"></div>
+                                    </div>
+                                    <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                        <div class="marker-container" id="peg-container-10">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 m-0 pt-3 p-0 side-border-divider">
+                                <div class="choose-red choose-button" onclick="chooseColour(redCounter,0)"></div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col-9 p-0 m-0">
+                                <div class="row board-row-height m-0 p-0 mt-0">
+                                    <div class=" d-flex align-items-center m-0  padding-left">
+                                        <div class="counter-black-hole" id="r-9-c-one"></div>
+                                        <div class="counter-black-hole" id="r-9-c-two"></div>
+                                        <div class="counter-black-hole" id="r-9-c-three"></div>
+                                        <div class="counter-black-hole" id="r-9-c-four"></div>
+                                    </div>
+                                    <div class="m-0  ml-2 p-0 d-flex justify-content-center align-items-center">
+                                        <div class="marker-container" id="peg-container-9">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 m-0 p-0 side-border-divider">
+                                <div class="choose-green choose-button" onclick="chooseColour(greenCounter,1)"></div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col-9 p-0 m-0">
+                                <div class="row board-row-height m-0 p-0 mt-0">
+                                    <div class=" d-flex align-items-center m-0  padding-left ">
+                                        <div class="counter-black-hole" id="r-8-c-one"></div>
+                                        <div class="counter-black-hole" id="r-8-c-two"></div>
+                                        <div class="counter-black-hole" id="r-8-c-three"></div>
+                                        <div class="counter-black-hole" id="r-8-c-four"></div>
+                                    </div>
+                                    <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                        <div class="marker-container" id="peg-container-8">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 m-0 p-0 side-border-divider">
+                                <div class="choose-yellow choose-button" onclick="chooseColour(yellowCounter,2)"></div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col-9 p-0 m-0">
+                                <div class="row board-row-height m-0 p-0 mt-0">
+                                    <div class=" d-flex align-items-center m-0 padding-left">
+                                        <div class="counter-black-hole" id="r-7-c-one"></div>
+                                        <div class="counter-black-hole" id="r-7-c-two"></div>
+                                        <div class="counter-black-hole" id="r-7-c-three"></div>
+                                        <div class="counter-black-hole" id="r-7-c-four"></div>
+                                    </div>
+                                    <div class="m-0 p-0 ml-2 d-flex justify-content-center align-items-center">
+                                        <div class="marker-container" id="peg-container-7">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 m-0 p-0 side-border-divider easy-counter-selector-container">
+                                <div class="choose-blue choose-button" onclick="chooseColour(blueCounter,3)"></div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col-9 p-0 m-0">
+                                <div class="row board-row-height m-0 p-0 mt-0">
+                                    <div class=" d-flex align-items-center m-0 padding-left">
+                                        <div class="counter-black-hole" id="r-6-c-one"></div>
+                                        <div class="counter-black-hole" id="r-6-c-two"></div>
+                                        <div class="counter-black-hole" id="r-6-c-three"></div>
+                                        <div class="counter-black-hole" id="r-6-c-four"></div>
+                                    </div>
+                                    <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                        <div class="marker-container" id="peg-container-6">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 m-0 p-0 side-border-divider easy-counter-selector-container">
+                                <div class="choose-orange choose-button" onclick="chooseColour(orangeCounter,4)"></div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col-9 p-0 m-0">
+                                <div class="row board-row-height m-0 p-0 mt-0">
+                                    <div class=" d-flex align-items-center m-0 padding-left">
+                                        <div class="counter-black-hole" id="r-5-c-one"></div>
+                                        <div class="counter-black-hole" id="r-5-c-two"></div>
+                                        <div class="counter-black-hole" id="r-5-c-three"></div>
+                                        <div class="counter-black-hole" id="r-5-c-four"></div>
+                                    </div>
+                                    <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                        <div class="marker-container" id="peg-container-5">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 m-0 p-0 side-border-divider medium-counter-selector-container">
+    
+                                <div class="choose-white choose-button" onclick="chooseColour(whiteCounter,5)"></div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col-9 p-0 m-0">
+                                <div class="row board-row-height m-0 p-0 mt-0">
+                                    <div class=" d-flex align-items-center m-0  padding-left">
+                                        <div class="counter-black-hole" id="r-4-c-one"></div>
+                                        <div class="counter-black-hole" id="r-4-c-two"></div>
+                                        <div class="counter-black-hole" id="r-4-c-three"></div>
+                                        <div class="counter-black-hole" id="r-4-c-four"></div>
+                                    </div>
+                                    <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                        <div class="marker-container" id="peg-container-4">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 m-0 p-0 side-border-divider medium-counter-selector-container">
+    
+                                <div id="choose-hole" onclick="chooseColour(holeCounter,6)"></div>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col-9 p-0 m-0">
+                                <div class="row board-row-height m-0 p-0 mt-0">
+                                    <div class=" d-flex align-items-center m-0  padding-left">
+                                        <div class="counter-black-hole" id="r-3-c-one"></div>
+                                        <div class="counter-black-hole" id="r-3-c-two"></div>
+                                        <div class="counter-black-hole" id="r-3-c-three"></div>
+                                        <div class="counter-black-hole" id="r-3-c-four"></div>
+                                    </div>
+                                    <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                        <div class="marker-container" id="peg-container-3">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 m-0 p-0 side-border-divider">
+                                <button class="check-round-button" onclick="removeCounter()">Remove</button>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col-9 p-0 m-0">
+                                <div class="row board-row-height m-0 p-0 mt-0">
+                                    <div class=" d-flex align-items-center m-0  padding-left">
+                                        <div class="counter-black-hole" id="r-2-c-one"></div>
+                                        <div class="counter-black-hole" id="r-2-c-two"></div>
+                                        <div class="counter-black-hole" id="r-2-c-three"></div>
+                                        <div class="counter-black-hole" id="r-2-c-four"></div>
+                                    </div>
+                                    <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                        <div class="marker-container" id="peg-container-2">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 m-0 p-0 side-border-divider">
+                                <div id="check-round-arrow"></div>
+                                <button class="check-round-button" onclick="checkCounters()">Check</button>
+                            </div>
+                        </div>
+                        <div class="row m-0 p-0">
+                            <div class="col-9 p-0 m-0">
+                                <div class="row board-row-height m-0 p-0 mt-0">
+                                    <div class=" d-flex align-items-center m-0  padding-left">
+                                        <div class="counter-black-hole" id="r-1-c-one"></div>
+                                        <div class="counter-black-hole" id="r-1-c-two"></div>
+                                        <div class="counter-black-hole" id="r-1-c-three"></div>
+                                        <div class="counter-black-hole" id="r-1-c-four"></div>
+                                    </div>
+                                    <div class="m-0 ml-2 p-0 d-flex justify-content-center align-items-center">
+                                        <div class="marker-container" id="peg-container-1">
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 m-0 p-0 side-border-divider">
+                                <div>
+                                    <p class="p-smaller-font m-0">Attempts: <span id="round-counter">1</span></p>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <i class="fas fa-stopwatch mx-1 text-black-50"></i>
+                                        <p class="p-smaller-font m-0"><span id="timer-min"></span><span class="mx-1">:</span><span id="timer-sec"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+
+            <!-- score board -->
+            <div class="col-12 col-md-4 px-0">
+                <h3>High Scores</h3>
+                <table id="highScoreTable">
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Difficulty</th>
+                    </tr>
+                    {% for score in high_score %}
+                    <tr>
+                        {% if loop.first %}
+                        <td><img src="https://img.icons8.com/color/20/000000/gold-medal--v1.png"/></td>
+                        {% elif loop.index == 2 %}
+                        <td><img src="https://img.icons8.com/color/20/000000/silver-medal--v1.png"/></td>
+                        {% elif loop.index == 3 %}
+                        <td><img src="https://img.icons8.com/color/20/000000/bronze-medal--v1.png"/></td>
+                        {% else %}
+                        <td class="pl-1">{{loop.index}}</td>
+                        {% endif %}
+                        <td>{{ score.name }}</td>
+                        <td>{{ score.score }}</td>
+                        <td>{{ score.difficulty }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
 
         </div>
-    </div>
 
     <!-- // shop and stats -->
 
@@ -512,6 +540,85 @@
     background-image: url('{{ url_for("static", filename="img/mastermind/peg-container-background.png") }}');
     background-size: 100% 100%;
 }
+
+#classic-counter-inventory {
+    width: 26px;
+    height: 26px;
+    background-image: url('{{ url_for("static", filename="img/mastermind/green-counter.png") }}');
+    background-size: 100%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* counters */
+
+.fruit-purchase-background {
+    background: url('{{ url_for("static", filename="img/mastermind/fruit-background-purchase.png") }}');
+    background-size: 110%;
+}
+
+.candy-purchase-background {
+    background: url('{{ url_for("static", filename="img/mastermind/candy-background-purchase.png") }}');
+    background-size: 110%;
+}
+
+.gem-purchase-background {
+    background: url('{{ url_for("static", filename="img/mastermind/gem-background-purchase.png") }}');
+    background-size: 100%;
+}
+
+
+/* thems */
+
+.fruit-background-container {
+    background-image: url('{{ url_for("static", filename="img/mastermind/fruit-background.png") }}');
+    background-size: 150%;
+}
+
+.fruit-background {
+    background-image: url('{{ url_for("static", filename="img/mastermind/fruit-background.png") }}');
+    background-size: 100%;
+}
+
+.pink-background-container {
+    background-image: url('{{ url_for("static", filename="img/mastermind/pink-background.png") }}');
+    background-size: 150%;
+}
+
+.pink-background {
+    background-image: url('{{ url_for("static", filename="img/mastermind/pink-background.png") }}');
+    background-size: 100%;
+}
+
+.ice-background-container {
+    background-image: url('{{ url_for("static", filename="img/mastermind/ice-background.png") }}');
+    background-size: 150%;
+}
+
+.ice-background {
+    background-image: url('{{ url_for("static", filename="img/mastermind/ice-background.png") }}');
+    background-size: 100%;
+}
+/* media queries */
+
+@media (max-width:450px) {
+    .mastermind-board-container {
+        margin-right: 0px;
+    }
+    .ice-background {
+        background-image: url('{{ url_for("static", filename="img/mastermind/ice-background-mobile.png") }}');
+    }
+    .pink-background {
+        background-image: url('{{ url_for("static", filename="img/mastermind/pink-background.png") }}');
+        background-size: 200%;
+    }
+    .fruit-background {
+        background-image: url('{{ url_for("static", filename="img/mastermind/fruit-background-mobile.png") }}');
+        background-size: 200%;
+    }
+}
+
+
 </style>
 {% endblock %}
 
@@ -549,7 +656,7 @@ $('.difficuly-select-entry').on('click', function () {
     
     $('#close-start-modal').html(`
     <a href="{{ url_for('home') }}" class="btn btn-danger">Back</a>
-    <Button type="submit" class="btn btn-success" onclick="addName()" data-dismiss="modal">Okay</Button>
+    <Button type="submit" class="btn btn-success" onclick="addName()" data-dismiss="modal">Ready</Button>
     `);
     
     $('#enter-name-message').html('<p class="text-success">Thank you, Enjoy!</p>');
@@ -1315,7 +1422,6 @@ function checkCounters() {
 
 function addStatsTable() {
         /* adding table of stats if first round */
-        console.log(fullGames)
         if (fullGames == 1) {
             $('#statsContainer').html(`
             <div class="mx-5"></div>
@@ -1452,6 +1558,17 @@ function levelLost() {
     for (let i = 0; i < 50; i++) {
         coins--;
     }
+    /* adding stats */
+    $('#stats-table').append(`
+    <tr>
+    <th class="theme ${currentTheme}">${fullGames}</th>
+    <td>${round}</td>
+    <td>${timerMin} : ${timerSec}</td>
+    <td>${totalRoundCoins}</td>
+    <td class="${difficultySetting}">${difficultyStats}</td>
+    </tr>
+    `);
+
     $('#player-coins').html(coins);
     $('.marker-peg').remove();
     $('#round-counter').html(1);
