@@ -16,6 +16,8 @@ I'm trying to use loads of icons to guide the user through this web app as I'm a
 
 ## bugs
 
+I need to use AJAX to submit the form so I can stop the user being able to change their score before submittion.
+
 ### Asteroid
 
 bullets will shoot when the game is pause.

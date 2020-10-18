@@ -12,7 +12,7 @@
         <div class="row m-0 p-0 justify-content-end">
             
             <!-- shop and stats -->
-            <div class="col-sm-12 col-md-3 my-4 my-md-0 px-0 d-flex justify-content-center order-2 order-md-1">
+            <div class="col-sm-12 col-md-3 my-4 my-md-0 px-0 d-flex justify-content-center justify-content-md-end order-2 order-md-1">
                 <div class="container-fluid ">
                     <div class="mastermind-menu mb-2 fixed-width-section">
                         <div class="row m-0 p-0">
@@ -126,14 +126,6 @@
                             <div class="shop-theme-container d-flex justify-content-center p-4" id="select-ice-theme">
                                 <i class="fas fa-lock"></i>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="my-2 mastermind-menu fixed-width-section">
-                        <h4 class="text-center"><span id="player-name-stats" class="colour-secondary theme"></span> Stats
-                        </h4>
-                        <div id="statsContainer">
-                        <p>Press play to play your first game to see your stats.</p>
                         </div>
                     </div>
                 </div>
@@ -403,7 +395,7 @@
                             {% else %}
                             <td class="pl-1">{{loop.index}}</td>
                             {% endif %}
-                            <td>{{ score.name }}</td>
+                            <td class="capitalize">{{ score.name }}</td>
                             <td>{{ score.score }}</td>
                             <td>{{ score.difficulty }}</td>
                         </tr>
@@ -477,6 +469,9 @@
                     <label><input type="radio" name="difficulty" class="hard-difficulty"> Hard</label>
                 </div>
                 <div class="modal-footer">
+                    <form action="save_high_score/mastermind/alex/350/EASY" id="endGameForm" method="POST">
+                        <button type="submit" class="btn btn-warning" >Play Again</button>
+                    </form>
                     <button type="button" class="btn btn-success" data-dismiss="modal" id="firstModal" onclick="loop()">Okay!</button>
                 </div>
             </div>
@@ -690,7 +685,13 @@ var round = 1;
 var holeSelect = 1;
 var gameStarted = false;
 var fullGames = 0;
-var coins = 0;
+var localCoins = localStorage.getItem('coins'); 
+if (localCoins) {
+    var coins = localCoins;
+} else {
+    var coins = 0;
+}
+
 var soundOn = true;
 
 var playerLocationOne = 0;
@@ -1401,6 +1402,7 @@ function checkCounters() {
         if (masterLocationOne == playerLocationOne && masterLocationTwo == playerLocationTwo && masterLocationThree == playerLocationThree && masterLocationFour == playerLocationFour) {
             addStatsTable();
             levelComplete();
+            saveCoinsLocal();
             winnerBoolean = true;
         }
 
@@ -1410,6 +1412,7 @@ function checkCounters() {
             }
             addStatsTable();
             levelLost();
+            saveCoinsLocal();
         }
 
 
@@ -1591,6 +1594,10 @@ function levelLost() {
     totalStatAttempts = addingTotalStats(round, totalStatAttempts);
     $('#totalStatAttempts').html(totalStatAttempts);
 
+}
+
+function saveCoinsLocal() {
+    localStorage.setItem('coins', coins)
 }
 
 /* Timer */

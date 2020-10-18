@@ -46,8 +46,8 @@ def mastermind():
     """
     Display the mastermind game with high scores.
     """
-
-    return render_template('mastermind/mastermind.html')
+    high_score = mongo.db.mastermind.find().sort('score', pymongo.DESCENDING)
+    return render_template('mastermind/mastermind.html', high_score=high_score)
 
 # motobike game
 
@@ -58,22 +58,31 @@ def motobike():
 
 # Save all the high scores.
 
-@app.route('/save_high_score/<name>/<score>/<difficulty>', methods=['POST'])
-def save_high_score(name, score, difficulty):
+@app.route('/save_high_score/<game>/<name>/<score>/<difficulty>', methods=['POST'])
+def save_high_score(game, name, score, difficulty):
     """
-    Save hight scores for the each game.
+    Save the high scores for the each game.
     """
+    if game == 'ufo_defence':
+        asteroid = mongo.db.asteroid
+        high_score = {
+            'name': name,
+            'score': int(score),
+            'difficulty': difficulty,
+        }
+        asteroid.insert_one(high_score)
+        return redirect(url_for('asteroid'))
 
-
-    asteroid = mongo.db.asteroid
-
-    high_score = {
-        'name': name,
-        'score': int(score),
-        'difficulty': difficulty,
-    }
-    asteroid.insert_one(high_score)
-    return redirect(url_for('asteroid'))
+    elif game == 'mastermind':
+        mastermind = mongo.db.mastermind
+        high_score = {
+            'name': name,
+            'score': int(score),
+            'difficulty': difficulty,
+        }
+        mastermind.insert_one(high_score)
+        return redirect(url_for('mastermind'))
+    
 
 
 

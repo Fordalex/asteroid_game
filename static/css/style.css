@@ -20,6 +20,12 @@ li,
 label, td {
     font-family: 'Open Sans Condensed', sans-serif;
 }
+/* other */
+.capitalize {
+    text-transform: capitalize;
+}
+
+/* header */
 
 .logo {
     border-radius: 50%;
