@@ -201,7 +201,7 @@ $('#ready').on('click', function() {
 var bulletSpeedCost = 10;
 var medipackCost = 10;
 var bulletSizeCost = 10;
-var fuleCost = 10;
+var fuelCost = 10;
 var miniGunCost = 10;
 var moneyMultiplierCost = 10;
 
@@ -312,8 +312,8 @@ function draw() {
         if (debris.length > 40) {
             debris.shift()
         }
-        // stop the player if they have ran out of fule while moving
-        if (fule == 0) {
+        // stop the player if they have ran out of fuel while moving
+        if (fuel == 0) {
             playerOne.velocity.x = 0;
             playerOne.velocity.y = 0;
         }
@@ -357,7 +357,7 @@ var score = 0;
 var money = 0;
 var bulletSpeed = 1;
 var bulletSize = 5;
-var fule = 50;
+var fuel = 50;
 var moneyMultiplier = 1;
 var miniGunTimer = 0;
 var miniGunActivated = false;
@@ -421,7 +421,7 @@ var playerOne = new Player();
 // move the player
 window.addEventListener('keypress', function(e) {
     if (!gamePaused) {
-        if (fule > 0) {
+        if (fuel > 0) {
             if (e.key == 'w') {
                 playerOne.moveUp()
                 movingDown = true;
@@ -438,7 +438,7 @@ window.addEventListener('keypress', function(e) {
                 playerOne.moveLeft()
                 movingRight = true;
             }
-            fule--
+            fuel--
         }
     }
 })
@@ -561,7 +561,7 @@ function showPlayersStats() {
     text(`Enemy Delay: ${enemySpawnSpeed}`, 10, 670);
     text(`Enemy Speed: ${enemySpeed.toFixed(2)}`, 10, 690);
 
-    text(`Fule: ${fule}`, 620, 630);
+    text(`Fuel: ${fuel}`, 620, 630);
     text('Velocity', 620, 650);
     text(`Y:${playerOne.velocity.y.toFixed(2)}`, 620, 670);
     text(`X:${playerOne.velocity.x.toFixed(2)}`, 620, 690);
@@ -659,10 +659,10 @@ window.addEventListener('keypress', function(e) {
         }
     }
     if (e.key == 4) {
-        if (money >= fuleCost) {
-            money -= fuleCost
-            fuleCost += fuleCost;
-            fule += 200;
+        if (money >= fuelCost) {
+            money -= fuelCost
+            fuelCost += fuelCost;
+            fuel += 200;
         }
     }
     if (e.key == 5) {
@@ -725,7 +725,7 @@ function updateShop() {
     $('#fasterBulletsCost').html(bulletSpeedCost)
     $('#medipackCost').html(medipackCost)
     $('#biggerBulletsCost').html(bulletSizeCost)
-    $('#fuelCost').html(fuleCost)
+    $('#fuelCost').html(fuelCost)
     $('#minigunCost').html(miniGunCost)
     $('#moneyMultiplerCost').html(moneyMultiplierCost)
 }

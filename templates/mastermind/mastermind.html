@@ -625,7 +625,7 @@ $(document).ready(function () {
         backdrop: 'static',
         keyboard: false
     });
-    playerName = localStorage.getItem('playerName');
+    playerName = localStorage.getItem('playersName');
     if (playerName == null) {
         playerName = 'Player';
     }
@@ -670,12 +670,10 @@ function addName() {
     playerName = $('#inputPlayerName').val();
     $('#player-name-stats').text(playerName + "'s");
     if (playerName == 'cheat') {
-        for (let i = 0; i < 8000; i++) {
-            coins++;
-        }
+        coins += 8000;
     }
     $('#player-coins').html(coins);
-    localStorage.setItem('playerName', playerName);
+    localStorage.setItem('playersName', playerName);
 }
 
 
