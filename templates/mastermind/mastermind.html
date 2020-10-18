@@ -419,7 +419,11 @@
                 <div class="modal-body p-0">
                     <div class="px-3 pt-3">
                         <h6>Please Enter Your Name:</h6>
-                        <input type="text" id="inputPlayerName" maxlength="15">
+                        <div class="d-flex justify-content-center">
+                            <input type="text" id="inputPlayerName" maxlength="15" class="form-control">
+                            <button id="anonymousButton" class="btn btn-warning ml-2">Anonymous</button>
+                        </div>
+                        <small>After a game your score will be saved. Please press anonymous if you don't want to show your name.</small>
                     </div>
                     <hr>
                     <div class="px-3">
@@ -463,16 +467,9 @@
                     <p>Time Bonus: <i class="fas fa-coins mx-2 coin-color"></i><span id="timer-bonus" class="font-weight-bold"></span></p>
                     <p>Difficulty Bonus: <i class="fas fa-coins mx-2 coin-color"></i><span id="difficulty-bonus" class="font-weight-bold"></span></p>
                     <p>Total coins for that round: <i class="fas fa-coins mx-2 coin-color"></i><span id="total-coins-round" class="font-weight-bold"></span> Coins</p>
-                    <h4>Try a different difficulty?</h4>
-                    <label><input type="radio" name="difficulty" class="easy-difficulty"> Easy</label>
-                    <label><input type="radio" name="difficulty" class="medium-difficulty"> Medium</label>
-                    <label><input type="radio" name="difficulty" class="hard-difficulty"> Hard</label>
                 </div>
-                <div class="modal-footer">
-                    <form action="save_high_score/mastermind/alex/350/EASY" id="endGameForm" method="POST">
-                        <button type="submit" class="btn btn-warning" >Play Again</button>
-                    </form>
-                    <button type="button" class="btn btn-success" data-dismiss="modal" id="firstModal" onclick="loop()">Okay!</button>
+                <div class="modal-footer" id="scoreFormContainer">
+                   
                 </div>
             </div>
         </div>
@@ -493,7 +490,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal" onclick="loop()">Try
                         Again!</button>
-
                 </div>
             </div>
         </div>
@@ -663,6 +659,10 @@ $('.difficuly-select-entry').on('click', function () {
 });
 
 /* players name */
+
+$('#anonymousButton').on('click', function() {
+    $('#inputPlayerName').val('Anonymous')
+});
 
 var playerName;
 
@@ -1400,9 +1400,9 @@ function checkCounters() {
         }
 
         if (masterLocationOne == playerLocationOne && masterLocationTwo == playerLocationTwo && masterLocationThree == playerLocationThree && masterLocationFour == playerLocationFour) {
-            addStatsTable();
             levelComplete();
             saveCoinsLocal();
+            addScoreForm();
             winnerBoolean = true;
         }
 
@@ -1410,7 +1410,6 @@ function checkCounters() {
             if (soundOn == true) {
                 gameOverSound.play();
             }
-            addStatsTable();
             levelLost();
             saveCoinsLocal();
         }
@@ -1428,41 +1427,7 @@ function checkCounters() {
     }
 }
 
-function addStatsTable() {
-        /* adding table of stats if first round */
-        if (fullGames == 1) {
-            $('#statsContainer').html(`
-            <div class="mx-5"></div>
-                                <div class="d-flex justify-content-around">
-                                    <table id="stats-table">
-                                        <tr>
-                                            <th>Round</th>
-                                            <th>Attempts</th>
-                                            <th>Time</th>
-                                            <th>Coins</th>
-                                            <th>Difficulty</th>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <hr>
-        
-                                <div class=" d-flex justify-content-around align-items-center">
-                                    <h4><span class="colour-secondary theme"></span> Total <span class="theme classic-theme">Stats</span>
-                                    </h4>
-                                    <table>
-                                        <tr>
-                                            <th>Attempts</th>
-                                            <th>Coins</th>
-                                        </tr>
-                                        <tr>
-                                            <th id="totalStatAttempts">0</th>
-                                            <th id="totalStatCoins">0</th>
-                                        </tr>
-                                    </table>
-                                </div>
-            `)
-        }
-}
+var totalRoundCoins = 0;
 
 function levelComplete() {
     $('#round-counter').html(1);
@@ -1472,11 +1437,11 @@ function levelComplete() {
     $('.marker-peg').remove();
     timer = false;
     if (difficultySetting == 'easy') {
-        difficultyBonus = 50;
-    } else if (difficultySetting == 'medium') {
         difficultyBonus = 100;
+    } else if (difficultySetting == 'medium') {
+        difficultyBonus = 200;
     } else if (difficultySetting == 'hard') {
-        difficultyBonus = 150;
+        difficultyBonus = 300;
     }
     if (timerMin < 1) {
         timerBonus = 50;
@@ -1487,10 +1452,12 @@ function levelComplete() {
     } else if (timerMin < 4) {
         timerBonus = 0;
     }
+    totalSeconds = (timerMin * 60) + (timerSec)
+    timerBonus = 200 - totalSeconds
     var timerBonus;
     var difficultyBonus;
     var roundCoinBonus = (10 - round + 1) * 10;
-    var totalRoundCoins = 50 + roundCoinBonus + difficultyBonus + timerBonus;
+    totalRoundCoins = 50 + roundCoinBonus + difficultyBonus + timerBonus;
 
     /* adding stats */
     $('#stats-table').append(`
@@ -1599,6 +1566,14 @@ function levelLost() {
 function saveCoinsLocal() {
     localStorage.setItem('coins', coins)
 }
+
+function addScoreForm() {
+    $('#scoreFormContainer').html(`
+    <form action="save_high_score/mastermind/${playerName}/${totalRoundCoins}/${difficultySetting.toUpperCase()}" id="endGameForm" method="POST">
+        <button type="submit" class="btn btn-warning" >Done</button>
+    </form>
+    `)
+};
 
 /* Timer */
 
