@@ -41,6 +41,10 @@ I will be refractoring this code becasue the html can easily be done using js.
 
 Add scoreboard and database to this project.
 
+### Mulitplayer Pong
+
+My next project will be multiplayer pong, using sockets.io.
+
 ### Acknowledgements
 
 [Inspiration for the asteroid game was taken from this tutorial](https://www.youtube.com/watch?v=eI9idPTT0c4&t=24s)
