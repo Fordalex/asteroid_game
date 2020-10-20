@@ -6,6 +6,7 @@
         .main-background {
             background: url("{{ url_for('static', filename='img/backgrounds/illustrations_background.png') }}");
             background-size: 50%;
+            background-color: rgba(0,0,0,0.02);
         }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -31,7 +32,7 @@
 
     <h1 class="text-center py-4 title m-0">{% block header %}{% endblock %}</h1>
 
-    <div class="main-background py-4">
+    <div class="main-background py-5">
         {% block content %}{% endblock %}
     </div>
 
