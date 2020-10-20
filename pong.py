@@ -33,7 +33,9 @@ def handle_join_room_event(data):
     Using sockets the room id will be passed into join_room to create a new room.
     """
     join_room(data['room'])
-    socketio.emit('join_room_announcement', data)
+    socketio.emit('join_room_announcement', data, room=data['room'])
+
+
 
 
 @socketio.on('playerOne_position')
@@ -41,4 +43,4 @@ def handle_playerOne_position(data):
     """
     Update player one's position.
     """
-    socketio.emit('playerOne_position_received', data)
+    socketio.emit('playerOne_position_received', data, room=data['room'])
