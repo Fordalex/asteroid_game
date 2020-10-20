@@ -5,6 +5,7 @@ general.pyc
 records.pyc
 sessions.pyc
 users.pyc
+*.pyc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
