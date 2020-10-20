@@ -4,8 +4,16 @@ Pong
 {% endblock %}
 {% block content %}
 
-<p>Welcome {{ playersName }}!</p>
 
+
+<div class="row m-0 p-0">
+    <div class="col-12 d-flex justify-content-center m-0 p-0 mt-2">
+        <p>Welcome {{ playersName }}!</p>
+    </div>
+    <div class="col-12 d-flex justify-content-center">
+        <div id="canvasContainer"></div>
+    </div>
+</div>
 
 
 {% endblock %}
