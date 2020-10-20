@@ -1,7 +1,9 @@
 $(document).ready(function() {
-    var canvas = $('#defaultCanvas0')
-    $('#defaultCanvas0').remove()
-    $('#canvasContainer').html(canvas)
+    setTimeout(function() {
+        var canvas = $('#defaultCanvas0')
+        $('#defaultCanvas0').remove()
+        $('#canvasContainer').html(canvas)
+    }, 50)
 });
 
 const socket = io.connect("http://localhost:5001/");

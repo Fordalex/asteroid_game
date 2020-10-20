@@ -45,7 +45,16 @@ label, td {
     align-items: center;
     padding: 0px 10px;
 }
+
+
 /* main */
+.white-container {
+    border: solid grey 1px;
+    border-radius: 2px;
+    background-color: rgb(255, 252, 252);
+    padding: 8px;
+}
+
 #card-wrapper {
     background-color: white;
     border: solid rgb(208, 208, 208) 1px;

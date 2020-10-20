@@ -6,13 +6,18 @@ Pong
 
 
 
-<div class="row m-0 p-0">
-    <div class="col-12 d-flex justify-content-center m-0 p-0 my-2">
-        <div>
-            <p class="m-0">Welcome {{ playersName }}!</p>
-            <p class="text-center m-0">Lobby: {{ room }}</p>
-            <p class="m-0">Player One is: {{ playerOne }}</p>
-            <p class="m-0">Player Two is: {{ playerTwo }}</p>
+<div class="row m-0 p-0 justify-content-center">
+    <div class="col-5 d-flex justify-content-center m-0 p-0 mb-2">
+        <div class="white-container pong-stats-width">
+            <div class="d-flex justify-content-between">
+                <p class="text-center m-0">Welcome {{ playersName }}!</p>
+                <p class="text-center m-0">Lobby: {{ room }}</p>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+                <p class="text-center m-0">Player One is: <span id="playerOne"></span></p>
+                <p class="text-center m-0">Player Two is: <span id="playerTwo"></span></p>
+            </div>
         </div>
     </div>
     <div class="col-12 d-flex justify-content-center">
@@ -32,4 +37,8 @@ Pong
     integrity="sha512-rMaqGbYalDaQz0lWNF2L8DHPtf4NW+gSZomExS0LcsNyRS4Rmj21+dt97XfXCZE/E569eX72Bh//Jt1EpStgiA=="
     crossorigin="anonymous"></script>
 <script src='{{ url_for('static', filename="js/pong/main.js") }}'></script>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href='{{ url_for("static", filename="css/pong.css") }}'>
 {% endblock %}
