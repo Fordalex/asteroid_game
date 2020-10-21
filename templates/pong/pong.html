@@ -16,7 +16,7 @@ Pong
             </div>
             <hr class="mb-1">
             <div id="joinedRoomContainer"></div>
-            
+
             <div class="d-flex justify-content-between">
                 <p class="text-center m-0">Player One is: <span id="playerOne"></span></p>
                 <p class="text-center m-0">Player Two is: <span id="playerTwo"></span></p>
@@ -28,6 +28,26 @@ Pong
     </div>
 </div>
 
+<!-- Are you sure you want to leave modal -->
+<div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>This will disconnected you from the server.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Leave</button>
+          <button type="button" class="btn btn-warning">Back to Pong</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
 
@@ -47,79 +67,114 @@ Pong
 
 <script>
 
-const socket = io.connect("http://localhost:5001/");
+    const socket = io.connect("http://localhost:5001/");
 
-$(document).ready(function() {
-    setTimeout(function() {
-        var canvas = $('#defaultCanvas0')
-        $('#defaultCanvas0').remove()
-        $('#canvasContainer').html(canvas)
-    }, 100)
-    console.log(socket)
-    socket.emit('join_room', {
-        playersName: "{{ playersName }}",
-        room: "{{ room }}",
+    $(document).ready(function () {
+        setTimeout(function () {
+            var canvas = $('#defaultCanvas0')
+            $('#defaultCanvas0').remove()
+            $('#canvasContainer').html(canvas)
+        }, 100)
+        console.log(socket)
+        socket.emit('join_room', {
+            playersName: "{{ playersName }}",
+            room: "{{ room }}",
+        })
+    });
+
+    var canvasHeight = 600;
+    var canvasWidth = 600;
+
+    function setup() {
+        createCanvas(canvasWidth, canvasHeight)
+    }
+
+    var playerOneX = 20;
+    var playerOneY = 20;
+
+    var playerTwoX = canvasWidth - 20;
+    var playerTwoY = 20;
+
+    var clearMessagesTimer = 0;
+
+    function draw() {
+        clearMessagesTimer++
+        if (clearMessagesTimer > 300) {
+            $('#joinedRoomContainer').html('')
+        }
+        background(15);
+        rect(playerOneX, playerOneY, 10, 70);
+        rect(playerTwoX, playerTwoY, 10, 70);
+    }
+
+window.addEventListener('keydown', function (e) {
+    if ($('#playerOne').text() == "{{ playersName }}") {
+        if (e.key == 's') {
+            if (playerOneY + 77 < canvasHeight) {
+                playerOneY += 20;
+                socket.emit('playerOne_position', {
+                    y: playerOneY,
+                    room: '{{ room }}',
+                })
+            }
+        }
+        if (e.key == 'w') {
+            if (playerOneY > 0) {
+                playerOneY -= 20;
+                socket.emit('playerOne_position', {
+                    y: playerOneY,
+                    room: '{{ room }}',
+                })
+            }
+        }
+    } else {
+        if (e.key == 's') {
+            if (playerTwoY + 77 < canvasHeight) {
+                playerTwoY += 20;
+                socket.emit('playerTwo_position', {
+                    y: playerTwoY,
+                    room: '{{ room }}',
+                })
+            }
+        }
+        if (e.key == 'w') {
+            if (playerTwoY > 0) {
+                playerTwoY -= 20;
+                socket.emit('playerTwo_position', {
+                    y: playerTwoY,
+                    room: '{{ room }}',
+                })
+            }
+        }
+    }
+   
+})
+
+socket.on('playerOne_position_received', function (e) {
+        playerOneY = e['y']
     })
-});
 
-var canvasHeight = 600;
-var canvasWidth = 600;
 
-function setup() {
-    createCanvas(canvasWidth, canvasHeight)
-}
-
-var playerOneX = 20;
-var playerOneY = 20;
-
-var playerTwoX = canvasWidth - 20;
-var playerTwoY = 20;
-
-var clearMessagesTimer = 0;
-
-function draw() {
-    clearMessagesTimer++
-    if (clearMessagesTimer > 300) {
-        $('#joinedRoomContainer').html('')
-    }
-    background(15);
-    rect(playerOneX, playerOneY, 10, 70);
-    rect(playerTwoX, playerTwoY, 10, 70);
-}
-
-window.addEventListener('keydown', function(e) {
-    if (e.key == 's') {
-        if (playerOneY + 77 < canvasHeight) {
-            playerOneY += 20;
-            socket.emit('playerOne_position', {
-                y: playerOneY,
-                room: '{{ room }}',
-            })
-        }
-    }
-    if (e.key == 'w') {
-        if (playerOneY > 0) {
-            playerOneY -= 20;
-            socket.emit('playerOne_position', {
-                y: playerOneY,
-                room: '{{ room }}',
-            })
-        }
-    }
-})
-
-socket.on('playerOne_position_received', function(e) {
-    playerOneY = e['y']
-})
-socket.on('join_room_announcement',function(e) {
-    $('#roomSize').html(e['players'].length)
-    $('#joinedRoomContainer').append(`
+    socket.on('join_room_announcement', function (e) {
+        $('#roomSize').html(e['players'].length)
+        $('#joinedRoomContainer').append(`
     <p class="m-0"><b>${e['playersName']}</b> Has joined!</p>
     <hr class="mt-1">
     `)
-    $('#playerOne').html(e['players'][0])
-    $('#playerTwo').html(e['players'][1])
-})
+        $('#playerOne').html(e['players'][0])
+        $('#playerTwo').html(e['players'][1])
+});
+
+
+socket.on('playerTwo_position_received', function (e) {
+        playerTwoY = e['y']
+    })
+
+// Ask the user if they are sure they want to leave and remove them for the room lobby.
+$(window).bind('beforeunload', function(){
+    return "Are you sure you want to leave the lobby?"
+});
+
 
 </script>
 {% endblock %}

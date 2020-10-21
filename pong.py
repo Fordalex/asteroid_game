@@ -70,3 +70,10 @@ def handle_playerOne_position(data):
     Update player one's position.
     """
     socketio.emit('playerOne_position_received', data, room=data['room'])
+
+@socketio.on('playerTwo_position')
+def handle_playerOne_position(data):
+    """
+    Update player two's position.
+    """
+    socketio.emit('playerTwo_position_received', data, room=data['room'])
