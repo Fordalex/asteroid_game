@@ -13,12 +13,14 @@ socketio = SocketIO(app)
 
 
 
-@app.route('/pong_lobby')
-def pong_lobby():
+@app.route('/pong_lobby/<message>')
+def pong_lobby(message):
     """
     The lobby to join with a waiting player or a friend with a chosen room id.
     """
-    return render_template('pong/lobby.html')
+    return render_template('pong/lobby.html', message=message)
+
+roomUsers = {}
 
 @app.route('/pong')
 def pong():
@@ -27,30 +29,32 @@ def pong():
     """
     playersName = request.args.get('playersName')
     room = request.args.get('room')
+    
+    global roomUsers
+    try:
+        playersInRoom = roomUsers[room]
+    except:
+        playersInRoom = []
+
+    if len(playersInRoom) < 2:
+        playersInRoom.append(playersName)
+    else:
+        return redirect(url_for('pong_lobby', message="This lobby is full!"))
+
+    roomDict = {
+        room: playersInRoom
+    }
+    roomUsers.update(roomDict)
+
+
     return render_template('pong/pong.html', playersName=playersName, room=room)
 
-roomUsers = {}
 
 @socketio.on('join_room')
 def handle_join_room_event(data):
     """
     Using sockets the room id will be passed into join_room to create a new room.
     """
-    global roomUsers
-    try:
-        playersInRoom = roomUsers[data['room']]
-    except:
-        playersInRoom = []
-
-    if len(playersInRoom) < 2:
-        playersInRoom.append(data['playersName'])
-    else:
-        return redirect('pong_lobby')
-
-    roomDict = {
-        data['room']: playersInRoom
-    }
-    roomUsers.update(roomDict)
 
     app.logger.info(roomUsers)
 
