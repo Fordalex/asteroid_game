@@ -57,8 +57,10 @@ def handle_join_room_event(data):
     """
 
     app.logger.info(roomUsers)
-
     join_room(data['room'])
+    data.update({
+        'players': roomUsers[data['room']],
+        })
     socketio.emit('join_room_announcement', data, room=data['room'])
 
 

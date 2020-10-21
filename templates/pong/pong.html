@@ -16,7 +16,7 @@ Pong
             </div>
             <hr class="mb-1">
             <div id="joinedRoomContainer"></div>
-            <hr class="mt-1">
+            
             <div class="d-flex justify-content-between">
                 <p class="text-center m-0">Player One is: <span id="playerOne"></span></p>
                 <p class="text-center m-0">Player Two is: <span id="playerTwo"></span></p>
@@ -75,7 +75,13 @@ var playerOneY = 20;
 var playerTwoX = canvasWidth - 20;
 var playerTwoY = 20;
 
+var clearMessagesTimer = 0;
+
 function draw() {
+    clearMessagesTimer++
+    if (clearMessagesTimer > 300) {
+        $('#joinedRoomContainer').html('')
+    }
     background(15);
     rect(playerOneX, playerOneY, 10, 70);
     rect(playerTwoX, playerTwoY, 10, 70);
@@ -106,9 +112,13 @@ socket.on('playerOne_position_received', function(e) {
     playerOneY = e['y']
 })
 socket.on('join_room_announcement',function(e) {
-
-    $('#roomSize').html(e['room'].length)
-    $('#joinedRoomContainer').append(`<p class="m-0"><b>${e['playersName']}</b> Has joined!</p>`)
+    $('#roomSize').html(e['players'].length)
+    $('#joinedRoomContainer').append(`
+    <p class="m-0"><b>${e['playersName']}</b> Has joined!</p>
+    <hr class="mt-1">
+    `)
+    $('#playerOne').html(e['players'][0])
+    $('#playerTwo').html(e['players'][1])
 })
 
 </script>

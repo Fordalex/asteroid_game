@@ -16,7 +16,9 @@ Pong Lobby
                     <button type="submit" class="btn btn-dark mt-3">Join</button>
                 </div>
             </form>
+            {% if message | length > 1%}
             <p class="text-danger m-0">{{ message }}</p>
+            {% endif %}
         </div>
         
     </div>
