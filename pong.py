@@ -11,6 +11,8 @@ from app import app
 mongo = PyMongo(app)
 socketio = SocketIO(app)
 
+
+
 @app.route('/pong_lobby')
 def pong_lobby():
     """
@@ -27,15 +29,33 @@ def pong():
     room = request.args.get('room')
     return render_template('pong/pong.html', playersName=playersName, room=room)
 
+roomUsers = {}
+
 @socketio.on('join_room')
 def handle_join_room_event(data):
     """
     Using sockets the room id will be passed into join_room to create a new room.
     """
+    global roomUsers
+    try:
+        playersInRoom = roomUsers[data['room']]
+    except:
+        playersInRoom = []
+
+    if len(playersInRoom) < 2:
+        playersInRoom.append(data['playersName'])
+    else:
+        return redirect('pong_lobby')
+
+    roomDict = {
+        data['room']: playersInRoom
+    }
+    roomUsers.update(roomDict)
+
+    app.logger.info(roomUsers)
+
     join_room(data['room'])
     socketio.emit('join_room_announcement', data, room=data['room'])
-
-
 
 
 @socketio.on('playerOne_position')

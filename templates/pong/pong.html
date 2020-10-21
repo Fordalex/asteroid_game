@@ -7,10 +7,11 @@ Pong
 
 
 <div class="row m-0 p-0 justify-content-center">
-    <div class="col-5 d-flex justify-content-center m-0 p-0 mb-2">
+    <div class="col-12 d-flex justify-content-center m-0 p-0 mb-2">
         <div class="white-container pong-stats-width">
             <div class="d-flex justify-content-between">
                 <p class="text-center m-0">Welcome {{ playersName }}!</p>
+                <p class="m-0">Room Size: <span id="roomSize"></span></p>
                 <p class="text-center m-0">Lobby: {{ room }}</p>
             </div>
             <hr class="mb-1">
@@ -35,7 +36,7 @@ Pong
 {% endblock %}
 
 {% block extra_js %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js" integrity="sha512-AcZyhRP/tbAEsXCCGlziPun5iFvcSUpEz2jKkx0blkYKbxU81F+iq8FURwPn1sYFeksJ+sDDrI5XujsqSobWdQ==" crossorigin="anonymous"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
     integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
     crossorigin="anonymous"></script>
@@ -45,19 +46,21 @@ Pong
 <script src='{{ url_for('static', filename="js/pong/main.js") }}'></script>
 
 <script>
-    $(document).ready(function() {
+
+const socket = io.connect("http://localhost:5001/");
+
+$(document).ready(function() {
     setTimeout(function() {
         var canvas = $('#defaultCanvas0')
         $('#defaultCanvas0').remove()
         $('#canvasContainer').html(canvas)
     }, 100)
+    console.log(socket)
     socket.emit('join_room', {
         playersName: "{{ playersName }}",
         room: "{{ room }}",
     })
 });
-
-const socket = io.connect("http://localhost:5001/");
 
 var canvasHeight = 600;
 var canvasWidth = 600;
@@ -84,7 +87,7 @@ window.addEventListener('keydown', function(e) {
             playerOneY += 20;
             socket.emit('playerOne_position', {
                 y: playerOneY,
-                room: {{ room }}
+                room: '{{ room }}',
             })
         }
     }
@@ -93,7 +96,7 @@ window.addEventListener('keydown', function(e) {
             playerOneY -= 20;
             socket.emit('playerOne_position', {
                 y: playerOneY,
-                room: {{ room }}
+                room: '{{ room }}',
             })
         }
     }
@@ -102,8 +105,9 @@ window.addEventListener('keydown', function(e) {
 socket.on('playerOne_position_received', function(e) {
     playerOneY = e['y']
 })
-
 socket.on('join_room_announcement',function(e) {
+
+    $('#roomSize').html(e['room'].length)
     $('#joinedRoomContainer').append(`<p class="m-0"><b>${e['playersName']}</b> Has joined!</p>`)
 })
 
