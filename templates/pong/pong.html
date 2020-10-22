@@ -66,8 +66,13 @@ Pong
 <script src='{{ url_for('static', filename="js/pong/main.js") }}'></script>
 
 <script>
-
-    const socket = io.connect("http://localhost:5001/");
+    // connect to locahost or heroku
+    if ("{{ hosted }}" == "local") {
+        var socket = io.connect("http://localhost:5001/");
+    } else {
+        var socket = io.connect("https://fd-games.herokuapp.com/");
+    }
+    
 
     $(document).ready(function () {
         setTimeout(function () {
@@ -75,11 +80,14 @@ Pong
             $('#defaultCanvas0').remove()
             $('#canvasContainer').html(canvas)
         }, 100)
-        console.log(socket)
+        // set players name
+        $('#playerOne').html("{{ playersName }}")
+
         socket.emit('join_room', {
             playersName: "{{ playersName }}",
             room: "{{ room }}",
         })
+   
     });
 
     var canvasHeight = 600;
@@ -161,8 +169,8 @@ socket.on('playerOne_position_received', function (e) {
     <p class="m-0"><b>${e['playersName']}</b> Has joined!</p>
     <hr class="mt-1">
     `)
-        $('#playerOne').html(e['players'][0])
-        $('#playerTwo').html(e['players'][1])
+    $('#playerOne').html(e['players'][0])
+    $('#playerTwo').html(e['players'][1])
 });
 
 

@@ -46,8 +46,12 @@ def pong():
     }
     roomUsers.update(roomDict)
 
+    if path.exists("env.py"):
+        hosted = 'local'
+    else:
+        hosted = 'heroku'
 
-    return render_template('pong/pong.html', playersName=playersName, room=room)
+    return render_template('pong/pong.html', playersName=playersName, room=room, hosted=hosted)
 
 
 @socketio.on('join_room')

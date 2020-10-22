@@ -24,6 +24,10 @@ bullets will shoot when the game is pause.
 Need to stop the player from being able to leave the play area.
 If the user edits the form before it's sent they can changed their score.
 
+### Mulitplayer Pong
+
+If two players enter the same lobby with the same name it gets confused. Hint: Maybe use an id.
+
 ## Features to implement
 
 ### Asteroid
@@ -41,9 +45,6 @@ I will be refractoring this code becasue the html can easily be done using js.
 
 Add scoreboard and database to this project.
 
-### Mulitplayer Pong
-
-My next project will be multiplayer pong, using sockets.io.
 
 ### Acknowledgements
 
