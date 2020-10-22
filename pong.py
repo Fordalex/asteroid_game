@@ -11,6 +11,7 @@ from app import app
 mongo = PyMongo(app)
 socketio = SocketIO(app)
 
+roomUsers = {}
 
 
 @app.route('/pong_lobby/<message>')
@@ -18,9 +19,9 @@ def pong_lobby(message):
     """
     The lobby to join with a waiting player or a friend with a chosen room id.
     """
-    return render_template('pong/lobby.html', message=message)
-
-roomUsers = {}
+    global roomUsers
+    app.logger.info(roomUsers)
+    return render_template('pong/lobby.html', message=message, lobbies=roomUsers, lobbyKeys=roomUsers)
 
 @app.route('/pong')
 def pong():
@@ -29,7 +30,7 @@ def pong():
     """
 
     playersName = request.args.get('playersName')
-    room = request.args.get('room')
+    room = str(request.args.get('room'))
     
     global roomUsers
     try:
@@ -38,7 +39,7 @@ def pong():
         playersInRoom = []
 
     if len(playersInRoom) < 2:
-        playersInRoom.append(playersName)
+        playersInRoom.append(str(playersName))
     else:
         return redirect(url_for('pong_lobby', message="This lobby is full!"))
 
