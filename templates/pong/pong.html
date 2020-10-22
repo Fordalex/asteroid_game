@@ -92,7 +92,8 @@ Pong
     var ballX = canvasWidth / 2 - 5;
     var ballY = canvasHeight / 2 - 5;
     var ballSize = 10;
-    var ballDirection = 'left';
+    var ballDirectionX = 'left';
+    var ballDirectionY = 'up';
 
     var clearMessagesTimer = 0;
     var gameStartDelay = 0;
@@ -126,10 +127,16 @@ Pong
 
         if (gameStartDelay > 300) {
             if ($('#playerOne').text() == "{{ playersName }}") {
-            if (ballDirection == 'left') {
-            ballX -= 3;
+            if (ballDirectionX == 'left') {
+                ballX -= 3;
             } else {
                 ballX += 3;
+            }
+
+            if (ballDirectionY == 'up') {
+                ballY -= 3;
+            } else {
+                ballY += 3;
             }
             socket.emit('ball_location', {
                 room: '{{ room }}',
@@ -162,12 +169,21 @@ Pong
 
         // ball collision with playerOne
         if (ballX < playerOneX + paddleWidth && ballX > playerOneX  && ballY + ballSize > playerOneY && ballY < playerOneY + paddleHeight) {
-            ballDirection = 'right'
+            ballDirectionX = 'right'
         }
 
         if (ballX > playerTwoX - paddleWidth && ballX < playerTwoX && ballY + ballSize > playerTwoY && ballY < playerTwoY + paddleHeight) {
-            ballDirection = 'left'
+            ballDirectionX = 'left'
         }
+
+        if (ballY > canvasHeight) {
+            ballDirectionY = 'up'
+        } 
+
+        if (ballY < 0) {
+            ballDirectionY = 'down'
+        }
+
         $('#playerOneScore').html(playerOneScore)
         $('#playerTwoScore').html(playerTwoScore)
         }
