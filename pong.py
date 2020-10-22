@@ -84,6 +84,14 @@ def handle_playerOne_position(data):
     """
     socketio.emit('playerTwo_position_received', data, room=data['room'])
 
+@socketio.on('ball_location')
+def handle_ball_location(data):
+    """
+    Update the ball location
+    """
+    socketio.emit('ball_position_received', data, room=data['room'])
+
+
 @socketio.on('player_leaving')
 def handle_playerOne_position(data):
     """
