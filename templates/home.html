@@ -5,7 +5,6 @@
 <main id="card-container" class="px-2 px-lg-3 d-flex justify-content-center">
     <div class="row m-0 px-2 py-2 d-flex justify-content-center" id="titleContainer"></div>
 </main>
-
 {% endblock %}
 
 {% block extra_js %}
@@ -23,6 +22,9 @@
             this.local = 'No';
             this.comingSoon = '';
 
+            this.highScore = '';
+            this.highScoreName = '';
+
             this.mobile = false;
             this.tablet = false;
             this.desktop = false;
@@ -30,7 +32,7 @@
             this.tabletIcon = '<img src="https://img.icons8.com/color/28/000000/android-tablet.png" />';
             this.desktopIcon = '<img src="https://img.icons8.com/color/28/000000/monitor.png" />';
         }
-        html() {
+        html(id) {
             var compatible = []
             if (this.desktop) {
                 compatible.push(this.desktopIcon)
@@ -41,7 +43,6 @@
             if (this.mobile) {
                 compatible.push(this.mobileIcon)
             }
-           
             return `
             <div class="mx-2 my-2">
                 <div class="card p-0" style="width: 18rem;">
@@ -49,19 +50,27 @@
                         alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">${this.title}</h5>
-                        <p class="card-text">${this.description}</p>
+                        <div class="collapse" id="more-${id}">
+                            <p class="card-text">${this.description}</p>
                             <small class="d-block"><b>Players:</b> ${this.players}</small>
                             <small class="d-block"><b>Online Multiplayer:</b> ${this.online}</small>
                             <small class="d-block"><b>Local Multiplayer:</b> ${this.local}</small>
                             <small class="d-block"><b>Compatible:</b></small>
-                        <div>
                             ${compatible.join('')}
-                            <a href="${this.link}" class="btn btn-info float-right">Play</a>
+                            <hr>
                         </div>
-                        <hr>
                         <div>
                             <small><b>Coming soon:</b> ${this.comingSoon}</small>
                         </div>
+                        <hr>
+                        <p class="m-0"><b>Highest Score:</b> ${this.highScore}</p>
+                        <p class="m-0"><b>Player:</b> ${this.highScoreName}</p>
+                        <hr>
+                        <div class="d-flex justify-content-center">
+                            <button href="#more-${id}" data-toggle="collapse" class="btn btn-dark container-fluid mr-2">About</button>
+                            <a href="${this.link}" class="btn btn-info float-right container-fluid">Play</a>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -69,6 +78,8 @@
         }
     }
     // Creating the titles available
+    var highScores = {{ highScores |safe }};
+
     var ufo_defence = new GameTitle();
     ufo_defence.image = '{{ url_for("static", filename="img/titles/asteroid_gameplay.png") }}';
     ufo_defence.title = 'UFO Defence';
@@ -76,6 +87,9 @@
     ufo_defence.link = '/ufo_defence';
     ufo_defence.comingSoon = "Shooting UFO's!"
     ufo_defence.desktop = true;
+    ufo_defence.highScore = highScores['ufo_defence']['score']
+    ufo_defence.highScoreName = highScores['ufo_defence']['name']
+   
     
     var mastermind = new GameTitle();
     mastermind.image = '{{ url_for("static", filename="img/titles/mastermind_gameplay.png") }}';
@@ -86,6 +100,8 @@
     mastermind.mobile = true;
     mastermind.tablet = true;
     mastermind.desktop = true;
+    mastermind.highScore = highScores['mastermind']['score']
+    mastermind.highScoreName = highScores['mastermind']['name']
 
     var pong = new GameTitle();
     pong.image = '{{ url_for("static", filename="img/titles/pong_gameplay.png") }}';
@@ -94,12 +110,16 @@
     pong.link = '/pong_lobby/1';
     pong.comingSoon = 'Play against AI!';
     pong.desktop = true;
+    pong.players = 2;
+    pong.online = 'Yes'
+    // pong.highScore = highScores['pong']['score']
+    // pong.highScoreName = highScores['pong']['name']
 
     var allTitles = [ufo_defence, mastermind, pong]
 
     // Adding the titles to the page
-    for(title of allTitles) {
-        $('#titleContainer').append(title.html())
+    for(let i = 0; allTitles.length; i++) {
+        $('#titleContainer').append(allTitles[i].html(i))
     }
 </script>
 {% endblock %}
