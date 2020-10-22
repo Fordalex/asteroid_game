@@ -5,57 +5,93 @@ Pong Lobby
 {% block content %}
 
 <div class="row m-0 p-0 justify-content-center mt-4">
-    <div class="col-12">
-        <div class="row m-0 p-0 justify-content-center">
-            <div class="col-4">
-                <div class="white-container">
-                    <form action="/pong">
-                        <label>Player Name</label>
-                        <input type="text" class="form-control" name="playersName">
-                        <label>Room ID</label>
-                        <input type="number" class="form-control" name="room">
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-dark mt-3">Join / Create</button>
-                        </div>
-                    </form>
-                    {% if message | length > 1%}
-                    <p class="text-danger m-0">{{ message }}</p>
-                    {% endif %}
+    <div class="col-12 col-md-6">
+        <div class="white-container">
+            <form action="/pong">
+                <label>Player Name</label>
+                <input type="text" class="form-control" name="playersName">
+                <label>Room ID</label>
+                <input type="number" class="form-control" name="room">
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-dark mt-3">Join / Create</button>
                 </div>
-            </div>
+            </form>
+            {% if message | length > 1%}
+            <p class="text-danger m-0">{{ message }}</p>
+            {% endif %}
         </div>
     </div>
-    <div class="col-12 mt-3">
-        <div class="row m-0 p-0 justify-content-center">
-            <div class="col-4">
-                <div class="white-container">
-                    <h4>Rooms</h4>
-                    {% if not lobbyKeys %}
-                        <p class="m-0">No rooms are open yet.</p>
-                    {% endif %}
-                    {% for key in lobbyKeys %}
-                        {% if lobbies[key] %}
-                        <p class="m-0">Lobby Id: {{key}}</p> 
-                        <p class="m-0">Players</p>
-                        <ol class="m-0">
-                            {% for player in lobbies[key] %}
-                            <li>{{ player }}</li>
-                            {% endfor %}
-                        </ol>
-                        {% if lobbies[key] | length < 2 %}
-                        <button class="btn container-fluid btn-success">Join</button>
-                        {% else %}
-                        <p class="m-0 text-warning"><b>Game in progress!</b></p>
-                        {% endif %}
-                        {% if not loop.last %}
-                       <hr>
-                       {% endif %}
-                       {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
+    <div class="col-12 col-md-6 mt-3 mt-md-0">
+        <div class="white-container">
+            <h4>Rooms</h4>
+            {% if not lobbyKeys %}
+            <p class="m-0">No rooms are currently open yet.</p>
+            {% endif %}
+            {% for key in lobbyKeys %}
+            {% if lobbies[key] %}
+            <p class="m-0">Room Id: {{key}}</p>
+            <p class="m-0">Players</p>
+            <ol class="m-0">
+                {% for player in lobbies[key] %}
+                <li>{{ player }}</li>
+                {% endfor %}
+            </ol>
+            {% if lobbies[key] | length < 2 %}
+            <a class="btn container-fluid btn-success join-room-button" data-toggle="modal" data-target="#enterNameModal" id="{{key}}">Join</a>
+            {% else %}
+            <p class="m-0 text-warning"><b>Game in progress!</b></p>
+            {% endif %}
+            {% if not loop.last %}
+            <hr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
         </div>
     </div>
+
 </div>
 
+  
+  <!-- Enter your name and join game modal -->
+  <div class="modal fade" id="enterNameModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Please enter your name.</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form action="/pong">
+        <div class="modal-body">
+            <label>Player Name</label>
+            <input type="text" class="form-control" name="playersName">
+            <label>Room ID</label>
+            <input type="number" class="form-control" name="room" id="roomInput">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Join Game</button>
+        </div>
+    </form>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename="js/pong/lobby.js") }}"></script>
+<script>
+    // connect to locahost or heroku
+    if ("{{ hosted }}" == "local") {
+        var socket = io.connect("http://localhost:5001/");
+    } else {
+        var socket = io.connect("https://fd-games.herokuapp.com/");
+    }
+
+    socket.on('join_room_annoucement', function() {
+        
+    });
+</script>
 {% endblock %}

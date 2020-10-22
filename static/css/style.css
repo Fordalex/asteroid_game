@@ -21,6 +21,10 @@ label, td {
     font-family: 'Open Sans Condensed', sans-serif;
 }
 /* other */
+.clickable {
+    cursor: pointer;
+}
+
 .capitalize {
     text-transform: capitalize;
 }

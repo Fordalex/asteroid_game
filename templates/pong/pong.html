@@ -50,6 +50,7 @@ Pong
     </div>
 </div>
 
+
 {% endblock %}
 
 {% block extra_css %}
@@ -73,7 +74,6 @@ Pong
     } else {
         var socket = io.connect("https://fd-games.herokuapp.com/");
     }
-
 
     $(document).ready(function () {
         setTimeout(function () {
@@ -120,8 +120,28 @@ Pong
         rect(playerOneX, playerOneY, paddleWidth, paddleHeight);
         rect(playerTwoX, playerTwoY, paddleWidth, paddleHeight);
         clearMessagesTimer++
+
         if ($('#roomSize').text() == 2) {
             gameStartDelay++
+            if (gameStartDelay < 100) {
+                textSize(32);
+                fill(255,255,255);
+                text('3', canvasWidth / 2, canvasHeight / 2);
+            } else if (gameStartDelay > 99 && gameStartDelay < 200) {
+                textSize(32);
+                fill(255,255,255);
+                text('2', canvasWidth / 2, canvasHeight / 2);
+            } else if (gameStartDelay > 199 && gameStartDelay < 299) {
+                textSize(32);
+                fill(255,255,255);
+                text('1', canvasWidth / 2, canvasHeight / 2);
+            } else if (gameStartDelay < 320) {
+                textSize(32);
+                fill(255,255,255);
+                text('Start!', canvasWidth / 2, canvasHeight / 2);
+            }
+
+
         if (gameStartDelay > 300) {
             if ($('#playerOne').text() == "{{ playersName }}") {
             if (ballDirection == 'left') {
@@ -252,7 +272,6 @@ Pong
         $('#playerTwo').html(data['players'][1])
         $('#roomSize').html(data['players'].length)
     });
-
 
 </script>
 {% endblock %}

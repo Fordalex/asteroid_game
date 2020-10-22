@@ -109,6 +109,9 @@ def handle_playerOne_position(data):
         'players': roomUsers[data['room']],
         })
 
+    if len(roomUsers[data['room']]) == 0:
+        del roomUsers[data['room']]
+
     socketio.emit('player_left_announcement', data, room=data['room'])
     
     
