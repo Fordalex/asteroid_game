@@ -20,9 +20,10 @@ I need to use AJAX to submit the form so I can stop the user being able to chang
 
 bullets will shoot when the game is pause.
 
-### Mulitplayer Pong
+### Pong
 
-If two players enter the same lobby with the same name it gets confused. Hint: Maybe use an id.
+- If two players enter the same lobby with the same name it gets confused. Hint: Maybe use an id.
+- When a player leaves the lobby sometimes that room still shows as if its populated.
 
 ## Features to implement
 
@@ -40,8 +41,9 @@ I will be refractoring this code becasue the html can easily be done using js.
 ### Pong
 
 - Allow users to change the colour of their paddle.
-- Lobbies with people in should show for others to join.
 - Allow other users to view a game in progress.
+- Lobby needs to update without having to refresh.
+
 
 
 ### Acknowledgements

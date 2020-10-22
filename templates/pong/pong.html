@@ -69,13 +69,13 @@ Pong
 
     });
 
-    var canvasHeight = 450;
-    var canvasWidth = 600;
+    var canvasHeight = 350;
+    var canvasWidth = 500;
 
     function setup() {
         createCanvas(canvasWidth, canvasHeight)
     }
-    var paddleHeight = 70;
+    var paddleHeight = 55;
     var paddleWidth = 10;
 
     var playerOneName = '';
@@ -83,7 +83,7 @@ Pong
     var playerOneY = 20;
 
     var playerTwoName = '';
-    var playerTwoX = canvasWidth - 20;
+    var playerTwoX = canvasWidth - 20 - paddleWidth;
     var playerTwoY = 20;
 
     var playerOneScore = 0;
@@ -94,6 +94,7 @@ Pong
     var ballSize = 10;
     var ballDirectionX = 'left';
     var ballDirectionY = 'up';
+    var ballSpeed = 1;
 
     var clearMessagesTimer = 0;
     var gameStartDelay = 0;
@@ -107,6 +108,7 @@ Pong
         if ($('#roomSize').text() == 2) {
             gameStartDelay++
             if (gameStartDelay < 100) {
+                ballSpeed = 1;
                 textSize(32);
                 fill(255,255,255);
                 text('3', canvasWidth / 2, canvasHeight / 2);
@@ -123,20 +125,21 @@ Pong
                 fill(255,255,255);
                 text('Start!', canvasWidth / 2, canvasHeight / 2);
             }
+            
 
 
         if (gameStartDelay > 300) {
             if ($('#playerOne').text() == "{{ playersName }}") {
             if (ballDirectionX == 'left') {
-                ballX -= 3;
+                ballX -= ballSpeed;
             } else {
-                ballX += 3;
+                ballX += ballSpeed;
             }
 
             if (ballDirectionY == 'up') {
-                ballY -= 3;
+                ballY -= ballSpeed;
             } else {
-                ballY += 3;
+                ballY += ballSpeed;
             }
             socket.emit('ball_location', {
                 room: '{{ room }}',
@@ -176,7 +179,7 @@ Pong
             ballDirectionX = 'left'
         }
 
-        if (ballY > canvasHeight) {
+        if (ballY + ballSize > canvasHeight) {
             ballDirectionY = 'up'
         } 
 
@@ -193,7 +196,7 @@ Pong
     window.addEventListener('keydown', function (e) {
         if ($('#playerOne').text() == "{{ playersName }}") {
             if (e.key == 's') {
-                if (playerOneY + 77 < canvasHeight) {
+                if (playerOneY + paddleHeight < canvasHeight) {
                     playerOneY += 20;
                     socket.emit('playerOne_position', {
                         y: playerOneY,
@@ -212,7 +215,7 @@ Pong
             }
         } else {
             if (e.key == 's') {
-                if (playerTwoY + 77 < canvasHeight) {
+                if (playerTwoY + paddleHeight < canvasHeight) {
                     playerTwoY += 20;
                     socket.emit('playerTwo_position', {
                         y: playerTwoY,

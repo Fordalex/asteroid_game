@@ -1,53 +1,105 @@
 {% extends 'base.html' %}
 {% block header %}FDS Games{% endblock %}
 {% block content %}
-
-
+<!-- Game title container -->
 <main id="card-container" class="px-2 px-lg-3 d-flex justify-content-center">
-    <div class="row m-0 px-2 py-2 d-flex justify-content-center" id="card-wrapper">
-        <!-- asteroid -->
-        <div class="mx-2 my-2">
-            <div class="card p-0" style="width: 18rem;">
-                <img class="card-img-top" src='{{ url_for("static", filename="img/titles/asteroid_gameplay.png") }}'
-                    alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">UFO Defence</h5>
-                    <p class="card-text">A survival game where an endless count of UFO's will attack with
-                        increasing difficulty. Use your skills and power-ups to try and get to the top of the leaderboard!</p>
-                    <small><b>Compatible:</b></small>
-                    <div>
-                        <img src="https://img.icons8.com/color/36/000000/monitor.png" />
-                        <!-- <img src="https://img.icons8.com/color/28/000000/android.png"/> -->
-                        <a href="/ufo_defence" class="btn btn-info float-right">Play</a>
-                    </div>
-                    <div>
-                        {{ ufo_defense_leader }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- mastermind -->
-        <div class="mx-2 my-2">
-            <div class="card p-0" style="width: 18rem;">
-                <img class="card-img-top" src='{{ url_for("static", filename="img/titles/mastermind_gameplay.png") }}'
-                    alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Mastermind</h5>
-                    <p class="card-text">Mastermind is a game that requires you to use logic, speculation and reasoning
-                        skills to determine the sequence of the coloured counters. Can you outsmart the computer?</p>
-                    <small><b>Compatible:</b></small>
-                    <div>
-                        <img src="https://img.icons8.com/color/36/000000/monitor.png" />
-                        <img src="https://img.icons8.com/color/28/000000/android-tablet.png"/>
-                        <img src="https://img.icons8.com/color/28/000000/android.png" />
-                        <a href="/mastermind_instructions"
-                            class="btn btn-info float-right">Play</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="row m-0 px-2 py-2 d-flex justify-content-center" id="titleContainer"></div>
 </main>
 
+{% endblock %}
 
+{% block extra_js %}
+<script>
+    // The title model
+    class GameTitle {
+        constructor() {
+            this.image = '';
+            this.title = '';
+            this.description = '';
+            this.link = '';
+
+            this.players = 1;
+            this.online = 'No';
+            this.local = 'No';
+            this.comingSoon = '';
+
+            this.mobile = false;
+            this.tablet = false;
+            this.desktop = false;
+            this.mobileIcon = '<img src="https://img.icons8.com/color/28/000000/android.png" />';
+            this.tabletIcon = '<img src="https://img.icons8.com/color/28/000000/android-tablet.png" />';
+            this.desktopIcon = '<img src="https://img.icons8.com/color/28/000000/monitor.png" />';
+        }
+        html() {
+            var compatible = []
+            if (this.desktop) {
+                compatible.push(this.desktopIcon)
+            }
+            if (this.tablet) {
+                compatible.push(this.tabletIcon)
+            }
+            if (this.mobile) {
+                compatible.push(this.mobileIcon)
+            }
+           
+            return `
+            <div class="mx-2 my-2">
+                <div class="card p-0" style="width: 18rem;">
+                    <img class="card-img-top" src='${this.image}'
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">${this.title}</h5>
+                        <p class="card-text">${this.description}</p>
+                            <small class="d-block"><b>Players:</b> ${this.players}</small>
+                            <small class="d-block"><b>Online Multiplayer:</b> ${this.online}</small>
+                            <small class="d-block"><b>Local Multiplayer:</b> ${this.local}</small>
+                            <small class="d-block"><b>Compatible:</b></small>
+                        <div>
+                            ${compatible.join('')}
+                            <a href="${this.link}" class="btn btn-info float-right">Play</a>
+                        </div>
+                        <hr>
+                        <div>
+                            <small><b>Coming soon:</b> ${this.comingSoon}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `
+        }
+    }
+    // Creating the titles available
+    var ufo_defence = new GameTitle();
+    ufo_defence.image = '{{ url_for("static", filename="img/titles/asteroid_gameplay.png") }}';
+    ufo_defence.title = 'UFO Defence';
+    ufo_defence.description = "A survival game where an endless count of UFO's will attack with increasing difficulty. Use your skills and power-ups to try and get to the top of the leaderboard!";
+    ufo_defence.link = '/ufo_defence';
+    ufo_defence.comingSoon = "Shooting UFO's!"
+    ufo_defence.desktop = true;
+    
+    var mastermind = new GameTitle();
+    mastermind.image = '{{ url_for("static", filename="img/titles/mastermind_gameplay.png") }}';
+    mastermind.title = 'Mastermind';
+    mastermind.description = 'Mastermind is a game that requires you to use logic, speculation and reasoning skills to determine the sequence of the coloured counters. Can you outsmart the computer?';
+    mastermind.link = '/mastermind_instructions';
+    mastermind.comingSoon = 'More themes!';
+    mastermind.mobile = true;
+    mastermind.tablet = true;
+    mastermind.desktop = true;
+
+    var pong = new GameTitle();
+    pong.image = '{{ url_for("static", filename="img/titles/pong_gameplay.png") }}';
+    pong.title = 'Pong';
+    pong.description = 'The classic old pong game now online, play with your friends or join a random room.';
+    pong.link = '/pong_lobby/1';
+    pong.comingSoon = 'Play against AI!';
+    pong.desktop = true;
+
+    var allTitles = [ufo_defence, mastermind, pong]
+
+    // Adding the titles to the page
+    for(title of allTitles) {
+        $('#titleContainer').append(title.html())
+    }
+</script>
 {% endblock %}
