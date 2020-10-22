@@ -41,6 +41,7 @@ I will be refractoring this code becasue the html can easily be done using js.
 
 - Allow users to change the colour of their paddle.
 - Lobbies with people in should show for others to join.
+- Allow other users to view a game in progress.
 
 
 ### Acknowledgements

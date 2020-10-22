@@ -29,27 +29,6 @@ Pong
     </div>
 </div>
 
-<!-- Are you sure you want to leave modal -->
-<div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Are you sure?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>This will disconnected you from the server.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Leave</button>
-                <button type="button" class="btn btn-warning">Back to Pong</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 {% endblock %}
 
@@ -107,6 +86,9 @@ Pong
     var playerTwoX = canvasWidth - 20;
     var playerTwoY = 20;
 
+    var playerOneScore = 0;
+    var playerTwoScore = 0;
+
     var ballX = canvasWidth / 2 - 5;
     var ballY = canvasHeight / 2 - 5;
     var ballSize = 10;
@@ -163,14 +145,31 @@ Pong
         
         rect(ballX, ballY, ballSize, ballSize);
 
+        // if the ball goes off the canvas
+        if (ballX > canvasWidth) {
+            gameStartDelay = 0;
+            ballX = canvasWidth / 2 - 5;
+            ballY = canvasHeight / 2 - 5;
+            playerOneScore++;
+        }
+
+        if (ballX < 0) {
+            gameStartDelay = 0;
+            ballX = canvasWidth / 2 - 5;
+            ballY = canvasHeight / 2 - 5;
+            playerTwoScore++;
+        }
+
         // ball collision with playerOne
-        if (ballX < playerOneX + paddleWidth && ballX > playerOneX  && ballY > playerOneY && ballY < playerOneY + paddleHeight) {
+        if (ballX < playerOneX + paddleWidth && ballX > playerOneX  && ballY + ballSize > playerOneY && ballY < playerOneY + paddleHeight) {
             ballDirection = 'right'
         }
 
-        if (ballX > playerTwoX - paddleWidth && ballX < playerTwoX && ballY > playerTwoY && ballY < playerTwoY + paddleHeight) {
+        if (ballX > playerTwoX - paddleWidth && ballX < playerTwoX && ballY + ballSize > playerTwoY && ballY < playerTwoY + paddleHeight) {
             ballDirection = 'left'
         }
+        $('#playerOneScore').html(playerOneScore)
+        $('#playerTwoScore').html(playerTwoScore)
         }
         
     }
