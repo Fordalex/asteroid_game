@@ -2,7 +2,7 @@
 
 This is a library of all my game projects, please take a look and see if you can set any new high scores.
 
-[Play Game](https://fd-games.herokuapp.com/)
+[Play Games](https://fd-games.herokuapp.com/)
 
 ## UX
 

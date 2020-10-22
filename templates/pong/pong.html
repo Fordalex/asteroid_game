@@ -158,12 +158,20 @@ window.addEventListener('keydown', function (e) {
    
 })
 
+
 socket.on('playerOne_position_received', function (e) {
+    if ($('#playerOne').text() != "{{ playersName }}") {
         playerOneY = e['y']
+    }
+})
+
+socket.on('playerTwo_position_received', function (e) {
+    if ($('#playerOne').text() == "{{ playersName }}") {
+        playerTwoY = e['y']
+    }
     })
 
-
-    socket.on('join_room_announcement', function (e) {
+socket.on('join_room_announcement', function (e) {
         $('#roomSize').html(e['players'].length)
         $('#joinedRoomContainer').append(`
     <p class="m-0"><b>${e['playersName']}</b> Has joined!</p>
@@ -174,9 +182,7 @@ socket.on('playerOne_position_received', function (e) {
 });
 
 
-socket.on('playerTwo_position_received', function (e) {
-        playerTwoY = e['y']
-    })
+
 
 // Ask the user if they are sure they want to leave and remove them for the room lobby.
 $(window).bind('beforeunload', function(){
