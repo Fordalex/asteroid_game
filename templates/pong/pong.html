@@ -19,6 +19,7 @@ Pong
 
             <div class="d-flex justify-content-between">
                 <p class="text-center m-0">Player One is: <span id="playerOne"></span></p>
+                <p class="m-0"><b id="playerOneScore">0</b> : <b id="playerTwoScore">0</b></p>
                 <p class="text-center m-0">Player Two is: <span id="playerTwo"></span></p>
             </div>
         </div>
@@ -81,7 +82,6 @@ Pong
             $('#canvasContainer').html(canvas)
         }, 100)
         // set players name
-        $('#playerOne').html("{{ playersName }}")
 
         socket.emit('join_room', {
             playersName: "{{ playersName }}",
@@ -90,7 +90,7 @@ Pong
    
     });
 
-    var canvasHeight = 600;
+    var canvasHeight = 450;
     var canvasWidth = 600;
 
     function setup() {
@@ -107,7 +107,7 @@ Pong
 
     function draw() {
         clearMessagesTimer++
-        if (clearMessagesTimer > 300) {
+        if (clearMessagesTimer > 200) {
             $('#joinedRoomContainer').html('')
         }
         background(15);
@@ -172,6 +172,7 @@ socket.on('playerTwo_position_received', function (e) {
     })
 
 socket.on('join_room_announcement', function (e) {
+    clearMessagesTimer = 0
         $('#roomSize').html(e['players'].length)
         $('#joinedRoomContainer').append(`
     <p class="m-0"><b>${e['playersName']}</b> Has joined!</p>
@@ -183,10 +184,25 @@ socket.on('join_room_announcement', function (e) {
 
 
 
-
 // Ask the user if they are sure they want to leave and remove them for the room lobby.
 $(window).bind('beforeunload', function(){
-    return "Are you sure you want to leave the lobby?"
+    socket.emit('player_leaving', {
+        playersName: "{{ playersName }}",
+        room: "{{ room }}",
+    })
+});
+
+socket.on('player_left_announcement', function (e) {
+    clearMessagesTimer = 0
+    $('#joinedRoomContainer').append(`
+    <p class="m-0"><b>${e['playersName']}</b> Just left!</p>
+    <hr class="mt-1">
+    `)
+    $('#playerOne').html("")
+    $('#playerTwo').html("")
+    $('#playerOne').html(e['players'][0])
+    $('#playerTwo').html(e['players'][1])
+    $('#roomSize').html(e['players'].length)
 });
 
 

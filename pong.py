@@ -27,6 +27,7 @@ def pong():
     """
     Joins the player to pong game with the same game id.
     """
+
     playersName = request.args.get('playersName')
     room = request.args.get('room')
     
@@ -51,6 +52,8 @@ def pong():
     else:
         hosted = 'heroku'
 
+    app.logger.info(roomUsers)
+
     return render_template('pong/pong.html', playersName=playersName, room=room, hosted=hosted)
 
 
@@ -60,7 +63,6 @@ def handle_join_room_event(data):
     Using sockets the room id will be passed into join_room to create a new room.
     """
 
-    app.logger.info(roomUsers)
     join_room(data['room'])
     data.update({
         'players': roomUsers[data['room']],
@@ -81,3 +83,25 @@ def handle_playerOne_position(data):
     Update player two's position.
     """
     socketio.emit('playerTwo_position_received', data, room=data['room'])
+
+@socketio.on('player_leaving')
+def handle_playerOne_position(data):
+    """
+    remove player from roomUsers
+    """
+    global roomUsers
+    playerLeaving = data['playersName']
+    if playerLeaving == roomUsers[data['room']][0]:
+        roomUsers[data['room']].pop(0)
+    else:
+        roomUsers[data['room']].pop(1)
+
+    data.update({
+        'players': roomUsers[data['room']],
+        })
+
+    socketio.emit('player_left_announcement', data, room=data['room'])
+    
+    
+
+    
