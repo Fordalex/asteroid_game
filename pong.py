@@ -59,8 +59,10 @@ def handle_join_room_event(data):
     """
     Using sockets the room id will be passed into join_room to create a new room.
     """
-
+    app.logger.info("the logger is working")
+    app.logger.info(data)
     join_room(data['room'])
+   
     data.update({
         'players': roomUsers[data['room']],
         })
@@ -96,10 +98,14 @@ def handle_playerOne_position(data):
     """
     global roomUsers
     playerLeaving = data['playersName']
-    if playerLeaving == roomUsers[data['room']][0]:
-        roomUsers[data['room']].pop(0)
-    else:
-        roomUsers[data['room']].pop(1)
+
+    try:
+        if playerLeaving == roomUsers[data['room']][0]:
+            roomUsers[data['room']].pop(0)
+        else:
+            roomUsers[data['room']].pop(1)
+    except:
+        None
 
     data.update({
         'players': roomUsers[data['room']],

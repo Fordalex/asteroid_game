@@ -24,6 +24,7 @@ bullets will shoot when the game is pause.
 
 - If two players enter the same lobby with the same name it gets confused. Hint: Maybe use an id.
 - When a player leaves the lobby sometimes that room still shows as if its populated.
+- unload and beforeunload are not working so I have no idea on how to notify the user someone has left.
 
 ## Features to implement
 
@@ -46,7 +47,7 @@ I will be refractoring this code becasue the html can easily be done using js.
 
 
 
-### Acknowledgements
+## Acknowledgements
 
 [Inspiration for the asteroid game was taken from this tutorial](https://www.youtube.com/watch?v=eI9idPTT0c4&t=24s)
 [Bike Game](https://www.youtube.com/watch?v=MW8HcwHK1S0&t=119s)

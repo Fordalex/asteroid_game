@@ -40,6 +40,9 @@
     crossorigin="anonymous"></script>
 <script src='{{ url_for('static', filename="js/pong/main.js") }}'></script>
 <script>
+    // warn the user that if they leave the page the data will not be saved.
+
+
     // socket connect to locahost or heroku.
     if ("{{ hosted }}" == "local") {
         var socket = io.connect("http://localhost:5001/");
@@ -74,6 +77,7 @@
 
     var clearMessagesTimer = 0;
     var gameStartDelay = 0;
+    var updateBallPositionTimer = 0;
 
     // ball variables
     var ballX = canvasWidth / 2 - 5;
@@ -86,6 +90,7 @@
     // player paddles models
     class paddle {
         constructor() {
+            this.player = 'playerOne'
             this.control = false;
             this.height = 55;
             this.width = 10;
@@ -112,11 +117,19 @@
         moveUp() {
             if (this.position.y > 0) {
                 this.position.y -= 3;
+                socket.emit(`${this.player}_position`, {
+                    y: this.position.y,
+                    room: '{{ room }}',
+                })
             }
         }
         moveDown() {
             if (this.position.y + this.height < canvasHeight) {
                 this.position.y += 3;
+                socket.emit(`${this.player}_position`, {
+                    y: this.position.y,
+                    room: '{{ room }}',
+                })
             }
         }
     }
@@ -125,6 +138,7 @@
     var playerOne = new paddle();
     var playerTwo = new paddle();
     playerTwo.position.x = canvasWidth - 10 - playerTwo.width;
+    playerTwo.player = 'playerTwo';
 
     function update_stats() {
         $('#playerOne').html(playerOneName)
@@ -145,7 +159,26 @@
         playerOne.draw();
         playerTwo.draw();
         rect(ballX, ballY, ballSize, ballSize);
+
+        // clear room messages.
         clearMessagesTimer++
+        if (clearMessagesTimer > 150) {
+            $('#joinedRoomContainer').html('')
+        }
+
+        // get player one to update the ball location.
+        updateBallPositionTimer++
+        if (updateBallPositionTimer > 100) {
+            if (playerOneName == "{{ playersName }}") {
+                socket.emit('ball_location', {
+                    room: '{{ room }}',
+                    x: ballX,
+                    y: ballY,
+                });
+                updateBallPositionTimer = 0;
+            }
+        }
+
 
         if ($('#roomSize').text() == 2) {
             // Start game count down at the start of the game and after each goal.
@@ -171,26 +204,18 @@
 
             // After delay start game.
             if (gameStartDelay > 300) {
-                if (playerOneName == "{{ playersName }}") {
-                    if (ballDirectionX == 'left') {
-                        ballX -= ballSpeed;
-                    } else {
-                        ballX += ballSpeed;
-                    }
+                if (ballDirectionX == 'left') {
+                    ballX -= ballSpeed;
+                } else {
+                    ballX += ballSpeed;
+                }
 
-                    if (ballDirectionY == 'up') {
-                        ballY -= ballSpeed;
-                    } else {
-                        ballY += ballSpeed;
-                    }
-                    socket.emit('ball_location', {
-                        room: '{{ room }}',
-                        x: ballX,
-                        y: ballY,
-                    });
+                if (ballDirectionY == 'up') {
+                    ballY -= ballSpeed;
+                } else {
+                    ballY += ballSpeed;
                 }
             }
-
 
             // if the ball goes off the canvas
             if (ballX > canvasWidth) {
@@ -223,14 +248,6 @@
 
             $('#playerOneScore').html(playerOneScore)
             $('#playerTwoScore').html(playerTwoScore)
-            socket.emit('playerTwo_position', {
-                        y: playerTwo.position.y,
-                        room: '{{ room }}',
-                    })
-                    socket.emit('playerOne_position', {
-                        y: playerOne.position.y,
-                        room: '{{ room }}',
-                    })
         }
     }
 
@@ -262,12 +279,14 @@
 
     socket.on('playerOne_position_received', function (data) {
         if (playerOneName != "{{ playersName }}") {
+            console.log('got player one position')
             playerOne.position.y = data['y'];
         }
     })
 
     socket.on('playerTwo_position_received', function (data) {
         if (playerOneName == "{{ playersName }}") {
+            console.log('got player Two position', data['y'])
             playerTwo.position.y = data['y'];
         }
     })
@@ -296,14 +315,6 @@
             ballY = data['y']
         }
     })
-
-    // Update the lobby size and notify other player a player left.
-    $(window).bind('beforeunload', function () {
-        socket.emit('player_leaving', {
-            playersName: "{{ playersName }}",
-            room: "{{ room }}",
-        })
-    });
 
     socket.on('player_left_announcement', function (data) {
         clearMessagesTimer = 0
