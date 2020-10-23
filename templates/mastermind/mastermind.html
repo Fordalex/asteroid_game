@@ -564,7 +564,7 @@
 }
 
 
-/* thems */
+/* themes */
 
 .fruit-background-container {
     background-image: url('{{ url_for("static", filename="img/mastermind/fruit-background.png") }}');
@@ -679,16 +679,17 @@ function addName() {
 
 /* variables */
 
-var round = 1;
-var holeSelect = 1;
-var gameStarted = false;
-var fullGames = 0;
-var localCoins = localStorage.getItem('coins'); 
 if (localCoins) {
     var coins = localCoins;
 } else {
     var coins = 0;
 }
+
+var round = 1;
+var holeSelect = 1;
+var gameStarted = false;
+var fullGames = 0;
+var localCoins = localStorage.getItem('coins'); 
 
 var soundOn = true;
 

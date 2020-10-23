@@ -13,7 +13,7 @@
             position: absolute;
             content: "";
             background: url("{{ url_for('static', filename='img/backgrounds/main_background.png') }}");
-            background-size: 20%;
+            background-size: 100%;
             background-color: rgba(0,0,0,0.02);
             filter: opacity(32%);
             width: 100%;
@@ -21,6 +21,16 @@
             top: 0px;
             left: 0px;
         }
+        @media screen and (min-width: 450px) {
+            .main-background:before {
+                background-size: 50%;
+            }
+        }   
+        @media screen and (min-width: 900px) {
+            .main-background:before {
+                background-size: 20%;
+            }
+        } 
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <meta charset="UTF-8">

@@ -86,6 +86,7 @@
     // player paddles models
     class paddle {
         constructor() {
+            this.control = false;
             this.height = 55;
             this.width = 10;
             this.position = {
@@ -93,16 +94,30 @@
                 y: canvasHeight / 2 - this.height / 2,
             }
             this.colour = 'rgb(0,0,0)';
-            
+
         }
         draw() {
             rect(this.position.x, this.position.y, this.width, this.height);
+            this.update();
+        }
+        update() {
+            if (this.control) {
+                if (mouseY > this.position.y + this.height) {
+                    this.moveDown();
+                } else if (mouseY < this.position.y) {
+                    this.moveUp();
+                }
+            }
         }
         moveUp() {
-            this.position.y -= 3;
+            if (this.position.y > 0) {
+                this.position.y -= 3;
+            }
         }
         moveDown() {
-            this.position.y += 3;
+            if (this.position.y + this.height < canvasHeight) {
+                this.position.y += 3;
+            }
         }
     }
 
@@ -119,10 +134,14 @@
 
     function setup() {
         createCanvas(canvasWidth, canvasHeight)
+        noCursor();
     }
 
     function draw() {
         background(15);
+        fill('rgba(255,255,255,0.9)');
+        circle(mouseX, mouseY, 5)
+
         playerOne.draw();
         playerTwo.draw();
         rect(ballX, ballY, ballSize, ballSize);
@@ -134,79 +153,84 @@
             if (gameStartDelay < 100) {
                 ballSpeed = 1;
                 textSize(32);
-                fill(255,255,255);
+                fill(255, 255, 255);
                 text('3', canvasWidth / 2, canvasHeight / 2);
             } else if (gameStartDelay > 99 && gameStartDelay < 200) {
                 textSize(32);
-                fill(255,255,255);
+                fill(255, 255, 255);
                 text('2', canvasWidth / 2, canvasHeight / 2);
             } else if (gameStartDelay > 199 && gameStartDelay < 299) {
                 textSize(32);
-                fill(255,255,255);
+                fill(255, 255, 255);
                 text('1', canvasWidth / 2, canvasHeight / 2);
             } else if (gameStartDelay < 320) {
                 textSize(32);
-                fill(255,255,255);
+                fill(255, 255, 255);
                 text('Start!', canvasWidth / 2, canvasHeight / 2);
             }
-            
-        // After delay start game.
-        if (gameStartDelay > 300) {
-            if (playerOneName == "{{ playersName }}") {
-            if (ballDirectionX == 'left') {
-                ballX -= ballSpeed;
-            } else {
-                ballX += ballSpeed;
+
+            // After delay start game.
+            if (gameStartDelay > 300) {
+                if (playerOneName == "{{ playersName }}") {
+                    if (ballDirectionX == 'left') {
+                        ballX -= ballSpeed;
+                    } else {
+                        ballX += ballSpeed;
+                    }
+
+                    if (ballDirectionY == 'up') {
+                        ballY -= ballSpeed;
+                    } else {
+                        ballY += ballSpeed;
+                    }
+                    socket.emit('ball_location', {
+                        room: '{{ room }}',
+                        x: ballX,
+                        y: ballY,
+                    });
+                }
             }
 
-            if (ballDirectionY == 'up') {
-                ballY -= ballSpeed;
-            } else {
-                ballY += ballSpeed;
+
+            // if the ball goes off the canvas
+            if (ballX > canvasWidth) {
+                gameStartDelay = 0;
+                ballX = canvasWidth / 2 - 5;
+                ballY = canvasHeight / 2 - 5;
+                playerOneScore++;
             }
-            socket.emit('ball_location', {
-                room: '{{ room }}',
-                x: ballX,
-                y: ballY,
-        }); 
-        }
-        }
 
-        if (clearMessagesTimer > 200) {
-            $('#joinedRoomContainer').html('')
-        }
+            if (ballX < 0) {
+                gameStartDelay = 0;
+                ballX = canvasWidth / 2 - 5;
+                ballY = canvasHeight / 2 - 5;
+                playerTwoScore++;
+            }
 
-        // if the ball goes off the canvas
-        if (ballX > canvasWidth) {
-            gameStartDelay = 0;
-            ballX = canvasWidth / 2 - 5;
-            ballY = canvasHeight / 2 - 5;
-            playerOneScore++;
-        }
+            // ball collision with playerOne
+            if (ballX < playerOne.position.x + playerOne.width && ballX > playerOne.position.x && ballY + ballSize > playerOne.position.y && ballY < playerOne.position.y + playerOne.height) {
+                ballDirectionX = 'right'
+            }
+            if (ballX > playerTwo.position.x - playerTwo.width && ballX < playerTwo.position.x && ballY + ballSize > playerTwo.position.y && ballY < playerTwo.position.y + playerTwo.height) {
+                ballDirectionX = 'left'
+            }
+            if (ballY + ballSize > canvasHeight) {
+                ballDirectionY = 'up'
+            }
+            if (ballY < 0) {
+                ballDirectionY = 'down'
+            }
 
-        if (ballX < 0) {
-            gameStartDelay = 0;
-            ballX = canvasWidth / 2 - 5;
-            ballY = canvasHeight / 2 - 5;
-            playerTwoScore++;
-        }
-
-        // ball collision with playerOne
-        if (ballX < playerOne.position.x + playerOne.width && ballX > playerOne.position.x  && ballY + ballSize > playerOne.position.y && ballY < playerOne.position.y + playerOne.height) {
-            ballDirectionX = 'right'
-        }
-        if (ballX > playerTwo.position.x - playerTwo.width && ballX < playerTwo.position.x && ballY + ballSize > playerTwo.position.y && ballY < playerTwo.position.y + playerTwo.height) {
-            ballDirectionX = 'left'
-        }
-        if (ballY + ballSize > canvasHeight) {
-            ballDirectionY = 'up'
-        } 
-        if (ballY < 0) {
-            ballDirectionY = 'down'
-        }
-
-        $('#playerOneScore').html(playerOneScore)
-        $('#playerTwoScore').html(playerTwoScore)
+            $('#playerOneScore').html(playerOneScore)
+            $('#playerTwoScore').html(playerTwoScore)
+            socket.emit('playerTwo_position', {
+                        y: playerTwo.position.y,
+                        room: '{{ room }}',
+                    })
+                    socket.emit('playerOne_position', {
+                        y: playerOne.position.y,
+                        room: '{{ room }}',
+                    })
         }
     }
 
@@ -215,60 +239,49 @@
             if (e.key == 's') {
                 if (playerOne.position.y + playerOne.height < canvasHeight) {
                     playerOne.moveDown();
-                    socket.emit('playerOne_position', {
-                        y: playerOne.position.y,
-                        room: '{{ room }}',
-                    })
                 }
             }
             if (e.key == 'w') {
                 if (playerOne.position.y > 0) {
                     playerOne.moveUp();
-                    socket.emit('playerOne_position', {
-                        y: playerOne.position.y,
-                        room: '{{ room }}',
-                    })
                 }
             }
         } else {
             if (e.key == 's') {
                 if (playerTwo.position.y + playerOne.height < canvasHeight) {
                     playerTwo.moveDown();
-                    socket.emit('playerTwo_position', {
-                        y: playerTwo.position.y,
-                        room: '{{ room }}',
-                    })
                 }
             }
             if (e.key == 'w') {
                 if (playerTwo.position.y > 0) {
                     playerTwo.moveUp();
-                    socket.emit('playerTwo_position', {
-                        y: playerTwo.position.y,
-                        room: '{{ room }}',
-                    })
                 }
             }
         }
     })
 
-    socket.on('playerOne_position_received', function(data) {
+    socket.on('playerOne_position_received', function (data) {
         if (playerOneName != "{{ playersName }}") {
             playerOne.position.y = data['y'];
         }
     })
 
-    socket.on('playerTwo_position_received', function(data) {
+    socket.on('playerTwo_position_received', function (data) {
         if (playerOneName == "{{ playersName }}") {
             playerTwo.position.y = data['y'];
         }
     })
 
-    socket.on('join_room_announcement', function(data) {
+    socket.on('join_room_announcement', function (data) {
         clearMessagesTimer = 0
         roomSize = data['players'].length;
         playerOneName = data['players'][0];
         playerTwoName = data['players'][1];
+        if (playerOneName == '{{ playersName }}') {
+            playerOne.control = true;
+        } else {
+            playerTwo.control = true;
+        }
         $('#joinedRoomContainer').append(`
         <p class="m-0"><b>${data['playersName']}</b> Has joined!</p>
         <hr class="mt-1">
@@ -277,22 +290,22 @@
     });
 
     // updating the ball location
-    socket.on('ball_position_received', function(data) {
-        if ($('#playerOne').text() != "{{ playersName }}") {
+    socket.on('ball_position_received', function (data) {
+        if (playerOneName != "{{ playersName }}") {
             ballX = data['x']
             ballY = data['y']
         }
     })
 
     // Update the lobby size and notify other player a player left.
-    $(window).bind('beforeunload', function() {
+    $(window).bind('beforeunload', function () {
         socket.emit('player_leaving', {
             playersName: "{{ playersName }}",
             room: "{{ room }}",
         })
     });
 
-    socket.on('player_left_announcement', function(data) {
+    socket.on('player_left_announcement', function (data) {
         clearMessagesTimer = 0
         playerOneName = data['players'][0];
         playerTwoName = data['players'][1];
