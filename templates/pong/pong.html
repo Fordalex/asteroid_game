@@ -1,11 +1,8 @@
 {% extends 'base.html' %}
-{% block header %}
-Pong
-{% endblock %}
+
+{% block header %}Pong{% endblock %}
+
 {% block content %}
-
-
-
 <div class="row m-0 p-0 justify-content-center">
     <div class="col-12 d-flex justify-content-center m-0 p-0 mb-2">
         <div class="white-container pong-stats-width">
@@ -28,8 +25,6 @@ Pong
         <div id="canvasContainer"></div>
     </div>
 </div>
-
-
 {% endblock %}
 
 {% block extra_css %}
@@ -37,7 +32,6 @@ Pong
 {% endblock %}
 
 {% block extra_js %}
-
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
     integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
     crossorigin="anonymous"></script>
@@ -45,7 +39,6 @@ Pong
     integrity="sha512-rMaqGbYalDaQz0lWNF2L8DHPtf4NW+gSZomExS0LcsNyRS4Rmj21+dt97XfXCZE/E569eX72Bh//Jt1EpStgiA=="
     crossorigin="anonymous"></script>
 <script src='{{ url_for('static', filename="js/pong/main.js") }}'></script>
-
 <script>
     // socket connect to locahost or heroku.
     if ("{{ hosted }}" == "local") {
@@ -73,16 +66,8 @@ Pong
     var canvasWidth = 500;
     var roomSize = 0;
 
-    var paddleHeight = 55;
-    var paddleWidth = 10;
-
     var playerOneName = '';
-    var playerOneX = 20;
-    var playerOneY = 20;
-
     var playerTwoName = '';
-    var playerTwoX = canvasWidth - 20 - paddleWidth;
-    var playerTwoY = 20;
 
     var playerOneScore = 0;
     var playerTwoScore = 0;
@@ -207,10 +192,10 @@ Pong
         }
 
         // ball collision with playerOne
-        if (ballX < playerOne.position.x + paddleWidth && ballX > playerOne.position.x  && ballY + ballSize > playerOne.position.y && ballY < playerOne.position.y + paddleHeight) {
+        if (ballX < playerOne.position.x + playerOne.width && ballX > playerOne.position.x  && ballY + ballSize > playerOne.position.y && ballY < playerOne.position.y + playerOne.height) {
             ballDirectionX = 'right'
         }
-        if (ballX > playerTwo.position.x - paddleWidth && ballX < playerTwo.position.x && ballY + ballSize > playerTwo.position.y && ballY < playerTwo.position.y + paddleHeight) {
+        if (ballX > playerTwo.position.x - playerTwo.width && ballX < playerTwo.position.x && ballY + ballSize > playerTwo.position.y && ballY < playerTwo.position.y + playerTwo.height) {
             ballDirectionX = 'left'
         }
         if (ballY + ballSize > canvasHeight) {
@@ -318,6 +303,5 @@ Pong
             `)
         update_stats()
     });
-
 </script>
 {% endblock %}
