@@ -13,14 +13,12 @@ socketio = SocketIO(app)
 
 roomUsers = {}
 
-
 @app.route('/pong_lobby/<message>')
 def pong_lobby(message):
     """
     The lobby to join with a waiting player or a friend with a chosen room id.
     """
     global roomUsers
-    app.logger.info(roomUsers)
     return render_template('pong/lobby.html', message=message, lobbies=roomUsers, lobbyKeys=roomUsers)
 
 @app.route('/pong')
@@ -52,8 +50,6 @@ def pong():
         hosted = 'local'
     else:
         hosted = 'heroku'
-
-    app.logger.info(roomUsers)
 
     return render_template('pong/pong.html', playersName=playersName, room=room, hosted=hosted)
 

@@ -47,13 +47,14 @@ Pong
 <script src='{{ url_for('static', filename="js/pong/main.js") }}'></script>
 
 <script>
-    // connect to locahost or heroku
+    // socket connect to locahost or heroku.
     if ("{{ hosted }}" == "local") {
         var socket = io.connect("http://localhost:5001/");
     } else {
         var socket = io.connect("https://fd-games.herokuapp.com/");
     }
 
+    // Put the canvas on the page and emit socket join room.
     $(document).ready(function () {
         setTimeout(function () {
             var canvas = $('#defaultCanvas0')
@@ -61,20 +62,17 @@ Pong
             $('#canvasContainer').html(canvas)
         }, 100)
         // set players name
-
         socket.emit('join_room', {
             playersName: "{{ playersName }}",
             room: "{{ room }}",
         })
-
     });
 
+    // game variables
     var canvasHeight = 350;
     var canvasWidth = 500;
+    var roomSize = 0;
 
-    function setup() {
-        createCanvas(canvasWidth, canvasHeight)
-    }
     var paddleHeight = 55;
     var paddleWidth = 10;
 
@@ -89,6 +87,10 @@ Pong
     var playerOneScore = 0;
     var playerTwoScore = 0;
 
+    var clearMessagesTimer = 0;
+    var gameStartDelay = 0;
+
+    // ball variables
     var ballX = canvasWidth / 2 - 5;
     var ballY = canvasHeight / 2 - 5;
     var ballSize = 10;
@@ -96,16 +98,53 @@ Pong
     var ballDirectionY = 'up';
     var ballSpeed = 1;
 
-    var clearMessagesTimer = 0;
-    var gameStartDelay = 0;
+    // player paddles models
+    class paddle {
+        constructor() {
+            this.height = 55;
+            this.width = 10;
+            this.position = {
+                x: 10,
+                y: canvasHeight / 2 - this.height / 2,
+            }
+            this.colour = 'rgb(0,0,0)';
+            
+        }
+        draw() {
+            rect(this.position.x, this.position.y, this.width, this.height);
+        }
+        moveUp() {
+            this.position.y -= 3;
+        }
+        moveDown() {
+            this.position.y += 3;
+        }
+    }
+
+    // creating the players
+    var playerOne = new paddle();
+    var playerTwo = new paddle();
+    playerTwo.position.x = canvasWidth - 10 - playerTwo.width;
+
+    function update_stats() {
+        $('#playerOne').html(playerOneName)
+        $('#playerTwo').html(playerTwoName)
+        $('#roomSize').html(roomSize)
+    }
+
+    function setup() {
+        createCanvas(canvasWidth, canvasHeight)
+    }
 
     function draw() {
         background(15);
-        rect(playerOneX, playerOneY, paddleWidth, paddleHeight);
-        rect(playerTwoX, playerTwoY, paddleWidth, paddleHeight);
+        playerOne.draw();
+        playerTwo.draw();
+        rect(ballX, ballY, ballSize, ballSize);
         clearMessagesTimer++
 
         if ($('#roomSize').text() == 2) {
+            // Start game count down at the start of the game and after each goal.
             gameStartDelay++
             if (gameStartDelay < 100) {
                 ballSpeed = 1;
@@ -126,10 +165,9 @@ Pong
                 text('Start!', canvasWidth / 2, canvasHeight / 2);
             }
             
-
-
+        // After delay start game.
         if (gameStartDelay > 300) {
-            if ($('#playerOne').text() == "{{ playersName }}") {
+            if (playerOneName == "{{ playersName }}") {
             if (ballDirectionX == 'left') {
                 ballX -= ballSpeed;
             } else {
@@ -152,8 +190,6 @@ Pong
         if (clearMessagesTimer > 200) {
             $('#joinedRoomContainer').html('')
         }
-        
-        rect(ballX, ballY, ballSize, ballSize);
 
         // if the ball goes off the canvas
         if (ballX > canvasWidth) {
@@ -171,18 +207,15 @@ Pong
         }
 
         // ball collision with playerOne
-        if (ballX < playerOneX + paddleWidth && ballX > playerOneX  && ballY + ballSize > playerOneY && ballY < playerOneY + paddleHeight) {
+        if (ballX < playerOne.position.x + paddleWidth && ballX > playerOne.position.x  && ballY + ballSize > playerOne.position.y && ballY < playerOne.position.y + paddleHeight) {
             ballDirectionX = 'right'
         }
-
-        if (ballX > playerTwoX - paddleWidth && ballX < playerTwoX && ballY + ballSize > playerTwoY && ballY < playerTwoY + paddleHeight) {
+        if (ballX > playerTwo.position.x - paddleWidth && ballX < playerTwo.position.x && ballY + ballSize > playerTwo.position.y && ballY < playerTwo.position.y + paddleHeight) {
             ballDirectionX = 'left'
         }
-
         if (ballY + ballSize > canvasHeight) {
             ballDirectionY = 'up'
         } 
-
         if (ballY < 0) {
             ballDirectionY = 'down'
         }
@@ -190,87 +223,83 @@ Pong
         $('#playerOneScore').html(playerOneScore)
         $('#playerTwoScore').html(playerTwoScore)
         }
-        
     }
 
     window.addEventListener('keydown', function (e) {
-        if ($('#playerOne').text() == "{{ playersName }}") {
+        if (playerOneName == "{{ playersName }}") {
             if (e.key == 's') {
-                if (playerOneY + paddleHeight < canvasHeight) {
-                    playerOneY += 20;
+                if (playerOne.position.y + playerOne.height < canvasHeight) {
+                    playerOne.moveDown();
                     socket.emit('playerOne_position', {
-                        y: playerOneY,
+                        y: playerOne.position.y,
                         room: '{{ room }}',
                     })
                 }
             }
             if (e.key == 'w') {
-                if (playerOneY > 0) {
-                    playerOneY -= 20;
+                if (playerOne.position.y > 0) {
+                    playerOne.moveUp();
                     socket.emit('playerOne_position', {
-                        y: playerOneY,
+                        y: playerOne.position.y,
                         room: '{{ room }}',
                     })
                 }
             }
         } else {
             if (e.key == 's') {
-                if (playerTwoY + paddleHeight < canvasHeight) {
-                    playerTwoY += 20;
+                if (playerTwo.position.y + playerOne.height < canvasHeight) {
+                    playerTwo.moveDown();
                     socket.emit('playerTwo_position', {
-                        y: playerTwoY,
+                        y: playerTwo.position.y,
                         room: '{{ room }}',
                     })
                 }
             }
             if (e.key == 'w') {
-                if (playerTwoY > 0) {
-                    playerTwoY -= 20;
+                if (playerTwo.position.y > 0) {
+                    playerTwo.moveUp();
                     socket.emit('playerTwo_position', {
-                        y: playerTwoY,
+                        y: playerTwo.position.y,
                         room: '{{ room }}',
                     })
                 }
             }
         }
-
     })
 
-
     socket.on('playerOne_position_received', function(data) {
-        if ($('#playerOne').text() != "{{ playersName }}") {
-            playerOneY = data['y']
+        if (playerOneName != "{{ playersName }}") {
+            playerOne.position.y = data['y'];
         }
     })
 
     socket.on('playerTwo_position_received', function(data) {
-        if ($('#playerOne').text() == "{{ playersName }}") {
-            playerTwoY = data['y']
+        if (playerOneName == "{{ playersName }}") {
+            playerTwo.position.y = data['y'];
         }
     })
 
     socket.on('join_room_announcement', function(data) {
         clearMessagesTimer = 0
-        $('#roomSize').html(data['players'].length)
+        roomSize = data['players'].length;
+        playerOneName = data['players'][0];
+        playerTwoName = data['players'][1];
         $('#joinedRoomContainer').append(`
-    <p class="m-0"><b>${data['playersName']}</b> Has joined!</p>
-    <hr class="mt-1">
-    `)
-        $('#playerOne').html(data['players'][0])
-        $('#playerTwo').html(data['players'][1])
+        <p class="m-0"><b>${data['playersName']}</b> Has joined!</p>
+        <hr class="mt-1">
+        `)
+        update_stats()
     });
 
     // updating the ball location
     socket.on('ball_position_received', function(data) {
         if ($('#playerOne').text() != "{{ playersName }}") {
-            console.log('got ball location')
             ballX = data['x']
             ballY = data['y']
         }
     })
 
-
-    // Ask the user if they are sure they want to leave and remove them for the room lobby.
+    // Update the lobby size and notify other player a player left.
     $(window).bind('beforeunload', function() {
         socket.emit('player_leaving', {
             playersName: "{{ playersName }}",
@@ -280,15 +309,14 @@ Pong
 
     socket.on('player_left_announcement', function(data) {
         clearMessagesTimer = 0
+        playerOneName = data['players'][0];
+        playerTwoName = data['players'][1];
+        roomSize = data['players'].length;
         $('#joinedRoomContainer').append(`
-    <p class="m-0"><b>${e['playersName']}</b> Just left!</p>
-    <hr class="mt-1">
-    `)
-        $('#playerOne').html("")
-        $('#playerTwo').html("")
-        $('#playerOne').html(data['players'][0])
-        $('#playerTwo').html(data['players'][1])
-        $('#roomSize').html(data['players'].length)
+            <p class="m-0"><b>${e['playersName']}</b> Just left!</p>
+            <hr class="mt-1">
+            `)
+        update_stats()
     });
 
 </script>
