@@ -25,6 +25,7 @@ bullets will shoot when the game is pause.
 - If two players enter the same lobby with the same name it gets confused. Hint: Maybe use an id.
 - When a player leaves the lobby sometimes that room still shows as if its populated.
 - unload and beforeunload are not working so I have no idea on how to notify the user someone has left.
+- The ball speed is being updated by the frame rate this causes some problems when players are using different devices.
 
 ## Features to implement
 

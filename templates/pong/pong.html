@@ -40,9 +40,6 @@
     crossorigin="anonymous"></script>
 <script src='{{ url_for('static', filename="js/pong/main.js") }}'></script>
 <script>
-    // warn the user that if they leave the page the data will not be saved.
-
-
     // socket connect to locahost or heroku.
     if ("{{ hosted }}" == "local") {
         var socket = io.connect("http://localhost:5001/");
@@ -87,7 +84,7 @@
     var ballDirectionY = 'up';
     var ballSpeed = 1;
 
-    // player paddles models
+    // player paddles models and class methods
     class paddle {
         constructor() {
             this.player = 'playerOne'

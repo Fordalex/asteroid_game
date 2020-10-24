@@ -20,6 +20,24 @@ li,
 label, td {
     font-family: 'Open Sans Condensed', sans-serif;
 }
+/* main background */
+.main-background {
+    position: relative;
+    background-color: rgba(0,0,0,0.02);
+   
+}
+
+@media screen and (min-width: 450px) {
+    .main-background:before {
+        background-size: 50%;
+    }
+}   
+@media screen and (min-width: 900px) {
+    .main-background:before {
+        background-size: 20%;
+    }
+} 
+
 /* other */
 .clickable {
     cursor: pointer;
