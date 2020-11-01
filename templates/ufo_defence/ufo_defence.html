@@ -224,6 +224,7 @@ function preload() {
     flameDown = loadImage("{{ url_for("static", filename="img/asteroid/flame-down.png") }}")
     ufo = loadImage("{{ url_for("static", filename="img/asteroid/ufo.png") }}")
     enemyUfo = loadImage("{{ url_for("static", filename="img/asteroid/enemy_ufo.png") }}")
+    crosshair = loadImage("{{ url_for("static", filename="img/asteroid/crosshair.png") }}")
 }
 
 
@@ -299,8 +300,9 @@ function draw() {
             d.draw()
         }
         // Display the custom cursor
-        fill('rgba(255,255,255,0.9)');
-        circle(mouseX, mouseY, 5)
+        image(crosshair, mouseX, mouseY, 15, 15)
+
+        // limit the amount of bullet being render at one time.
         if (bullets.length > 35) {
             bullets.shift()
         }
