@@ -21,6 +21,8 @@ from mastermind import *
 from ufo_defence import *
 # mulitplater pong game
 from pong import *
+# santa catch game
+from santa_catch import *
 
 
 if __name__ == '__main__':

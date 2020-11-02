@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block header %}Santa Catch{% endblock %}
+{% block content %}
+
+<div class="row m-0 px-0">
+    <div class="col-md-12 col-lg-4 col-xl-3">
+        <div class="white-container">
+            
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-8 col-xl-6 d-flex justify-content-center">
+        <div id="canvasContainer"></div>
+    </div>
+    <div class="col-md-12 col-lg-12 col-xl-3">
+        <div class="white-container">
+            <h3>High Scores</h3> 
+            <table id="highScoreTable" class="container-fluid">
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Difficulty</th>
+                </tr>
+                {% for score in high_score %}
+                <tr>
+                    {% if loop.first %}
+                    <td><img src="https://img.icons8.com/color/20/000000/gold-medal--v1.png"/></td>
+                    {% elif loop.index == 2 %}
+                    <td><img src="https://img.icons8.com/color/20/000000/silver-medal--v1.png"/></td>
+                    {% elif loop.index == 3 %}
+                    <td><img src="https://img.icons8.com/color/20/000000/bronze-medal--v1.png"/></td>
+                    {% else %}
+                    <td class="pl-1">{{loop.index}}</td>
+                    {% endif %}
+                    <td class="capitalize">{{ score.name }}</td>
+                    <td>{{ score.score }}</td>
+                    <td>{{ score.difficulty }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"
+    integrity="sha512-rMaqGbYalDaQz0lWNF2L8DHPtf4NW+gSZomExS0LcsNyRS4Rmj21+dt97XfXCZE/E569eX72Bh//Jt1EpStgiA=="
+    crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        setTimeout(function() {
+            const canvas = $('#defaultCanvas0')
+            $('#defaultCanvas0').remove()
+            $('#canvasContainer').html(canvas)
+        }, 50)
+    });
+    
+    const canvasHeight = 600;
+    const canvasWidth = 600;
+
+    function setup() {
+        createCanvas(canvasWidth, canvasHeight)
+        noCursor();
+    }
+
+    function draw() {
+        background(15);
+    }
+</script>
+
+{% endblock %}
