@@ -291,7 +291,7 @@ function draw() {
                         explosions.push(new explosion(enemies[j].position.x, enemies[j].position.y, enemies[j].diameter * 7 + 50));
                         var enemyExplode = new Audio();
                         enemyExplode.src = "{{ url_for("static", filename="sounds/ufo_defence/ufo_explode.wav") }}";
-                        enemyExplode.volume = enemies[j].diameter / 700;
+                        enemyExplode.volume = enemies[j].diameter / 100;
                         enemyExplode.play()
                         enemies.splice(j, 1)
                     }

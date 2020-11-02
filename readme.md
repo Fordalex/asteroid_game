@@ -4,6 +4,8 @@ This is a library of all my game projects, please take a look and see if you can
 
 [Play Games](https://fd-games.herokuapp.com/)
 
+More Information on [Pong](https://github.com/Fordalex/fds_games)
+
 ## UX
 
 I'm trying to use loads of icons to guide the user through this web app as I'm assuming the type of user that will be using this site will be of the younger generation.
@@ -49,7 +51,17 @@ bullets will shoot when the game is pause.
 - Allow other users to view a game in progress.
 - Lobby needs to update without having to refresh.
 
-### Things I've learnt
+## Deployment
+
+This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
+
+In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
+- Different values for environment variables (Heroku Config Vars)?
+- Different configuration files?
+- Separate git branch?
+
+In addition, if it is not obvious, you should also describe how to run your code locally.
+
 
 
 ## Acknowledgements
