@@ -11,6 +11,8 @@ I'm trying to use loads of icons to guide the user through this web app as I'm a
 ## Things to do
 
 - Add travisCI.
+- Add a star on the games I've put the most effort on.
+- Break up the readme files.
 
 ## bugs
 
@@ -27,6 +29,10 @@ bullets will shoot when the game is pause.
 - unload and beforeunload are not working so I have no idea on how to notify the user someone has left.
 - The ball speed is being updated by the frame rate this causes some problems when players are using different devices.
 
+### Mastermind
+
+- Add all the image urls.
+
 ## Features to implement
 
 ### Asteroid
@@ -36,9 +42,6 @@ bullets will shoot when the game is pause.
 - Add sounds to each section of the game.
 - More feedback to the user after an item is purchased.
 
-### Mastermind
-
-I will be refractoring this code becasue the html can easily be done using js.
 
 ### Pong
 
@@ -46,6 +49,7 @@ I will be refractoring this code becasue the html can easily be done using js.
 - Allow other users to view a game in progress.
 - Lobby needs to update without having to refresh.
 
+### Things I've learnt
 
 
 ## Acknowledgements

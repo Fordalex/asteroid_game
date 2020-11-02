@@ -58,20 +58,77 @@
             const canvas = $('#defaultCanvas0')
             $('#defaultCanvas0').remove()
             $('#canvasContainer').html(canvas)
-        }, 50)
+        }, 300)
     });
     
     const canvasHeight = 600;
     const canvasWidth = 600;
+    var santa_image;
+
+    function preload() {
+        santa_image = loadImage("{{ url_for("static", filename="img/santa_catch/santa_walk.png") }}");
+    }
 
     function setup() {
         createCanvas(canvasWidth, canvasHeight)
-        noCursor();
     }
 
     function draw() {
         background(15);
+        santa.draw();
     }
+
+    class Santa {
+        constructor() {
+            this.height = 32;
+            this.width = 24;
+            this.position = {
+                x: 0,
+                y: 0,
+            }
+
+            this.img_height = 32;
+            this.img_width = 24;
+            this.speed = {
+                count: 0,
+                loop: 5,
+            };
+            this.img_position = {
+                x: 0,
+                y: 32,
+            }
+
+            
+        }
+        draw() {
+            image(santa_image,this.position.x, this.position.y, this.width, this.height, this.img_position.x, this.img_position.y, 24, 32, )
+        }
+        update() {
+            if (this.speed.count == this.speed.loop) {
+                this.speed.count = 0;
+            }
+            if (this.img_position.x == 0) {
+                this.img_position.x = 48;
+            }
+            this.speed.count++
+        }
+        moveRight() {
+            this.update();
+            this.img_position.y = 32;
+            if (this.speed.count == this.speed.loop) {
+                this.img_position.x -= 24;
+            }
+        }
+    }
+
+    var santa = new Santa();
+
+    window.addEventListener('keydown', function(e) {
+        if (e.key == 'd') {
+            santa.moveRight();
+        }
+    })
+
 </script>
 
 {% endblock %}
