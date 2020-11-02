@@ -218,13 +218,16 @@ var canvasHeight = 700;
 
 
 function preload() {
-    flameUp = loadImage("{{ url_for("static", filename="img/asteroid/flame-up.png") }}")
-    flameLeft = loadImage("{{ url_for("static", filename="img/asteroid/flame-left.png") }}")
-    flameRight = loadImage("{{ url_for("static", filename="img/asteroid/flame-right.png") }}")
-    flameDown = loadImage("{{ url_for("static", filename="img/asteroid/flame-down.png") }}")
-    ufo = loadImage("{{ url_for("static", filename="img/asteroid/ufo.png") }}")
-    enemyUfo = loadImage("{{ url_for("static", filename="img/asteroid/enemy_ufo.png") }}")
-    crosshair = loadImage("{{ url_for("static", filename="img/asteroid/crosshair.png") }}")
+    flameUp = loadImage("{{ url_for("static", filename="img/asteroid/flame-up.png") }}");
+    flameLeft = loadImage("{{ url_for("static", filename="img/asteroid/flame-left.png") }}");
+    flameRight = loadImage("{{ url_for("static", filename="img/asteroid/flame-right.png") }}");
+    flameDown = loadImage("{{ url_for("static", filename="img/asteroid/flame-down.png") }}");
+    ufo = loadImage("{{ url_for("static", filename="img/asteroid/ufo.png") }}");
+    enemyUfo = loadImage("{{ url_for("static", filename="img/asteroid/enemy_ufo.png") }}");
+    crosshair = loadImage("{{ url_for("static", filename="img/asteroid/crosshair.png") }}");
+    explosion3 = loadImage("{{ url_for("static", filename="img/asteroid/explosion_3.png") }}");
+    explosion2 = loadImage("{{ url_for("static", filename="img/asteroid/explosion_2.png") }}");
+    explosion1 = loadImage("{{ url_for("static", filename="img/asteroid/explosion_1.png") }}");
 }
 
 
@@ -236,6 +239,7 @@ function setup() {
 // draw loop
 
 function draw() {
+
     // check players score and increase the difficulty
     background(15);
     showPlayersStats();
@@ -284,9 +288,10 @@ function draw() {
                             debris.push(newDebri)
                             velocity += 4
                         }
+                        explosions.push(new explosion(enemies[j].position.x, enemies[j].position.y, enemies[j].diameter * 7 + 50));
                         var enemyExplode = new Audio();
-                        enemyExplode.src = "{{ url_for("static", filename="sounds/ufo_explode.wav") }}"
-                        enemyExplode.volume = 0.05;
+                        enemyExplode.src = "{{ url_for("static", filename="sounds/ufo_defence/ufo_explode.wav") }}";
+                        enemyExplode.volume = enemies[j].diameter / 700;
                         enemyExplode.play()
                         enemies.splice(j, 1)
                     }
@@ -297,18 +302,22 @@ function draw() {
         }
         // draw all the debri
         for (d of debris) {
-            d.draw()
+            d.draw();
+        }
+        // draw all the explosions
+        for (e of explosions) {
+            e.draw();
         }
         // Display the custom cursor
         image(crosshair, mouseX, mouseY, 15, 15)
 
         // limit the amount of bullet being render at one time.
         if (bullets.length > 35) {
-            bullets.shift()
+            bullets.shift();
         }
         // reduce the debri count when there gets too much.
         if (debris.length > 40) {
-            debris.shift()
+            debris.shift();
         }
         // stop the player if they have ran out of fuel while moving
         if (fuel == 0) {
@@ -350,6 +359,7 @@ function draw() {
 var enemies = [];
 var bullets = [];
 var debris = [];
+var explosions = [];
 
 var score = 0;
 var money = 0;
@@ -402,15 +412,19 @@ class Player {
     }
     moveUp() {
         this.velocity.y -= 0.2;
+        fuel--;
     }
     moveDown() {
         this.velocity.y += 0.2;
+        fuel--;
     }
     moveLeft() {
         this.velocity.x -= 0.2;
+        fuel--;
     }
     moveRight() {
         this.velocity.x += 0.2;
+        fuel--;
     }
 }
 
@@ -436,7 +450,6 @@ window.addEventListener('keypress', function(e) {
                 playerOne.moveLeft()
                 movingRight = true;
             }
-            fuel--
         }
     }
 })
@@ -535,11 +548,42 @@ class enemy {
         }
     }
     dead() {
-        fill('#fffff')
-        circle(this.position.x, this.position.y, 50)
+        fill('#fffff');
+        circle(this.position.x, this.position.y, 50);
         if (this.diameter < 20) {
             return true
         }
+    }
+}
+
+class explosion {
+    constructor(posX, posY, size) {
+        this.position = {
+            x: posX,
+            y: posY,
+        }
+        this.imgPosition = {
+            x: 0,
+            y: 0,
+        }
+        this.size = size;
+        this.image = Math.floor(Math.random() * 4);
+    }
+    draw() {
+        if (this.image == 3) {
+            var explosionImage = explosion3;
+        } else if (this.image == 2) {
+            var explosionImage = explosion1;
+        } else {
+            var explosionImage = explosion2;
+        }
+        if (this.imgPosition.x == 4096) {
+            this.imgPosition.x = 0;
+            this.imgPosition.y += 512;
+        } else {
+            this.imgPosition.x += 512;
+        }
+        image(explosionImage, this.position.x - this.size / 2, this.position.y - this.size / 2, this.size, this.size, this.imgPosition.x, this.imgPosition.y, 512, 512)
     }
 }
 
@@ -569,7 +613,7 @@ function showPlayersStats() {
 
 function mouseClicked() {
     var lazerSound = new Audio();
-    lazerSound.src = "{{ url_for("static", filename="sounds/lazer_shot.wav") }}";
+    lazerSound.src = "{{ url_for("static", filename="sounds/ufo_defence/lazer_shot.wav") }}";
     lazerSound.volume = 0.05;
     lazerSound.play();
     var newBullet = new bullet();
@@ -693,7 +737,7 @@ window.addEventListener('keypress', function(e) {
 // start minigun 
 function startMinigun() {
     var lazerSound = new Audio();
-    lazerSound.src = "{{ url_for("static", filename="sounds/lazer_shot.wav") }}";
+    lazerSound.src = "{{ url_for("static", filename="sounds/ufo_defence/lazer_shot.wav") }}";
     lazerSound.volume = 0.05;
     lazerSound.play();
     if (miniGunActivated && miniGunTimer > 0) {
