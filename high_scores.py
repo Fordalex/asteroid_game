@@ -19,7 +19,7 @@ def save_high_score(game, name, score, difficulty):
             'difficulty': difficulty,
         }
         asteroid.insert_one(high_score)
-        return redirect(url_for('asteroid'))
+        return redirect(url_for('ufo_defence'))
 
     elif game == 'mastermind':
         mastermind = mongo.db.mastermind

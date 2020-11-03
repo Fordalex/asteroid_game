@@ -775,7 +775,7 @@ function endGame() {
     $('#playersScore').html(score)
     var playersName = localStorage.getItem('playersName');
     $('#endGameFormContainer').html(`
-    <form action="save_high_score/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
+    <form action="save_high_score/ufo_defence/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
         <button type="submit" class="btn btn-warning" >Save Score</button>
     </form>
     `)
