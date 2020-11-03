@@ -4,7 +4,10 @@ This is a library of all my game projects, please take a look and see if you can
 
 [Play Games](https://fd-games.herokuapp.com/)
 
-More Information on [Pong](https://github.com/Fordalex/fds_games)
+- More Information on [Pong](https://github.com/Fordalex/fds_games/blob/master/readme/pong.md)
+- More Information on [Mastermind](https://github.com/Fordalex/fds_games/blob/master/readme/mastermind.md)
+- More Information on [Santa Catch](https://github.com/Fordalex/fds_games/blob/master/readme/santa_catch.md)
+- More Information on [UFO Defence](https://github.com/Fordalex/fds_games/blob/master/readme/ufo_defence.md)
 
 ## UX
 

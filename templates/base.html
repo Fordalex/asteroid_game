@@ -2,14 +2,25 @@
 <html lang="en">
 
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js" integrity="sha512-AcZyhRP/tbAEsXCCGlziPun5iFvcSUpEz2jKkx0blkYKbxU81F+iq8FURwPn1sYFeksJ+sDDrI5XujsqSobWdQ==" crossorigin="anonymous"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PBR0L0J985"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-PBR0L0J985');
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"
+        integrity="sha512-AcZyhRP/tbAEsXCCGlziPun5iFvcSUpEz2jKkx0blkYKbxU81F+iq8FURwPn1sYFeksJ+sDDrI5XujsqSobWdQ=="
+        crossorigin="anonymous"></script>
     <style>
         .main-background:before {
             position: absolute;
             content: "";
             background: url("{{ url_for('static', filename='img/backgrounds/main_background.png') }}");
             background-size: 100%;
-            background-color: rgba(0,0,0,0.02);
+            background-color: rgba(0, 0, 0, 0.02);
             filter: opacity(32%);
             width: 100%;
             height: 100%;
@@ -17,10 +28,12 @@
             left: 0px;
         }
     </style>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href='{{ url_for("static", filename="css/style.css") }}'>
     {% block extra_css %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
@@ -35,7 +48,7 @@
             <img src="{{ url_for("static", filename="img/logos/logo.png") }}" class="logo">
         </a>
         <a href="{{ url_for('home') }}">
-            <img src="https://img.icons8.com/material-rounded/24/000000/home.png"/>
+            <img src="https://img.icons8.com/material-rounded/24/000000/home.png" />
         </a>
     </nav>
 
@@ -52,25 +65,30 @@
         <div class="row m-0 p-0">
             <div class="col-12 col-md-4">
                 <h4 class="text-center mt-4 mb-3">Social Media</h4>
-                <p>Follow to keep up to date with future updates. Also, if you find any problems, have any suggestions or programming questions please connect me!</p>
+                <p>Follow to keep up to date with future updates. Also, if you find any problems, have any suggestions
+                    or programming questions please connect me!</p>
                 <div class="d-flex justify-content-center">
                     <a href="https://www.facebook.com/Fords-development-102522668044543/" class="m-0" target="_blank">
-                        <img src="https://img.icons8.com/color/25/000000/facebook.png"/>
+                        <img src="https://img.icons8.com/color/25/000000/facebook.png" />
                     </a>
                     <a href="https://www.instagram.com/fordsdevelopments_games/" class="m-0 mx-1" target="_blank">
-                        <img src="https://img.icons8.com/fluent/25/000000/instagram-new.png"/>
+                        <img src="https://img.icons8.com/fluent/25/000000/instagram-new.png" />
                     </a>
                     <a href="https://github.com/Fordalex" class="m-0" target="_blank">
-                        <img src="https://img.icons8.com/fluent/25/000000/github.png"/>
+                        <img src="https://img.icons8.com/fluent/25/000000/github.png" />
                     </a>
                 </div>
             </div>
             <div class="col-12 col-md-4 mt-4">
                 <hr class="d-block d-md-none">
-                <h4 class="text-center mt-1 mb-3">Created By  <img class="logo-size ml-2" src='{{ url_for("static", filename="img/logos/fordsdevelopment_logo.svg") }}' alt="Card image cap"></h4>
-                <p>I also create websites and web applications for businesses, big or small, please see my main website for more information!</p>
+                <h4 class="text-center mt-1 mb-3">Created By <img class="logo-size ml-2"
+                        src='{{ url_for("static", filename="img/logos/fordsdevelopment_logo.svg") }}'
+                        alt="Card image cap"></h4>
+                <p>I also create websites and web applications for businesses, big or small, please see my main website
+                    for more information!</p>
                 <div class="d-flex justify-content-center">
-                    <a href="https://www.fordsdevelopment.co.uk/" target="_blank" class="btn btn-dark">Go To Fordsdevelopment</a>
+                    <a href="https://www.fordsdevelopment.co.uk/" target="_blank" class="btn btn-dark">Go To
+                        Fordsdevelopment</a>
                 </div>
             </div>
             <div class="col-12 col-md-4 mt-4">
@@ -78,25 +96,33 @@
                 <h4 class="text-center mt-1 mb-3">Acknowledgements</h4>
                 <p>This web application would of never been created without the following platforms.</p>
                 <ul class="acknowledgements-list">
-                    <li><img src="https://img.icons8.com/fluent/22/000000/github.png"/> Github</li>
-                    <li><img src="https://img.icons8.com/color/22/000000/heroku.png"/> Heroku</li>
-                    <li><img src="https://img.icons8.com/ios-filled/22/000000/jquery.png"/> Jquery</li>
-                    <li><img src="https://img.icons8.com/fluent/22/000000/icons8-new-logo.png"/> <a target="_blank" href="https://icons8.com/icons/set/create-icon" class="text-dark">Create Icon icon</a> icon by <a target="_blank" href="https://icons8.com" class="text-dark">Icons8</a></li>
-                    <li><img src="https://img.icons8.com/plasticine/22/000000/youtube.png"/> Youtube</li>
-                    <li><img src="https://img.icons8.com/color/22/000000/bootstrap.png"/> Bootstrap</li>
+                    <li><img src="https://img.icons8.com/fluent/22/000000/github.png" /> Github</li>
+                    <li><img src="https://img.icons8.com/color/22/000000/heroku.png" /> Heroku</li>
+                    <li><img src="https://img.icons8.com/ios-filled/22/000000/jquery.png" /> Jquery</li>
+                    <li><img src="https://img.icons8.com/fluent/22/000000/icons8-new-logo.png" /> <a target="_blank"
+                            href="https://icons8.com/icons/set/create-icon" class="text-dark">Create Icon icon</a> icon
+                        by <a target="_blank" href="https://icons8.com" class="text-dark">Icons8</a></li>
+                    <li><img src="https://img.icons8.com/plasticine/22/000000/youtube.png" /> Youtube</li>
+                    <li><img src="https://img.icons8.com/color/22/000000/bootstrap.png" /> Bootstrap</li>
                     <li>P5.js</li>
                     <li><a href='https://pngtree.com/so/coming' target="_blank">coming png from pngtree.com</a></li>
                 </ul>
             </div>
         </div>
-        <small class="m-0 mt-2 py-1 d-flex justify-content-center text-small"><span>Copyright © 2020 FD Games</span></small>
+        <small class="m-0 mt-2 py-1 d-flex justify-content-center text-small"><span>Copyright © 2020 FD
+                Games</span></small>
         <small class="text-light text-center d-block"></small>
 
     </footer>
 
     {% block extra_js %}{% endblock %}
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-   
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+
 </body>
+
 </html>
