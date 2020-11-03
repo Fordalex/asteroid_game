@@ -792,14 +792,14 @@ $('#annoymous').on('click', function() {
     if (anonymous) {
         var playersName = localStorage.getItem('playersName');
         $('#endGameFormContainer').html(`
-        <form action="save_high_score/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
+        <form action="save_high_score/ufo_defence/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
         <button type="submit" class="btn btn-warning" >Save Score</button>
         </form>
         `)
         anonymous = false;
     } else {
         $('#endGameFormContainer').html(`
-        <form action="save_high_score/Anonymous/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
+        <form action="save_high_score/ufo_defence/Anonymous/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
             <button type="submit" class="btn btn-warning" >Save Score</button>
         </form>
         `)
