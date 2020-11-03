@@ -13,6 +13,7 @@
                 <div class="p-3">
                     <h5>Your Players Name</h5>
                     <input class="form-control" type="text" id="playersNameInput">
+                    <div id="messageContainer"></div>
                 </div>
                 <hr class="mb-0">
                 <div class="row m-0 p-0">
@@ -43,7 +44,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" id="ready">Ready</button>
+                <button type="button" class="btn btn-success" id="ready">Ready</button>
             </div>
         </div>
     </div>
@@ -61,7 +62,7 @@
                 <p>Save your score as anonymous<input type="checkbox" class="ml-2" id="annoymous">
             </div>
             <div class="modal-footer" id="endGameFormContainer">
-
+                
             </div>
         </div>
     </div>
@@ -174,24 +175,30 @@ $(document).ready(function() {
 var difficuly = '';
 // get the game difficuly and start the game
 $('#ready').on('click', function() {
-    difficuly = $('input[name="difficuly"]:checked').val();
-    if (difficuly == 'easy') {
-        gameDifficulty = 1;
+    if ($('#playersNameInput').val().length >= 1) {
+        difficuly = $('input[name="difficuly"]:checked').val();
+        if (difficuly == 'easy') {
+            gameDifficulty = 1;
+        }
+        if (difficuly == 'medium') {
+            gameDifficulty = 2;
+        }
+        if (difficuly == 'hard') {
+            gameDifficulty = 3;
+        }
+        if (difficuly == 'extreme') {
+            gameDifficulty = 5;
+        }
+        localStorage.setItem('playersName', $('#playersNameInput').val())
+        playersColour = $('#playersColour').val();
+        var canvas = $('#defaultCanvas0')
+        $('#defaultCanvas0').remove()
+        $('#canvasContainer').html(canvas)
+        $('#enterNameModal').modal("hide")
+    } else {
+        $('#messageContainer').html('<p class="m-0 text-danger">Add a player name!</p>');
     }
-    if (difficuly == 'medium') {
-        gameDifficulty = 2;
-    }
-    if (difficuly == 'hard') {
-        gameDifficulty = 3;
-    }
-    if (difficuly == 'extreme') {
-        gameDifficulty = 5;
-    }
-    localStorage.setItem('playersName', $('#playersNameInput').val())
-    playersColour = $('#playersColour').val();
-    var canvas = $('#defaultCanvas0')
-    $('#defaultCanvas0').remove()
-    $('#canvasContainer').html(canvas)
+    
 });
 
 var bulletSpeedCost = 10;
@@ -612,18 +619,20 @@ function showPlayersStats() {
 
 
 function mouseClicked() {
-    var lazerSound = new Audio();
-    lazerSound.src = "{{ url_for("static", filename="sounds/ufo_defence/lazer_shot.wav") }}";
-    lazerSound.volume = 0.05;
-    lazerSound.play();
-    var newBullet = new bullet();
-    const angle = Math.atan2(
-        mouseX - playerOne.position.x,
-        mouseY - playerOne.position.y,
-    )
-    newBullet.velocity.x = Math.sin(angle)
-    newBullet.velocity.y = Math.cos(angle)
-    bullets.push(newBullet)
+    if (!gamePaused) {  
+        var lazerSound = new Audio();
+        lazerSound.src = "{{ url_for("static", filename="sounds/ufo_defence/lazer_shot.wav") }}";
+        lazerSound.volume = 0.05;
+        lazerSound.play();
+        var newBullet = new bullet();
+        const angle = Math.atan2(
+            mouseX - playerOne.position.x,
+            mouseY - playerOne.position.y,
+        )
+        newBullet.velocity.x = Math.sin(angle)
+        newBullet.velocity.y = Math.cos(angle)
+        bullets.push(newBullet)
+    }
 }
 
 //  spawn the enemies
@@ -776,7 +785,7 @@ function endGame() {
     var playersName = localStorage.getItem('playersName');
     $('#endGameFormContainer').html(`
     <form action="save_high_score/ufo_defence/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
-        <button type="submit" class="btn btn-warning" >Save Score</button>
+        <button type="submit" class="btn btn-warning">Continue</button>
     </form>
     `)
     $('#playersName').html(playersName)
@@ -793,14 +802,14 @@ $('#annoymous').on('click', function() {
         var playersName = localStorage.getItem('playersName');
         $('#endGameFormContainer').html(`
         <form action="save_high_score/ufo_defence/${playersName}/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
-        <button type="submit" class="btn btn-warning" >Save Score</button>
+        <button type="submit" class="btn btn-warning">Continue</button>
         </form>
         `)
         anonymous = false;
     } else {
         $('#endGameFormContainer').html(`
         <form action="save_high_score/ufo_defence/Anonymous/${score}/${difficuly.toUpperCase()}" id="endGameForm" method="POST">
-            <button type="submit" class="btn btn-warning" >Save Score</button>
+            <button type="submit" class="btn btn-warning">Continue</button>
         </form>
         `)
         anonymous = true;
