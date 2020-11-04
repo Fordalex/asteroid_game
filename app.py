@@ -11,6 +11,8 @@ app = Flask(__name__)
 app.config["MONGO_URI"] = DBURL
 mongo = PyMongo(app)
 
+# Add the custom error pages.
+from error import *
 # View the home page.
 from home import *
 # Save the high scores for each game.
