@@ -1,11 +1,8 @@
-{% extends 'base.html' %}
-{% block header %}
-FDS Games
+{% extends 'base.html' %} {% block header %} FDS Games
 <div class="d-block d-md-none mt-3 d-flex justify-content-center">
     <h5 class="text-danger">More games available on desktop!</h5>
 </div>
-{% endblock %}
-{% block content %}
+{% endblock %} {% block content %}
 <!-- Game title container -->
 
 <main id="card-container" class="px-2 px-lg-3 d-flex justify-content-center">
@@ -14,21 +11,22 @@ FDS Games
             <div class="col-12 mt-2">
                 <h5>Games</h5>
                 <p>From old board games to never-ending survival mini-games, online multiplayer and more to come in the future!</p>
+                <hr>
             </div>
         </div>
         <div class="row m-0 px-2 py-2 mt-5 d-flex justify-content-center title-container">
             <div class="col-12 mt-2">
                 <h5>Code Pen</h5>
                 <p>Simulations and other mini-projects, view the code and/or enjoy the creations.</p>
+                <hr>
                 <a class="btn btn-info" target="_blank" href="https://codepen.io/fordalex/pen/RwRNvxr">Cannonball Physics Test</a>
+                <a class="btn btn-info" target="_blank" href="https://codepen.io/fordalex/pen/bGejQgY">Custom Fireworks</a>
             </div>
         </div>
     </div>
-   
-</main>
-{% endblock %}
 
-{% block extra_js %}
+</main>
+{% endblock %} {% block extra_js %}
 <script>
     // The title model
     class GameTitle {
@@ -136,7 +134,7 @@ FDS Games
         }
     }
     // Creating the titles available
-    var highScores = {{ highScores |safe }};
+    var highScores = {{ highScores | safe }};
 
     var ufo_defence = new GameTitle();
     ufo_defence.image = '{{ url_for("static", filename="img/titles/asteroid_gameplay.png") }}';
@@ -148,7 +146,7 @@ FDS Games
     ufo_defence.highScore = highScores['ufo_defence']['score']
     ufo_defence.highScoreName = highScores['ufo_defence']['name']
     ufo_defence.desktopOnly = true;
-    
+
     var mastermind = new GameTitle();
     mastermind.image = '{{ url_for("static", filename="img/titles/mastermind_gameplay.png") }}';
     mastermind.title = 'Mastermind';
@@ -185,10 +183,8 @@ FDS Games
     var allTitles = [ufo_defence, mastermind, pong, santa_catch]
 
     // Adding the titles to the page
-    for(let i = 0; allTitles.length; i++) {
+    for (let i = 0; allTitles.length; i++) {
         $('#titleContainer').append(allTitles[i].html(i))
     }
-
-
 </script>
 {% endblock %}
