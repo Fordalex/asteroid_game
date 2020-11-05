@@ -9,7 +9,22 @@ FDS Games
 <!-- Game title container -->
 
 <main id="card-container" class="px-2 px-lg-3 d-flex justify-content-center">
-    <div class="row m-0 px-2 py-2 d-flex justify-content-center" id="titleContainer"></div>
+    <div class="d-inline-block">
+        <div class="row m-0 px-2 py-2 d-flex justify-content-center title-container" id="titleContainer">
+            <div class="col-12 mt-2">
+                <h5>Games</h5>
+                <p>From old board games to never-ending survival mini-games, online multiplayer and more to come in the future!</p>
+            </div>
+        </div>
+        <div class="row m-0 px-2 py-2 mt-5 d-flex justify-content-center title-container">
+            <div class="col-12 mt-2">
+                <h5>Code Pen</h5>
+                <p>Simulations and other mini-projects, view the code and/or enjoy the creations.</p>
+                <a class="btn btn-info" target="_blank" href="https://codepen.io/fordalex/pen/RwRNvxr">Cannonball Physics Test</a>
+            </div>
+        </div>
+    </div>
+   
 </main>
 {% endblock %}
 
@@ -173,5 +188,7 @@ FDS Games
     for(let i = 0; allTitles.length; i++) {
         $('#titleContainer').append(allTitles[i].html(i))
     }
+
+
 </script>
 {% endblock %}
