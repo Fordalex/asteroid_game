@@ -25,6 +25,9 @@ from ufo_defence import *
 from pong import *
 # santa catch game
 # from santa_catch import *
+# tower defence game views
+from tower_defence import *
+
 
 
 if __name__ == '__main__':
