@@ -65,16 +65,45 @@
     const canvasWidth = 600;
 
     function preload() {
-        
+        baseImg = loadImage("{{ url_for("static", filename="img/tower_defence/base.png") }}");
+        cannonImg = loadImage("{{ url_for("static", filename="img/tower_defence/cannon.png") }}");
+        bulletImg = loadImage("{{ url_for("static", filename="img/tower_defence/bullet.png") }}");
     }
 
     function setup() {
-        createCanvas(canvasWidth, canvasHeight)
+        createCanvas(canvasWidth, canvasHeight, WEBGL)
     }
 
     function draw() {
-        background(80);
+        background(0);
+        tower.draw();
+        rotateZ(10);
+        rect(0, 0, 55, 55);
+        rotateZ(45);
+        rect(-50, -90, 55, 55);
+        color('white');
     }
+
+    class Tower {
+        constructor() {
+            this.width = 50;
+            this.height = 50;
+            this.position = {
+                x: 80,
+                y: 80,
+            }
+            this.tower = 'cannon';
+        }
+        draw() {
+            image(baseImg, this.position.x , this.position.y, 50,50);
+            if (this.tower == 'cannon') {
+                // rotateZ(3.5);
+                image(cannonImg, this.position.x + 12.5, this.position.y - 12, 25,50);
+            }
+        }
+    }
+
+    var tower = new Tower();
 
 
 </script>

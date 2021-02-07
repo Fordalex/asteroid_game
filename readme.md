@@ -1,5 +1,7 @@
 # Fds Games
 
+My original mastermind project is located [here](https://github.com/Fordalex/mastermind-project)
+
 This is a library of all my game projects, please take a look and see if you can set any new high scores.
 
 [Play Games](https://fd-games.herokuapp.com/)

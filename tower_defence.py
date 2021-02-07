@@ -9,4 +9,3 @@ mongo = PyMongo(app)
 @app.route('/tower_defence')
 def santa_catch():
     return render_template('tower_defence/tower_defence.html')
-

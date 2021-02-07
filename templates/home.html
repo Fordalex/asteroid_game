@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block header %} FDS Games
+{% extends 'base.html' %} {% block header %} FD Games
 <div class="d-block d-md-none mt-3 d-flex justify-content-center">
     <h5 class="text-danger">More games available on desktop!</h5>
 </div>
@@ -10,7 +10,8 @@
         <div class="row m-0 px-2 py-2 d-flex justify-content-center title-container" id="titleContainer">
             <div class="col-12 mt-2">
                 <h5>Games</h5>
-                <p>From old board games to never-ending survival mini-games, online multiplayer and more to come in the future!</p>
+                <p>From old board games to never-ending survival mini-games, more to come in the
+                    future!</p>
                 <hr>
             </div>
         </div>
@@ -19,8 +20,10 @@
                 <h5>Code Pen</h5>
                 <p>Simulations and other mini-projects, view the code and/or enjoy the creations.</p>
                 <hr>
-                <a class="btn btn-info" target="_blank" href="https://codepen.io/fordalex/pen/RwRNvxr">Cannonball Physics Test</a>
-                <a class="btn btn-info" target="_blank" href="https://codepen.io/fordalex/pen/bGejQgY">Custom Fireworks</a>
+                <a class="btn btn-info" target="_blank" href="https://codepen.io/fordalex/pen/RwRNvxr">Cannonball
+                    Physics Test</a>
+                <a class="btn btn-info" target="_blank" href="https://codepen.io/fordalex/pen/bGejQgY">Custom
+                    Fireworks</a>
             </div>
         </div>
     </div>
@@ -159,28 +162,28 @@
     mastermind.highScore = highScores['mastermind']['score']
     mastermind.highScoreName = highScores['mastermind']['name']
 
-    var pong = new GameTitle();
-    pong.image = '{{ url_for("static", filename="img/titles/pong_gameplay.png") }}';
-    pong.title = 'Pong';
-    pong.description = 'The classic old pong game now online, play with your friends or join a random room.';
-    pong.link = '/pong_lobby/1';
-    pong.comingSoon = 'Play against AI!';
-    pong.desktop = true;
-    pong.players = 2;
-    pong.online = 'Yes'
-    pong.highScore = 'None Yet';
-    pong.highScoreName = 'None Yet';
-    pong.beta = true;
-    pong.desktopOnly = true;
+    // var pong = new GameTitle();
+    // pong.image = '{{ url_for("static", filename="img/titles/pong_gameplay.png") }}';
+    // pong.title = 'Pong';
+    // pong.description = 'The classic old pong game now online, play with your friends or join a random room.';
+    // pong.link = '/pong_lobby/1';
+    // pong.comingSoon = 'Play against AI!';
+    // pong.desktop = true;
+    // pong.players = 2;
+    // pong.online = 'Yes'
+    // pong.highScore = 'None Yet';
+    // pong.highScoreName = 'None Yet';
+    // pong.beta = true;
+    // pong.desktopOnly = true;
 
-    var santa_catch = new GameTitle();
-    santa_catch.image = '';
-    santa_catch.title = 'Santa Catch';
-    santa_catch.description = "Help santa get all the presents ready for christmas, make sure not to pack any unwanted goods but don't let the grinch catch you first!";
-    santa_catch.link = '/santa_catch';
-    santa_catch.notPlayable = true;
+    // var santa_catch = new GameTitle();
+    // santa_catch.image = '';
+    // santa_catch.title = 'Santa Catch';
+    // santa_catch.description = "Help santa get all the presents ready for christmas, make sure not to pack any unwanted goods but don't let the grinch catch you first!";
+    // santa_catch.link = '/santa_catch';
+    // santa_catch.notPlayable = true;
 
-    var allTitles = [ufo_defence, mastermind, pong, santa_catch]
+    var allTitles = [ufo_defence, mastermind]
 
     // Adding the titles to the page
     for (let i = 0; allTitles.length; i++) {
